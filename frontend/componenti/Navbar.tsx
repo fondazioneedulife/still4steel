@@ -1,17 +1,24 @@
 import './Navbar.css';
-import { Gear } from 'react-bootstrap-icons';
+import { Gear, Bell } from 'react-bootstrap-icons';
 
 const Navbar = () => {
   return (
     <nav className="navbar">
-      {/* Logo centrato */}
-      <div className="navbar-logo">
-        <img src="/path/to/logo.png" alt="Logo" />
-      </div>
+      <div className="navbar-content">
+        {/* Icona notifiche */}
+        <div className="navbar-icon left">
+          <Bell size={28} className="bell-icon" />
+        </div>
 
-      {/* Icona dell'ingranaggio a destra */}
-      <div className="navbar-icon">
-        <Gear size={24} />
+        {/* Logo centrato */}
+        <div className="navbar-logo">
+          <img src="/path/to/logo.png" alt="Logo" />
+        </div>
+
+        {/* Icona impostazioni */}
+        <div className="navbar-icon right">
+          <Gear size={28} className="gear-icon" />
+        </div>
       </div>
     </nav>
   );
