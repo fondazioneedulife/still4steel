@@ -22,7 +22,7 @@
 }
 
 .navbar-logo {
-  flex: 1;
+  flex: 3 ;
   display: flex;
   justify-content: center;
 }
@@ -44,7 +44,7 @@
 }
 
 .navbar-icon:hover .gear-icon, .navbar-icon:hover .bell-icon {
-  color: #ffff00;
+  color: #f5e100;
   transform: rotate(3deg);
 }
 .navbar-icon:hover .gear-icon, .navbar-icon:hover  {
