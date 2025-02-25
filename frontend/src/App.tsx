@@ -9,6 +9,8 @@ import QuintaSottopagina from '../pagine/QuintaSottopagina';
 import NavFooter from '../componenti/NavFooter'
 import VisualizaProdotti from '../pagine/VisuaizzaProdotti'
 import DettagliSpedizioni from '../pagine/DettagliSpedizione'
+import Spedzioni from '../pagine/Spedizioni'
+import './App.css';
 function App() {
     return (
       <Router>
@@ -22,6 +24,7 @@ function App() {
           <Route path="/riepilogo" element={<Riepilogo />} />
           <Route path="/quinta-sottopagina" element={<QuintaSottopagina />} />
           <Route path='/visualizza-prodotti' element={<VisualizaProdotti/>} />
+          <Route path="/spedizioni" element={<Spedzioni />} />
           <Route path="/dettagli-spedizione" element={<DettagliSpedizioni />}/>
         </Routes>
         <NavFooter/>

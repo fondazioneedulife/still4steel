@@ -2,21 +2,32 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Container } from 'react-bootstrap';
 import './DettagliSpedizione.css';
+import jsPDF from 'jspdf';
 
 const DettagliSpedizione: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const shipment = location.state?.shipment; // Dati della spedizione passati tramite navigate
+  const shipment = location.state?.shipment;
 
-  // Funzione per scaricare i dati come file JSON
-  const downloadData = () => {
-    const blob = new Blob([JSON.stringify(shipment, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `spedizione_${shipment.trackingNumber}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
+  // Funzione per scaricare i dettagli come PDF
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+
+    // Titolo del PDF
+    doc.setFontSize(18);
+    doc.text('Dettagli Spedizione', 10, 10);
+
+    // Dettagli della spedizione
+    doc.setFontSize(12);
+    doc.text(`Tracking: ${shipment.trackingNumber}`, 10, 20);
+    doc.text(`Stato: ${shipment.status}`, 10, 30);
+    doc.text(`Data: ${shipment.date}`, 10, 40);
+    doc.text(`Mittente: ${shipment.sender}`, 10, 50);
+    doc.text(`Destinatario: ${shipment.recipient}`, 10, 60);
+    doc.text(`Peso: ${shipment.weight}`, 10, 70);
+
+    // Salva il PDF
+    doc.save(`spedizione_${shipment.trackingNumber}.pdf`);
   };
 
   return (
@@ -34,10 +45,10 @@ const DettagliSpedizione: React.FC = () => {
             <div><strong>Destinatario:</strong> {shipment.recipient}</div>
             <div><strong>Peso:</strong> {shipment.weight}</div>
           </div>
-          <Button variant="primary" onClick={downloadData} className="download-button">
-            Scarica Dati
+          <Button variant="dark" onClick={downloadPDF} className="download-button">
+            Scarica PDF
           </Button>
-          <Button variant="secondary" onClick={() => navigate('/spedizioni')} className="back-button">
+          <Button variant="outline secondary" onClick={() => navigate('/spedizioni')} className="back-button">
             Torna alle Spedizioni
           </Button>
         </Card.Body>
