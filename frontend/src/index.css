@@ -1,0 +1,31 @@
+/* Stili globali */
+body {
+  font-family: 'Arial', sans-serif; 
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; 
+}
+
+/* Contenitore principale */
+.container {
+  max-width: 800px; 
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 80px;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff; 
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); 
+  z-index: 1000; 
+}
