@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
-import './VisualizzaProdotti.css';
+import { useNavigate } from 'react-router-dom';
+import './ListaProdotti.css';
 
 const products = [
   { id: 1, sku: 'SKU123', name: 'Prodotto A', image: 'https://placehold.co/100x100', quantity: 10, status: 'available' },
@@ -17,9 +18,10 @@ const STATUS_LABELS = {
   out_of_stock: 'Non disponibile',
 };
 
-const VisualizzaProdotti: React.FC = () => {
+const ListaProdotti: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const navigate = useNavigate();
 
   // Filtraggio ottimizzato con useMemo
   const filteredProducts = useMemo(() => {
@@ -33,7 +35,7 @@ const VisualizzaProdotti: React.FC = () => {
   }, [searchTerm, selectedCategory]);
 
   return (
-    <Container className="visualizza-prodotti-page">
+    <Container className="lista-prodotti-page">
       <Row className="mb-4">
         <Col md={6} className="mb-2">
           <Form.Control
@@ -65,7 +67,10 @@ const VisualizzaProdotti: React.FC = () => {
                   <img src={product.image} alt={product.name} className="product-image mb-3" />
                   <div className="product-sku">{product.sku}</div>
                   <div className="product-name mb-3">{product.name}</div>
-                  <Button variant={product.status === 'out_of_stock' ? 'danger' : product.status === 'low_stock' ? 'warning' : 'dark'}>
+                  <Button
+                    variant={product.status === 'out_of_stock' ? 'danger' : product.status === 'low_stock' ? 'warning' : 'dark'}
+                    onClick={() => navigate('/dettagli-prodotto', { state: { product } })}
+                  >
                     Visualizza
                   </Button>
                 </Card.Body>
@@ -82,4 +87,4 @@ const VisualizzaProdotti: React.FC = () => {
   );
 };
 
-export default VisualizzaProdotti;
+export default ListaProdotti;

@@ -6,10 +6,11 @@ import TerzaSottopagina from '../pagine/TerzaSottopagina';
 import Riepilogo from '../pagine/Riepilogo'
 import Navbar from '../componenti/Navbar';
 import QuintaSottopagina from '../pagine/QuintaSottopagina';
-import NavFooter from '../componenti/NavFooter'
-import VisualizaProdotti from '../pagine/VisuaizzaProdotti'
-import DettagliSpedizioni from '../pagine/DettagliSpedizione'
-import Spedzioni from '../pagine/Spedizioni'
+import NavFooter from '../componenti/NavFooter';
+import DettagliSpedizioni from '../pagine/DettagliSpedizione';
+import Spedzioni from '../pagine/Spedizioni';
+import ListaProdotti from '../pagine/ListaProdotti';
+import DettagliProdotto from '../pagine/DettagliProdotto';
 import './App.css';
 function App() {
     return (
@@ -23,9 +24,10 @@ function App() {
           <Route path="/terza-sottopagina" element={<TerzaSottopagina />} />
           <Route path="/riepilogo" element={<Riepilogo />} />
           <Route path="/quinta-sottopagina" element={<QuintaSottopagina />} />
-          <Route path='/visualizza-prodotti' element={<VisualizaProdotti/>} />
+          <Route path='/lista-prodotti' element={<ListaProdotti />} />
           <Route path="/spedizioni" element={<Spedzioni />} />
           <Route path="/dettagli-spedizione" element={<DettagliSpedizioni />}/>
+          <Route path="/dettagli-prodotto" element={<DettagliProdotto />} />
         </Routes>
         <NavFooter/>
       </Router>

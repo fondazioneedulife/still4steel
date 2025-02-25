@@ -11,7 +11,7 @@ const Magazzino = () => {
           <img src="/path/to/logo1.png" alt="Logo" className="rectangle-logo" />
           <h3 className="rectangle-title">Aggiungi Prodotti</h3>
         </div>
-        <div className="rectangle" onClick={() => navigate('/visualizza-prodotti')}>
+        <div className="rectangle" onClick={() => navigate('/lista-prodotti')}>
           <img src="/path/to/logo2.png" alt="Logo" className="rectangle-logo" />
           <h3 className="rectangle-title">Visualizza Prodotti</h3>
         </div>

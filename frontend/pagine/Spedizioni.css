@@ -42,12 +42,12 @@
   }
   
   .status-badge.in-transito {
-    background-color: #ffc107; /* Giallo per "In transito" */
+    background-color: #ffc107; 
     color: #000;
   }
   
   .status-badge.consegnato {
-    background-color: #28a745; /* Verde per "Consegnato" */
+    background-color: #28a745; 
     color: #fff;
   }
   
