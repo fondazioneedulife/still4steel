@@ -1,0 +1,56 @@
+.magazzino-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .rectangle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -33px;
+    gap: 20px; 
+    height: 84.9vh;
+    width: 100%;
+    max-width: 400px; 
+  }
+  
+  .rectangle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 120px;
+    border: 1px solid #000;
+    border-radius: 12px;
+    padding: 10px;
+    background-color: #111;
+    color: #fff;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; /
+  }
+  
+  .rectangle:hover {
+    background-color: #fff;
+    color: #000;
+  }
+
+  .rectangle:active {
+    background-color: #fff;
+    color: #000;
+  }
+  .rectangle-logo {
+    width: 50px; 
+    height: 50px;
+    margin-bottom: 10px; 
+  }
+  
+  .rectangle-title {
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 700;
+  }
