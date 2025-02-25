@@ -1,0 +1,96 @@
+.dettagli-spedizione-page {
+    padding: 20px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .shipment-details-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .shipment-tracking {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .shipment-status {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .status-badge.in-transito {
+    background-color: #ffc107; /* Giallo per "In transito" */
+    color: #000;
+  }
+  
+  .status-badge.consegnato {
+    background-color: #28a745; /* Verde per "Consegnato" */
+    color: #fff;
+  }
+  
+  .status-badge.in-elaborazione {
+    background-color: #007bff; /* Blu per "In elaborazione" */
+    color: #fff;
+  }
+  
+  .shipment-date {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .shipment-details {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .download-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .back-button {
+    width: 100%;
+  }
+  
+  /* Stili per dispositivi mobili */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 20px;
+    }
+  
+    .shipment-tracking {
+      font-size: 16px;
+    }
+  
+    .shipment-status {
+      font-size: 14px;
+    }
+  
+    .shipment-date {
+      font-size: 14px;
+    }
+  
+    .shipment-details {
+      font-size: 14px;
+    }
+  }
