@@ -1,4 +1,3 @@
-import React from 'react';
 import './Navbar.css';
 import { Gear } from 'react-bootstrap-icons';
 
