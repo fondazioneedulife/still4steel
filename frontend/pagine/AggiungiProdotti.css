@@ -11,12 +11,12 @@
 
 .form-card {
   width: 100%;
-  max-width: 800px; /* Larghezza ottimale per il form */
+  max-width: 800px;
   padding: 30px;
   border: none;
   border-radius: 15px;
   background: #ffffff;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Ombra più pronunciata */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
 }
 
 .input-container {
