@@ -1,4 +1,5 @@
-version: "3.8"
+version: '3.8'
+
 services:
   db:
     image: postgres:15
@@ -9,22 +10,58 @@ services:
       POSTGRES_DB: memodb
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
 
   backend:
     build: ./backend
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      DB_HOST: still4steel
+      DB_HOST: db
+      DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_NAME: memodb
+      USE_DOCKER: "true"
+      PORT: 3000
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
 
   frontend:
     build: ./frontend
     ports:
-      - "3001:3000"
+      - "3001:80"
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  pgdata:
