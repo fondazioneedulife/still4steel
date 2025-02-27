@@ -67,3 +67,7 @@
 .remove-button:hover {
   background-color: #cc0000;
 }
+.selected-widget {
+  border: 2px solid red !important;
+  border-radius: 8px;
+}

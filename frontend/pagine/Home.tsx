@@ -18,6 +18,7 @@ import {
 } from '@dnd-kit/sortable';
 import SortableWidget from '../componenti/SortableWidget';
 import { Widget } from '../Types/types';
+import '../componenti/Widget.css'; 
 
 // Lista di widget disponibili
 const availableWidgets: Widget[] = [
@@ -64,6 +65,7 @@ const Home: React.FC = () => {
   const [homeWidgets, setHomeWidgets] = useState<Widget[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [activeWidget, setActiveWidget] = useState<Widget | null>(null);
+  const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null); // Stato per il widget selezionato
 
   // Sensori per il drag & drop
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
@@ -126,6 +128,11 @@ const Home: React.FC = () => {
   // Alterna la visibilità della modale
   const toggleModal = () => setShowModal(!showModal);
 
+  // Gestisce il clic su un widget nel popup
+  const handleWidgetClick = (id: string) => {
+    setSelectedWidgetId(id); // Imposta il widget selezionato
+  };
+
   return (
     <DndContext
       sensors={sensors}
@@ -133,9 +140,11 @@ const Home: React.FC = () => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <Container className="widget-container mt-4 "style={{ maxWidth: '97vw', maxHeight: '100vh', height: '70vh', overflow: 'auto'}}>
-        <Button  className="widget-btn" variant="dark" onClick={toggleModal} style={{borderRadius: '50%' , fontSize: '1rem', fontWeight: '900'}}>
-        + </Button>
+      <Container className="mt-4">
+        <h1>Dashboard Aziendale</h1>
+        <Button variant="primary" onClick={toggleModal}>
+          Mostra Widget Disponibili
+        </Button>
 
         {/* Zona droppabile della Home */}
         <div
@@ -170,7 +179,12 @@ const Home: React.FC = () => {
             <Row>
               {availableWidgets.map((widget) => (
                 <Col key={widget.id} xs={12} md={6} className="mb-3">
-                  <SortableWidget widget={widget} />
+                  <div
+                    className={`widget ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
+                    onClick={() => handleWidgetClick(widget.id)}
+                  >
+                    <SortableWidget widget={widget} />
+                  </div>
                 </Col>
               ))}
             </Row>
