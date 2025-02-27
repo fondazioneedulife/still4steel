@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Person, Hash, Calendar, Envelope, Telephone } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../componenti/Steppper';
 import { useNavigate } from 'react-router-dom';
 
 const TerzaSottopagina: React.FC = () => {

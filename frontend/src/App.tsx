@@ -11,14 +11,15 @@ import DettagliSpedizioni from '../pagine/DettagliSpedizione';
 import Spedzioni from '../pagine/Spedizioni';
 import ListaProdotti from '../pagine/ListaProdotti';
 import DettagliProdotto from '../pagine/DettagliProdotto';
-import Calendario from '../pagine/Calendario';
+import Home from '../pagine/Home';
 import './App.css';
 function App() {
     return (
       <Router>
         <Navbar/>
         <Routes>
-          <Route path="/" />
+        <Route path="/" element={<Home />}  />
+          <Route path="/home" element={<Home />} />
           <Route path="/magazzino" element= {<Magazzino/>}/>
           <Route path="/aggiungi-prodotti" element={<AggiungiProdotti />} />
           <Route path="/seconda-sottopagina" element={<SecondaSottopagina />} />
@@ -29,7 +30,6 @@ function App() {
           <Route path="/spedizioni" element={<Spedzioni />} />
           <Route path="/dettagli-spedizione" element={<DettagliSpedizioni />}/>
           <Route path="/dettagli-prodotto" element={<DettagliProdotto />} />
-          <Route path="/calendario" element={<Calendario />} />
         </Routes>
         <NavFooter/>
       </Router>

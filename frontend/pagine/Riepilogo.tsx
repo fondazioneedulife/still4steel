@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../componenti/Steppper';
 import { useNavigate } from 'react-router-dom';
 
 const Riepilogo: React.FC = () => {

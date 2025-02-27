@@ -42,7 +42,7 @@ const DettagliProdotto: React.FC = () => {
           <Button variant="outline-dark" onClick={downloadPDF} className="download-button">
             Scarica PDF
           </Button>
-          <Button variant="dark" onClick={() => navigate('/visualizza-prodotti')} className="back-button">
+          <Button variant="dark" onClick={() => navigate('/lista-prodotti')} className="back-button">
             Torna ai Prodotti
           </Button>
         </Card.Body>

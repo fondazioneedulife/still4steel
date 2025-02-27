@@ -6,7 +6,6 @@
   min-height: 100vh;
   padding: 20px;
   background: linear-gradient(135deg, #f8f9fa, #e9ecef); 
-
 }
 
 .form-card {
@@ -14,9 +13,15 @@
   max-width: 800px;
   padding: 30px;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   background: #ffffff;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05); /* Ombra più pronunciata per l'effetto 3D */
+  transition: all 0.3s ease-in-out;
+}
+
+.form-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1); /* Ombra più intensa al passaggio del mouse */
+  transform: translateY(-5px); /* Solleva il card al passaggio del mouse */
 }
 
 .input-container {
@@ -37,16 +42,18 @@
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 14px;
   color: #333;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: #f9f9f9; /* Leggero colore di sfondo per un effetto più morbido */
 }
 
 .form-input:focus {
   border-color: #007bff;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
   outline: none;
+  transform: translateY(-2px); /* Effetto di sollevamento */
 }
 
 .form-input.is-invalid {
@@ -55,6 +62,7 @@
 
 .form-input.is-invalid:focus {
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+  transform: translateY(-2px); /* Effetto di sollevamento in caso di errore */
 }
 
 .navigation-buttons {
@@ -78,6 +86,9 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.nav-button:hover {
+  transform: translateY(-3px); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 /* Responsive Design */
 @media (max-width: 768px) {

@@ -17,59 +17,45 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
+  width: 100%; 
+  max-width: 100%; 
+  padding: 0 20px;
 }
 
 .navbar-logo {
-  flex: 3 ;
   display: flex;
   justify-content: center;
+  flex-grow: 1;
 }
 
-.navbar-logo img {
+.logo {
   height: 45px;
   max-width: 100%;
 }
 
 .navbar-icon {
-  cursor: pointer;
-  padding: 10px;
-  transition: transform 0.2s ease;
-}
-
-.navbar-icon .gear-icon, .navbar-icon .bell-icon {
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.navbar-icon:hover .gear-icon, .navbar-icon:hover .bell-icon {
-  color: #f5e100;
-  transform: rotate(3deg);
-}
-.navbar-icon:hover .gear-icon, .navbar-icon:hover  {
-  color: #000;
-  transform: rotate(20deg);
+  position: relative;
+  z-index: 1;
 }
 
 .navbar-icon.left {
-  position: absolute;
-  left: 20px;
+  margin-right: auto;
 }
 
 .navbar-icon.right {
-  position: absolute;
-  right: 20px;
+  margin-left: auto;
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    padding: 10px;
-  }
-  .navbar-logo img {
-    height: 35px;
-  }
-  .navbar-icon {
-    padding: 8px;
-  }
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
 }

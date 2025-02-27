@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Cash, Tag, Percent, Box, BoxArrowInDown } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../componenti/Steppper';
 
 const SecondaSottopagina: React.FC = () => {
   const [step] = useState<number>(2);

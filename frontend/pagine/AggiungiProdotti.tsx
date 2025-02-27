@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
-import { ArrowLeft, ArrowRight, Tag, List, FileText, InfoCircle } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import { Container, Form, Button, Card, Row, Col, Modal } from 'react-bootstrap';
+import { ArrowLeft, ArrowRight, Tag, List, FileText, InfoCircle, PlusCircle } from 'react-bootstrap-icons';
+import Stepper from '../componenti/Steppper';
 import { useNavigate } from 'react-router-dom';
 
 const AggiungiProdotti: React.FC = () => {
   const [step] = useState<number>(1);
   const steps = [1, 2, 3, 4, 5];
+  const [showModal, setShowModal] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
+  const [categories, setCategories] = useState(['Categoria A', 'Categoria B', 'Categoria C']);
 
   const [nomeProdotto, setNomeProdotto] = useState<string>('');
   const [sku, setSku] = useState<string>('');
@@ -36,6 +39,14 @@ const AggiungiProdotti: React.FC = () => {
 
   const handlePrev = () => {
     navigate('/magazzino');
+  };
+
+  const handleAddCategory = () => {
+    if (newCategory.trim() && !categories.includes(newCategory)) {
+      setCategories([...categories, newCategory]);
+      setNewCategory('');
+      setShowModal(false);
+    }
   };
 
   return (
@@ -79,17 +90,22 @@ const AggiungiProdotti: React.FC = () => {
                 <Form.Label className="form-label">
                   <InfoCircle size={16} className="me-2" /> Categoria
                 </Form.Label>
-                <Form.Select
-                  value={categoria}
-                  onChange={(e) => setCategoria(e.target.value)}
-                  isInvalid={!!errors.categoria}
-                  className="form-input"
-                >
-                  <option value="">Seleziona una categoria</option>
-                  <option value="Categoria A">Categoria A</option>
-                  <option value="Categoria B">Categoria B</option>
-                  <option value="Categoria C">Categoria C</option>
-                </Form.Select>
+                <div className="d-flex">
+                  <Form.Select
+                    value={categoria}
+                    onChange={(e) => setCategoria(e.target.value)}
+                    isInvalid={!!errors.categoria}
+                    className="form-input"
+                  >
+                    <option value="">Seleziona una categoria</option>
+                    {categories.map((cat, index) => (
+                      <option key={index} value={cat}>{cat}</option>
+                    ))}
+                  </Form.Select>
+                  <Button variant="outline-primary" className="ms-2" onClick={() => setShowModal(true)}>
+                    <PlusCircle size={20} />
+                  </Button>
+                </div>
                 <Form.Control.Feedback type="invalid">{errors.categoria}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mb-3 input-container">
@@ -119,6 +135,25 @@ const AggiungiProdotti: React.FC = () => {
           <ArrowRight size={24} /> Avanti
         </Button>
       </div>
+
+      {/* Modal per aggiungere categoria */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Aggiungi Categoria</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Control
+            type="text"
+            placeholder="Nuova categoria"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Chiudi</Button>
+          <Button variant="primary" onClick={handleAddCategory}>Aggiungi</Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
