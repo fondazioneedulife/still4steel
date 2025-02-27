@@ -16,8 +16,13 @@
     "dotenv": "^16.4.7",
     "knex": "^3.1.0",
     "koa": "^2.15.4",
+    "koa-body": "^6.0.1",
     "koa-router": "^13.0.1",
+    "koa-static": "^5.0.0",
+    "koa-swagger-decorator": "^1.8.7",
     "objection": "^3.1.5",
-    "pg": "^8.13.3"
+    "pg": "^8.13.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-koa": "^0.0.1"
   }
 }
