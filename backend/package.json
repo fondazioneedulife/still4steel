@@ -2,6 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -20,9 +21,9 @@
     "koa-router": "^13.0.1",
     "koa-static": "^5.0.0",
     "koa-swagger-decorator": "^1.8.7",
+    "koa2-swagger-ui": "^5.11.0",
     "objection": "^3.1.5",
     "pg": "^8.13.3",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-koa": "^0.0.1"
+    "swagger-jsdoc": "^6.2.8"
   }
 }
