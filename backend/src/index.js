@@ -2,8 +2,8 @@ import Koa from "koa";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
-import setupSwagger from "./config/swagger";
-import { routes, allowedMethods } from "./routes/companiesRoutes";
+import setupSwagger from "./docs/swagger.js";
+import { routes, allowedMethods } from "./routes/companies.js";
 
 const app = new Koa();
 const router = new Router();
@@ -18,7 +18,7 @@ setupSwagger(app);
 // Rotta di test connessione DB
 router.get("/test-db", async (ctx) => {
   try {
-    const result = await require("./db").default.query("SELECT NOW()");
+    const result = await db.query("SELECT NOW()");
     ctx.body = { success: true, time: result.rows[0].now };
   } catch (err) {
     ctx.status = 500;
