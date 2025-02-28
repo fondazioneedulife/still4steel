@@ -1,5 +1,6 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-koa');
+import swaggerJsdoc from 'swagger-jsdoc';
+import Router from 'koa-router';
+import { koaSwagger } from 'koa2-swagger-ui';
 
 const options = {
     definition: {
@@ -10,14 +11,26 @@ const options = {
             description: 'Documentazione API con Swagger e Koa',
         },
     },
-    apis: ['./server.js'], // Percorso ai file con le API documentate
+    apis: ['../routes/*.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
-function setupSwagger(app, router) {
-    app.use(swaggerUi.serve);
-    router.get('/docs', swaggerUi.setup(swaggerSpec));
+function setupSwagger(app) {
+    const router = new Router();
+    
+    router.get('/swagger.json', async (ctx) => {
+        ctx.body = swaggerSpec;
+    });
+
+    app.use(router.routes()).use(router.allowedMethods());
+    
+    app.use(koaSwagger({
+        routePrefix: '/docs',
+        swaggerOptions: {
+            url: '/swagger.json',
+        },
+    }));
 }
 
-module.exports = setupSwagger;
+export default setupSwagger;
