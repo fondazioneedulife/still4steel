@@ -16,23 +16,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:7002",
+        url: "http://localhost:7001/api",
         description: "Server locale",
       },
     ],
   },
   apis: ["./routes/*.js"], // Specifica dove si trovano i file delle API
 };
-
-// Genera la documentazione
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-
-// Usa Swagger UI come middleware
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-app.listen(7002, () => {
-  console.log("Server avviato su http://localhost:7002");
-  console.log("Swagger UI disponibile su http://localhost:7002/api-docs");
-});
 
 export const swaggerSpec = swaggerJSDoc(swaggerOptions);

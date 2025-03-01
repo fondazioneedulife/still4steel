@@ -72,4 +72,8 @@ router.post("/login", (req, res) => {
   res.status(200).json({ token: "jwt_token" });
 });
 
+router.get("/login", (req, res) => {
+  res.status(200).json({ message: "Login endpoint is active" });
+});
+
 export { router }; 
