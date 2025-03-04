@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
     console.error("Errore nel recupero delle aziende:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
-});*/
+});
 
 router.get("/", (req, res) => {
   pool.query("SELECT * FROM companies")
@@ -39,7 +39,7 @@ router.get("/", (req, res) => {
       res.status(500).json({ error: "Errore interno del server" });
     });
 });
-
+*/
 /**
  * @swagger
  * /companies/{id}:
