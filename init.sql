@@ -21,6 +21,21 @@ CREATE TABLE warehouses (
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
 );
 
+INSERT INTO companies (name, vat, tax_code, phone, email, address, password, password_confirm, created_at, note)
+VALUES  ('Tech Innovations Srl', 'IT12345678901', 'TIN1234XYZ', '0412345678', 'info@techinnovations.com', 'Via Roma 45, Milano', 'password2025', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.'),
+        ('Green Energy Solutions', 'IT98765432109', 'GES9876ABC', '0398765432', 'contact@greenenergy.com', 'Viale Europa 12, Torino', 'securePass123', 'securePass123', NOW(), 'Fornitore di soluzioni per energie rinnovabili.'),
+        ('Foodie Delight Srl', 'IT11223344556', 'FDL1122QWE', '0634567890', 'support@foodiedelight.com', 'Piazza Maggiore 20, Bologna', 'gusto2025', 'gusto2025', NOW(), 'Ristorante con cucina gourmet.'),
+        ('AutoTech Italia', 'IT66778899000', 'ATI7788RTY', '0551234567', 'info@autotechitalia.com', 'Via Firenze 10, Firenze', 'automotive@123', 'automotive@123', NOW(), 'Specializzati in componenti per automobili.'),
+        ('Fashion Trends Srl', 'IT99887766554', 'FTS9988WER', '0301234567', 'sales@fashiontrends.com', 'Corso Vittorio Emanuele 120, Napoli', 'style2025', 'style2025', NOW(), 'Azienda di abbigliamento e moda.');
+
+INSERT INTO warehouses (name, address, type, note, company_id)
+VALUES  ('Magazzino Centrale Milano', 'Via Milano 100, Milano', 'Stoccaggio', 'Magazzino principale per la gestione delle merci.', 1),
+        ('Deposito Torino', 'Strada Torino 45, Torino', 'Logistica', 'Magazzino utilizzato per la distribuzione regionale.', 2),
+        ('Centro Distribuzione Bologna', 'Via Bologna 120, Bologna', 'Logistica', 'Magazzino per la gestione degli ordini online.', 3),
+        ('Stoccaggio Materie Prime Firenze', 'Via Firenze 55, Firenze', 'Stoccaggio', 'Deposito per materie prime utilizzate nella produzione.', 4),
+        ('Magazzino Rimini', 'Via Rimini 10, Rimini', 'Distribuzione', 'Magazzino destinato alla spedizione dei prodotti finiti.', 5);
+
+
 CREATE TABLE iva (
     iva_id SERIAL PRIMARY KEY,
     rate DECIMAL(5,2) NOT NULL,
