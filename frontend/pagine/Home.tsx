@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
 import {
   DndContext,
@@ -31,6 +31,8 @@ const availableWidgets: Widget[] = [
       { name: 'Feb', value: 12000 },
       { name: 'Mar', value: 8000 },
     ],
+    theme: 'light', 
+    color: '#8884d8',
   },
   {
     id: 'widget-2',
@@ -41,22 +43,46 @@ const availableWidgets: Widget[] = [
       { name: 'Feb', value: 6000 },
       { name: 'Mar', value: 4000 },
     ],
+    theme: 'dark',
+    color: '#82ca9d', 
   },
   {
     id: 'widget-3',
-    type: 'stato-spedizioni',
-    title: 'Stato Spedizioni',
+    type: 'magazzino',
+    title: 'Stato Magazzino',
     data: [
-      { name: 'In Transito', value: 12 },
-      { name: 'Consegnate', value: 20 },
-      { name: 'In Attesa', value: 5 },
+      { name: 'Disponibile', value: 120 },
+      { name: 'In Arrivo', value: 50 },
+      { name: 'Esaurito', value: 10 },
     ],
+    theme: 'light',
+    color: '#FF8042', 
   },
   {
     id: 'widget-4',
-    type: 'spedizioni-transito',
-    title: 'Spedizioni in Transito',
-    data: [{ name: 'Totale', value: 12 }],
+    type: 'vendite',
+    title: 'Vendite Giornaliere',
+    data: [
+      { name: 'Lun', value: 200 },
+      { name: 'Mar', value: 300 },
+      { name: 'Mer', value: 400 },
+      { name: 'Gio', value: 350 },
+      { name: 'Ven', value: 500 },
+    ],
+    theme: 'dark',
+    color: '#0088FE', 
+  },
+  {
+    id: 'widget-5',
+    type: 'ordini',
+    title: 'Stato Ordini',
+    data: [
+      { name: 'In Attesa', value: 15 },
+      { name: 'Spediti', value: 30 },
+      { name: 'Consegnati', value: 55 },
+    ],
+    theme: 'light',
+    color: '#FFBB28', 
   },
 ];
 
@@ -116,22 +142,60 @@ const Home: React.FC = () => {
     setHomeWidgets(homeWidgets.filter((widget) => widget.id !== id));
   };
 
-  // Aggiorna i dati di un widget
-  const handleUpdateValue = (id: string, newData: { name: string; value: number }[]) => {
+  // Aggiorna il colore di un widget
+  const handleUpdateColor = (id: string, newColor: string) => {
     setHomeWidgets((prevWidgets) =>
       prevWidgets.map((widget) =>
-        widget.id === id ? { ...widget, data: newData } : widget
+        widget.id === id ? { ...widget, color: newColor } : widget
       )
     );
   };
 
   // Alterna la visibilità della modale
-  const toggleModal = () => setShowModal(!showModal);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+    setSelectedWidgetId(null); // Resetta il widget selezionato quando la modale viene chiusa
+  };
 
   // Gestisce il clic su un widget nel popup
   const handleWidgetClick = (id: string) => {
     setSelectedWidgetId(id); // Imposta il widget selezionato
   };
+
+  // Aggiunge il widget selezionato alla home
+  const handleAddWidget = () => {
+    if (selectedWidgetId) {
+      const widgetToAdd = availableWidgets.find((w) => w.id === selectedWidgetId);
+      if (widgetToAdd && !homeWidgets.some((w) => w.type === widgetToAdd.type)) {
+        const newWidget = {
+          ...widgetToAdd,
+          id: generateUniqueId(widgetToAdd.id),
+        };
+        setHomeWidgets([...homeWidgets, newWidget]);
+        setSelectedWidgetId(null); // Resetta il widget selezionato
+        setShowModal(false); // Chiudi la modale
+      } else {
+        alert('Questo widget è già stato aggiunto.');
+      }
+    }
+  };
+
+  // Simula l'aggiornamento automatico dei dati
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHomeWidgets((prevWidgets) =>
+        prevWidgets.map((widget) => ({
+          ...widget,
+          data: widget.data.map((item) => ({
+            ...item,
+            value: item.value + Math.floor(Math.random() * 10), 
+          })),
+        }))
+      );
+    }, 5000); 
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <DndContext
@@ -141,9 +205,9 @@ const Home: React.FC = () => {
       onDragEnd={handleDragEnd}
     >
       <Container className="mt-4">
-        <h1>Dashboard Aziendale</h1>
-        <Button variant="primary" onClick={toggleModal}>
-          Mostra Widget Disponibili
+        <h1></h1>
+        <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
+          +
         </Button>
 
         {/* Zona droppabile della Home */}
@@ -157,7 +221,7 @@ const Home: React.FC = () => {
                   <SortableWidget
                     widget={widget}
                     onRemove={handleRemoveWidget}
-                    onUpdateValue={handleUpdateValue}
+                    onUpdateColor={handleUpdateColor}
                   />
                 </Col>
               ))}
@@ -180,10 +244,11 @@ const Home: React.FC = () => {
               {availableWidgets.map((widget) => (
                 <Col key={widget.id} xs={12} md={6} className="mb-3">
                   <div
-                    className={`widget ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
+                    className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
                     onClick={() => handleWidgetClick(widget.id)}
                   >
-                    <SortableWidget widget={widget} />
+                    
+                    <SortableWidget widget={widget} isInModal />
                   </div>
                 </Col>
               ))}
@@ -192,6 +257,9 @@ const Home: React.FC = () => {
           <Modal.Footer>
             <Button variant="secondary" onClick={toggleModal}>
               Chiudi
+            </Button>
+            <Button variant="primary" onClick={handleAddWidget} disabled={!selectedWidgetId}>
+              Aggiungi
             </Button>
           </Modal.Footer>
         </Modal>

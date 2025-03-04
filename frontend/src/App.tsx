@@ -12,6 +12,7 @@ import Spedzioni from '../pagine/Spedizioni';
 import ListaProdotti from '../pagine/ListaProdotti';
 import DettagliProdotto from '../pagine/DettagliProdotto';
 import Home from '../pagine/Home';
+import Calendario from '../pagine/Calendario';
 import './App.css';
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/spedizioni" element={<Spedzioni />} />
           <Route path="/dettagli-spedizione" element={<DettagliSpedizioni />}/>
           <Route path="/dettagli-prodotto" element={<DettagliProdotto />} />
+          <Route path="/calendario" element={<Calendario />} />
         </Routes>
         <NavFooter/>
       </Router>

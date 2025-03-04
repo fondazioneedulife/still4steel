@@ -1,73 +1,218 @@
+/* Stile principale per il widget */
 .widget {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 16px;
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05); /* Ombra più morbida */
+  margin-bottom: 24px;
   position: relative;
-  width: 100%;
+  width: 100%; /* Larghezza al 100% per una gestione dinamica */
+  max-width: 600px; /* Larghezza massima per evitare che diventi troppo larga */
+  height: 400px; /* Altezza fissa per uniformità */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Transizioni fluide */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.widget:hover {
+  transform: translateY(-6px); /* Widget sollevato */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra marcata */
+  background-color: #f9f9f9; /* Colore di sfondo leggermente diverso quando si passa sopra */
 }
 
 .widget h3 {
   margin-top: 0;
   color: #333;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  flex-shrink: 0; /* Evita che il titolo si rimpicciolisca */
 }
 
 .widget-content {
-  margin-top: 12px;
+  margin-top: 16px;
+  flex-grow: 1; /* Per permettere al contenuto di crescere */
+  overflow-y: auto; /* Aggiunge lo scroll se il contenuto è troppo lungo */
 }
 
 .data-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .data-label {
-  font-weight: bold;
+  font-weight: 600;
   color: #555;
 }
 
 .data-value {
-  color: #333;
+  font-weight: 500;
+  color: #007bff;
 }
 
 .update-button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 50px;
   cursor: pointer;
-  margin-top: 12px;
   width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Effetto di hover e animazione */
+  font-size: 16px;
+  margin-top: 16px;
 }
 
 .update-button:hover {
   background-color: #0056b3;
+  transform: scale(1.05); /* Pulsazione al passaggio del mouse */
 }
 
 .remove-button {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   color: white;
+  background-color: #ff5c5c;
   border: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .remove-button:hover {
   background-color: #cc0000;
+  transform: scale(1.1); /* Aumenta la dimensione al passaggio del mouse */
 }
-.selected-widget {
-  border: 2px solid red !important;
+
+.remove-button:active {
+  transform: scale(0.95); /* Rende il pulsante un po' più piccolo quando cliccato */
+}
+
+.selected-widget .widget {
+  border: 3px solid #ff5c5c !important; /* Aggiungi un bordo rosso più evidente */
+}
+
+/* Stile per i widget nel popup */
+.widget-in-modal {
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.widget-in-modal:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.03); /* Leggera espansione quando si passa sopra */
+}
+
+/* Aggiungi una transizione di colore e ombra per il fondo */
+.widget-in-modal:active {
+  transform: scale(0.98); /* Effetto di riduzione quando cliccato */
+}
+
+/* Media query per schermi piccoli */
+@media (max-width: 768px) {
+  .widget {
+    width: 100%; /* Prende tutta la larghezza disponibile per schermi più piccoli */
+    height: auto; /* Altezza automatica per gestire il contenuto */
+  }
+
+  .widget h3 {
+    font-size: 18px;
+  }
+
+  .update-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+.color-picker-container {
+  position: absolute;
+  top: 3rem;
+  right: 0.5rem;
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.customize-button {
+  font-size: 1.2rem;
+  z-index: 1001; /* Assicura che il pulsante sia sopra il selettore di colore */
+}
+
+
+/* Media query per schermi più piccoli (mobile-first) */
+@media (max-width: 480px) {
+  .widget {
+    width: 100%; /* I widget saranno responsivi al 100% della larghezza */
+    max-width: 100%; /* Rimuove il limite massimo per schermi molto piccoli */
+    margin: 8px 0; /* Riduce il margine tra i widget */
+  }
+
+  .update-button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+/* Tema scuro */
+.widget-dark-mode {
+  background-color: #2d2d2d !important;
+  color: #f0f0f0 !important;
+  border-color: #444 !important;
+}
+
+.widget-dark-mode h3 {
+  color: #f0f0f0 !important;
+}
+
+.widget-dark-mode .data-label {
+  color: #ccc !important;
+}
+
+.widget-dark-mode .data-value {
+  color: #82ca9d !important;
+}
+
+.widget-dark-mode .update-button {
+  background-color: #444 !important;
+  color: #f0f0f0 !important;
+}
+
+.widget-dark-mode .remove-button {
+  background-color: #666 !important;
+}
+
+.widget-dark-mode .chart-container {
+  filter: brightness(0.8);
+}
+
+/* Stile per il pulsante della luna */
+.dark-mode-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 2.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.dark-mode-button:hover {
+  color: #007bff;
 }
