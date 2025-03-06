@@ -24,13 +24,13 @@ services:
     env_file:
       - .backend-env
     ports:
-      - "4000:3000"
+      - "3001:3000"
     depends_on:
       - db
 
   frontend:
     build: ./frontend
     ports:
-      - "3001:3000"
+      - "3002:3000"
     depends_on:
       - backend

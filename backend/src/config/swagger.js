@@ -16,12 +16,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:7001/api",
+        url: "http://127.0.0.1:3000",
         description: "Server locale",
       },
-    ],
+    ], 
   },
-  apis: ["./routes/*.js"],
+  apis: ["./src/routes/*.js"],
 };
 
 export const swaggerSpec = swaggerJSDoc(swaggerOptions);

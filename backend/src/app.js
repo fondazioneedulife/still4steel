@@ -18,7 +18,7 @@ app.use("/api/company", companyRoutes);
 app.use("/api/warehouses", warehousesRoutes);
 
 // Documentazione Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 
   
 
