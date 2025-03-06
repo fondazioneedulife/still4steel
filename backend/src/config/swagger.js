@@ -21,7 +21,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./routes/*.js"], // Specifica dove si trovano i file delle API
+  apis: ["./routes/*.js"],
 };
 
 export const swaggerSpec = swaggerJSDoc(swaggerOptions);

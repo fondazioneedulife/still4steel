@@ -1,8 +1,7 @@
-# Frontend Dockerfile
 FROM node:18
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 CMD ["npm", "start"]
-EXPOSE 3001
+EXPOSE 4000
