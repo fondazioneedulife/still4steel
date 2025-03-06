@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install dotenv pg
 COPY . .
 CMD ["node", "src/server.js"]
-EXPOSE 3000
+EXPOSE 3001
