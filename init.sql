@@ -131,11 +131,21 @@ CREATE TABLE customers (
     note TEXT
 );
 
+INSERT INTO customers (customer_id, first_name, last_name, email, age, created_at, note)
+VALUES  ('Giovanni', 'Rossi', 'giovanni.rossi@example.com', '35', NOW(), 'Cliente regolare'),
+        ('Maria', 'Bianchi', 'maria.bianchi@example.com', '28', NOW(), 'Cliente VIP'),
+        ('Luca', 'Verdi', 'luca.verdi@example.com', '45', NOW(), 'Cliente occasionale');
+
 CREATE TABLE company_customer (
     company_customer_id SERIAL PRIMARY KEY,
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE,
     customer_id INT REFERENCES customers(customer_id) ON DELETE CASCADE
 );
+
+INSERT INTO company_customer (company_id, customer_id)
+VALUES  (1, 1),  -- Tech Innovations Srl, Giovanni Rossi
+        (2, 2),  -- Green Energy Solutions, Maria Bianchi
+        (3, 3);  -- Foodie Delight Srl, Luca Verdi
 
 CREATE TABLE suppliers (
     supplier_id SERIAL PRIMARY KEY,
@@ -146,6 +156,7 @@ CREATE TABLE suppliers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     note TEXT
 );
+
 
 CREATE TABLE company_supplier (
     company_supplier_id SERIAL PRIMARY KEY,

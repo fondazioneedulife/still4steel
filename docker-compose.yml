@@ -28,11 +28,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    environment:
-      DB_HOST: localhost
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: memodb
+    
 
   frontend:
     build: ./frontend
