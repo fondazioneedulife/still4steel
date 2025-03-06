@@ -131,7 +131,7 @@ CREATE TABLE customers (
     note TEXT
 );
 
-INSERT INTO customers (customer_id, first_name, last_name, email, age, created_at, note)
+INSERT INTO customers (first_name, last_name, email, age, created_at, note)
 VALUES  ('Giovanni', 'Rossi', 'giovanni.rossi@example.com', '35', NOW(), 'Cliente regolare'),
         ('Maria', 'Bianchi', 'maria.bianchi@example.com', '28', NOW(), 'Cliente VIP'),
         ('Luca', 'Verdi', 'luca.verdi@example.com', '45', NOW(), 'Cliente occasionale');
@@ -157,12 +157,19 @@ CREATE TABLE suppliers (
     note TEXT
 );
 
+INSERT INTO suppliers (first_name, last_name, email, phone, created_at, note)
+VALUES  ('Marco', 'Conti', 'marco.conti@example.com', '0412345678', NOW(), 'Fornitore di componenti elettronici'),
+        ('Sara', 'Galli', 'sara.galli@example.com', '0398765432', NOW(), 'Fornitrice di materie prime per la ristorazione');
 
 CREATE TABLE company_supplier (
     company_supplier_id SERIAL PRIMARY KEY,
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE,
     supplier_id INT REFERENCES suppliers(supplier_id) ON DELETE CASCADE
 );
+
+INSERT INTO company_supplier (company_id, supplier_id)
+VALUES  (1, 1),  -- Tech Innovations Srl, Marco Conti
+        (2, 2);  -- Green Energy Solutions, Sara Galli
 
 CREATE TABLE supplies (
     supply_id SERIAL PRIMARY KEY,
@@ -176,17 +183,29 @@ CREATE TABLE supplies (
     supplier_id INT REFERENCES suppliers(supplier_id) ON DELETE CASCADE
 );
 
+INSERT INTO supplies (name, code, date_release, state, supply_cost, note, product_id, supplier_id)
+VALUES  ('Chipset Laptop X100', 'CHIPX100', NOW(), TRUE, 500.00, 'Componenti per la produzione del Laptop X100', 1, 1),
+        ('Materie Prime Ristorante', 'MATERIE123', NOW(), TRUE, 200.00, 'Fornitura di ingredienti freschi', 3, 2);
+
 CREATE TABLE supply_product (
     supply_product_id SERIAL PRIMARY KEY,
     product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
     supply_id INT REFERENCES supplies(supply_id) ON DELETE CASCADE
 );
 
+INSERT INTO supply_product (product_id, supply_id)
+VALUES  (1, 1),  -- Laptop X100, Chipset Laptop X100
+        (3, 2);  -- Pizza Gourmet, Materie Prime Ristorante
+
 CREATE TABLE company_supply (
     company_supply_id SERIAL PRIMARY KEY,
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE,
     supply_id INT REFERENCES supplies(supply_id) ON DELETE CASCADE
 );
+
+INSERT INTO company_supply (company_id, supply_id)
+VALUES  (1, 1),  -- Tech Innovations Srl, Chipset Laptop X100
+        (3, 2);  -- Foodie Delight Srl, Materie Prime Ristorante
 
 CREATE TABLE invoices (
     invoice_id SERIAL PRIMARY KEY,
@@ -196,6 +215,11 @@ CREATE TABLE invoices (
     state BOOLEAN NOT NULL,
     note TEXT
 );
+
+INSERT INTO invoices (date, type, description, state, note)
+VALUES  (NOW(), 'Vendita', 'Fattura per laptop X100', TRUE, 'Fattura inviata al cliente'),
+        (NOW(), 'Vendita', 'Fattura per pannelli solari', TRUE, 'Fattura inviata al cliente');
+
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
@@ -207,6 +231,11 @@ CREATE TABLE orders (
     invoice_id INT REFERENCES invoices(invoice_id) ON DELETE CASCADE
 );
 
+INSERT INTO orders (date, state, note, customer_id, company_id, invoice_id)
+VALUES  (NOW(), 'completato', 'Ordine per laptop', 1, 1, 1),
+        (NOW(), 'in corso', 'Ordine per pannelli solari', 2, 2, 2);
+
+
 CREATE TABLE order_details (
     order_detail_id SERIAL PRIMARY KEY,
     quantity INT NOT NULL CHECK (quantity > 0),
@@ -214,6 +243,10 @@ CREATE TABLE order_details (
     product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
     order_id INT REFERENCES orders(order_id) ON DELETE CASCADE
 );
+
+INSERT INTO order_details (quantity, note, product_id, order_id)
+VALUES  (1, 'Ordine per laptop X100', 1, 1),
+        (5, 'Ordine per pannelli solari', 2, 2);
 
 CREATE TABLE renders (
     render_id SERIAL PRIMARY KEY,
@@ -226,6 +259,10 @@ CREATE TABLE renders (
     order_detail_id INT REFERENCES order_details(order_detail_id) ON DELETE CASCADE
 );
 
+INSERT INTO renders (quantity, date, state, accept, description, note, order_detail_id)
+VALUES  (1, NOW(), TRUE, TRUE, 'Rendimento del laptop X100', 'Accettato e spedito', 1),
+        (5, NOW(), TRUE, TRUE, 'Rendimento dei pannelli solari', 'Accettato e spedito', 2);
+
 CREATE TABLE payments (
     payment_id SERIAL PRIMARY KEY,
     date_start TIMESTAMP NOT NULL,
@@ -234,6 +271,10 @@ CREATE TABLE payments (
     state VARCHAR(100) NOT NULL CHECK (state IN ('in attesa', 'completato', 'fallito', 'annullato')),
     note TEXT
 );
+
+INSERT INTO payments (date_start, date_end, method, state, note)
+VALUES  (NOW(), NOW() + INTERVAL '1 day', 'Carta di credito', 'completato', 'Pagamento per laptop X100'),
+        (NOW(), NOW() + INTERVAL '1 week', 'Contanti', 'in attesa', 'Pagamento per pizza gourmet');
 
 CREATE TABLE sales (
     sale_id SERIAL PRIMARY KEY,
@@ -245,17 +286,29 @@ CREATE TABLE sales (
     order_id INT REFERENCES orders(order_id) ON DELETE CASCADE
 );
 
+INSERT INTO sales (date, tax, online, note, payment_id, order_id)
+VALUES  (NOW(), 22.00, TRUE, 'Vendita di laptop X100', 1, 1),
+        (NOW(), 10.00, FALSE, 'Vendita di pizza gourmet', 2, 2);
+
 CREATE TABLE sale_discount (
     sale_discount_id SERIAL PRIMARY KEY,
     sale_id INT REFERENCES sales(sale_id) ON DELETE CASCADE,
     discount_id INT REFERENCES discounts(discount_id) ON DELETE CASCADE
 );
 
+INSERT INTO sale_discount (sale_id, discount_id)
+VALUES  (1, 1),  -- Laptop X100, sconto 10%
+        (2, 2);  -- Pizza Gourmet, sconto 5€
+
 CREATE TABLE sale_payment (
     sale_payment_id SERIAL PRIMARY KEY,
     sale_id INT REFERENCES sales(sale_id) ON DELETE CASCADE,
     payment_id INT REFERENCES payments(payment_id) ON DELETE CASCADE
 );
+
+INSERT INTO sale_payment (sale_id, payment_id)
+VALUES  (1, 1),     -- Laptop X100, carta di credito
+        (2, 2);     -- Pizza Gourmet, contante
 
 CREATE TABLE logs (
     log_id SERIAL PRIMARY KEY,
@@ -264,3 +317,7 @@ CREATE TABLE logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
 );
+
+INSERT INTO logs (action, description, created_at, company_id)
+VALUES  ('creazione ordine', 'Creato un nuovo ordine per laptop', NOW(), 1),
+        ('modifica sconto', 'Modificato il valore dello sconto per i pannelli solari', NOW(), 2);
