@@ -92,5 +92,3 @@ export const deleteCompany = async (req, res) => {
     res.status(500).json({ error: "Errore nel server" });
   }
 };
-
-
