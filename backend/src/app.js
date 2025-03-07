@@ -12,6 +12,13 @@ import discountRoutes from "./routes/discountRoutes.js"
 import product_discountRoutes from "./routes/product_discountRoutes.js"
 import customerRoutes from "./routes/customerRoutes.js"
 import company_customerRoutes from "./routes/company_customerRoutes.js";
+import suppliersRoutes from "./routes/suppliersRoutes.js";
+import suppliesRoutes from "./routes/suppliesRoutes.js";
+import companySupplyRoutes from "./routes/companySupplyRoutes.js";
+import ordersRoutes from "./routes/ordersRoutes.js";
+import rendersRoutes from "./routes/rendersRoutes.js";
+import salesRoutes from "./routes/salesRoutes.js";
+import salePaymentRoutes from "./routes/salePaymentRoutes.js";
 import companySupplierRoutes from "./routes/companySupplierRoutes.js";
 import supplyProductRoutes from "./routes/supplyProductRoutes.js";
 import invoiceRoutes from "./routes/invoiceRoutes.js";
@@ -19,6 +26,7 @@ import orderDetailsRoutes from "./routes/orderDetailsRoutes.js";
 import paymentsRoutes from "./routes/paymentsRoutes.js";
 import saleDiscountRoutes from "./routes/saleDiscountRoutes.js";
 import logsRoutes from "./routes/logsRoutes.js";
+
 
 const app = express();
 app.use(express.json());
@@ -55,6 +63,27 @@ app.use("/api/customer", customerRoutes);
 
 // CRUD company_customer
 app.use("/api/company_customer", company_customerRoutes);
+
+// CRUD suppliersCustomer
+app.use("/api/suppliersCustomer", suppliersRoutes);
+
+// CRUD suppliesCustomer
+app.use("/api/suppliesCustomer", suppliesRoutes);
+
+// CRUD companySupplyCustomer
+app.use("/api/companySupplyCustomer", companySupplyRoutes);
+
+// CRUD ordersCustomer
+app.use("/api/ordersCustomer", ordersRoutes);
+
+// CRUD rendersCustomer
+app.use("/api/rendersCustomer", rendersRoutes);
+
+// CRUD salesCustomer
+app.use("/api/salesCustomer", salesRoutes);
+
+// CRUD salePaymentCustomer
+app.use("/api/salePaymentCustomer", salePaymentRoutes);
 
 // Documentazione Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
