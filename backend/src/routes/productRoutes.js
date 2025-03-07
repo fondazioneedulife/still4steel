@@ -10,86 +10,97 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: Product
+ *   name: Products
  *   description: API per la gestione dei prodotti
  */
 
 /**
  * @swagger
- * /product:
+ * /products:
  *   get:
  *     summary: Ottiene tutti i prodotti
- *     tags: [Product]
+ *     tags: [Products]
  *     responses:
  *       200:
- *         description: Lista di prodotti
+ *         description: Lista di tutti i prodotti
+ *       500:
+ *         description: Errore interno del server
  */
 router.get("/", getProducts);
 
 /**
  * @swagger
- * /product/{id}:
+ * /products/{id}:
  *   get:
  *     summary: Ottiene un prodotto per ID
- *     tags: [Product]
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID del prodotto
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Dettagli del prodotto
+ *         description: Dettagli del prodotto richiesto
+ *       404:
+ *         description: Prodotto non trovato
+ *       500:
+ *         description: Errore interno del server
  */
 router.get("/:id", getProductById);
 
 /**
  * @swagger
- * /product:
+ * /products:
  *   post:
  *     summary: Crea un nuovo prodotto
- *     tags: [Product]
+ *     tags: [Products]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id]
  *             properties:
  *               name:
  *                 type: string
  *               code:
  *                 type: string
  *               unit_price:
- *                 type: integer
+ *                 type: number
  *               quantity:
  *                 type: integer
- *              description:
+ *               description:
  *                 type: string
- *              company_id:
+ *               company_id:
  *                 type: integer
- *              warehouse_id:
+ *               warehouse_id:
  *                 type: integer
- *              iva_id:
+ *               iva_id:
  *                 type: integer
  *     responses:
  *       201:
  *         description: Prodotto creato con successo
+ *       400:
+ *         description: Dati non validi
+ *       500:
+ *         description: Errore interno del server
  */
 router.post("/", createProduct);
 
 /**
  * @swagger
- * /product/{id}:
+ * /products/{id}:
  *   put:
  *     summary: Aggiorna un prodotto esistente
- *     tags: [Product]
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID del prodotto da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -104,38 +115,49 @@ router.post("/", createProduct);
  *               code:
  *                 type: string
  *               unit_price:
- *                 type: integer
+ *                 type: number
  *               quantity:
  *                 type: integer
- *              description:
+ *               description:
  *                 type: string
- *              company_id:
+ *               company_id:
  *                 type: integer
- *              warehouse_id:
+ *               warehouse_id:
  *                 type: integer
- *              iva_id:
+ *               iva_id:
  *                 type: integer
  *     responses:
  *       200:
  *         description: Prodotto aggiornato con successo
+ *       400:
+ *         description: Dati non validi
+ *       404:
+ *         description: Prodotto non trovato
+ *       500:
+ *         description: Errore interno del server
  */
 router.put("/:id", updateProduct);
 
 /**
  * @swagger
- * /product/{id}:
+ * /products/{id}:
  *   delete:
  *     summary: Elimina un prodotto
- *     tags: [Product]
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID del prodotto da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Prodotto eliminato
+ *         description: Prodotto eliminato con successo
+ *       404:
+ *         description: Prodotto non trovato
+ *       500:
+ *         description: Errore interno del server
  */
 router.delete("/:id", deleteProduct);
 
