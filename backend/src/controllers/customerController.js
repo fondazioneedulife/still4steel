@@ -24,7 +24,7 @@ export const getCustomerById = async (req, res) => {
         res.status(500).json({ error: "Errore interno del server" });
     }
 };
-/*
+
 export const createCustomer = async (req, res) => {
     try {
         const { first_name, last_name, email, age, note } = req.body;
@@ -44,7 +44,7 @@ export const createCustomer = async (req, res) => {
         console.error("Errore nella creazione del cliente:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
-};*/
+};
 
 export const updateCustomer = async (req, res) => {
     try {
