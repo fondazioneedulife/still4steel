@@ -3,7 +3,7 @@ import {
   createCompany, getCompanies, getCompanyById, 
   updateCompany, deleteCompany 
 } from "../controllers/companyController.js";
-import { authenticateUser, validateCompanyData } from "../middlewares/middleware.js";
+import { authenticateUser } from "../middlewares/middleware.js";
 
 const router = express.Router();
 
@@ -44,7 +44,7 @@ router.get("/", getCompanies);
  *       404:
  *         description: Azienda non trovata
  */
-router.get("/:id", getCompanyById);
+router.get("/:id", authenticateUser, getCompanyById);
 /**
  * @swagger
  * /companies:
@@ -65,7 +65,7 @@ router.get("/:id", getCompanyById);
  *       201:
  *         description: Azienda creata con successo
  */
-router.post("/", authenticateUser, validateCompanyData, createCompany);
+router.post("/", authenticateUser, createCompany);
 /**
  * @swagger
  * /companies/{id}:

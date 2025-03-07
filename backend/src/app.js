@@ -31,6 +31,9 @@ import logsRoutes from "./routes/logsRoutes.js";
 const app = express();
 app.use(express.json());
 
+app.use("/:company_id/customers/:id", authenticateUser, getCustomerById);
+
+
 // Rotte API
 app.use("/api/auth", authRoutes);
 
@@ -74,7 +77,7 @@ app.use("/api/suppliesCustomer", suppliesRoutes);
 app.use("/api/companySupplyCustomer", companySupplyRoutes);
 
 // CRUD ordersCustomer
-app.use("/api/ordersCustomer", ordersRoutes);
+app.use("/api/order", ordersRoutes);
 
 // CRUD rendersCustomer
 app.use("/api/rendersCustomer", rendersRoutes);

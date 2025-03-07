@@ -1,5 +1,13 @@
 import express from "express";
+import dotenv from "dotenv";
+import {
+    registerAccount,
+    loginAccount,
+    forgetPassword,
+    resetPassword
+} from "../controllers/authController.js";
 
+dotenv.config();
 const router = express.Router();
 
 /**
@@ -14,7 +22,6 @@ const router = express.Router();
  * /auth/register:
  *   post:
  *     summary: Registra una nuova azienda
- *     description: Crea un nuovo account aziendale nel gestionale.
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -25,29 +32,24 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Azienda XYZ"
  *               email:
  *                 type: string
- *                 example: "azienda@example.com"
  *               password:
  *                 type: string
- *                 example: "password123"
  *     responses:
  *       201:
  *         description: Registrazione avvenuta con successo
  *       400:
- *         description: Errore nei dati di registrazione
+ *         description: Email già in uso o errore nei dati
  */
-router.post("/register", (req, res) => {
-  res.status(201).json({ message: "Registrazione completata" });
-});
+
+router.post("/register", registerAccount);
 
 /**
  * @swagger
  * /auth/login:
  *   post:
  *     summary: Effettua il login
- *     description: Permette a un'azienda di autenticarsi nel sistema.
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -58,22 +60,19 @@ router.post("/register", (req, res) => {
  *             properties:
  *               email:
  *                 type: string
- *                 example: "azienda@example.com"
  *               password:
  *                 type: string
- *                 example: "password123"
  *     responses:
  *       200:
  *         description: Login effettuato con successo
  *       401:
  *         description: Credenziali errate
  */
-router.post("/login", (req, res) => {
-  res.status(200).json({ token: "jwt_token" });
-});
 
-router.get("/login", (req, res) => {
-  res.status(200).json({ message: "Login endpoint is active" });
-});
+router.post("/login", loginAccount);
 
-export { router }; 
+router.post("/forgot-password", forgetPassword);
+
+router.post("/reset-password/:token", resetPassword);
+
+export { router };

@@ -3,7 +3,7 @@ import {
   createWarehouse, getWarehouses, getWarehouseById, 
   updateWarehouse, deleteWarehouse
 } from "../controllers/warehouseController.js";
-import { authenticateUser, validateCompanyData } from "../middlewares/middleware.js";
+import { authenticateUser } from "../middlewares/middleware.js";
 
 const router = express.Router();
 

@@ -12,6 +12,29 @@ CREATE TABLE companies (
     note TEXT
 );
 
+CREATE TABLE login (
+    login_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) CHECK (phone ~ '^[0-9+\-\s]+$'), -- Accetta solo numeri, spazi, + e -
+    email VARCHAR(100) UNIQUE NOT NULL CHECK (email LIKE '%@%'), -- Controllo base sull'email
+    address VARCHAR(255) NOT NULL,
+    password VARCHAR(200) NOT NULL, -- Qui salviamo solo la password hashata
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    note TEXT
+);
+
+INSERT INTO login (name, phone, email, address, password, created_at, note)
+VALUES  ('Tech Innovations Srl', '0412345678', 'alessandronicolis1@gmail.com', 'Via Roma 45, Milano', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.');
+        
+
+CREATE TABLE password_resets (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    reset_token VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 CREATE TABLE warehouses (
     warehouse_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

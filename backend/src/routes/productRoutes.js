@@ -3,7 +3,7 @@ import {
   createProduct, getProducts, getProductById, 
   updateProduct, deleteProduct
 } from "../controllers/productController.js";
-import { authenticateUser, validateCompanyData } from "../middlewares/middleware.js";
+import { authenticateUser} from "../middlewares/middleware.js";
 
 const router = express.Router();
 
