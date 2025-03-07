@@ -19,6 +19,13 @@ import ordersRoutes from "./routes/ordersRoutes.js";
 import rendersRoutes from "./routes/rendersRoutes.js";
 import salesRoutes from "./routes/salesRoutes.js";
 import salePaymentRoutes from "./routes/salePaymentRoutes.js";
+import companySupplierRoutes from "./routes/companySupplierRoutes.js";
+import supplyProductRoutes from "./routes/supplyProductRoutes.js";
+import invoiceRoutes from "./routes/invoiceRoutes.js";
+import orderDetailsRoutes from "./routes/orderDetailsRoutes.js";
+import paymentsRoutes from "./routes/paymentsRoutes.js";
+import saleDiscountRoutes from "./routes/saleDiscountRoutes.js";
+import logsRoutes from "./routes/logsRoutes.js";
 
 
 const app = express();
@@ -81,7 +88,26 @@ app.use("/api/salePaymentCustomer", salePaymentRoutes);
 // Documentazione Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 
-  
+// Gestione delle associazioni azienda-fornitore
+app.use("/api/company_suppliers", companySupplierRoutes);
+
+// Gestione delle associazioni prodotto-fornitura
+app.use("/api/supply_products", supplyProductRoutes);
+
+// Gestione delle fatture
+app.use("/api/invoices", invoiceRoutes);
+
+// Gestione dei dettagli ordine
+app.use("/api/order_details", orderDetailsRoutes);
+
+// Gestione dei pagamenti
+app.use("/api/payments", paymentsRoutes);
+
+// Gestione delle associazioni vendita-sconto
+app.use("/api/sale_discounts", saleDiscountRoutes);
+
+// Gestione dei log
+app.use("/api/logs", logsRoutes);
 
 export default app;
 
