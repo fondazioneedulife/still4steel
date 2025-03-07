@@ -1,10 +1,5 @@
 import express from "express";
-import {
-    getCompanyCustomers,
-    getCompanyCustomerById,
-    createCompanyCustomer,
-    deleteCompanyCustomer
-} from "../controllers/company_customerController.js";
+import { getCompanyCustomers, getCompanyCustomerById, createCompanyCustomer, deleteCompanyCustomer } from "../controllers/companyCustomerController.js";
 
 const router = express.Router();
 

@@ -1,8 +1,6 @@
 // routes/ivaRouter.js
 import express from "express";
-import {
-  createIva, getIvas, getIvaById, updateIva, deleteIva
-} from "../controllers/ivaController.js";
+import { createIva, getIvas, getIvaById, updateIva, deleteIva } from "../controllers/ivaController.js";
 
 const router = express.Router();
 

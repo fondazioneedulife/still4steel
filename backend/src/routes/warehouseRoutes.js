@@ -1,8 +1,5 @@
 import express from "express";
-import { 
-  createWarehouse, getWarehouses, getWarehouseById, 
-  updateWarehouse, deleteWarehouse
-} from "../controllers/warehouseController.js";
+import { createWarehouse, getWarehouses, getWarehouseById, updateWarehouse, deleteWarehouse } from "../controllers/warehouseController.js";
 import { authenticateUser, validateCompanyData } from "../middlewares/middleware.js";
 
 const router = express.Router();

@@ -1,8 +1,5 @@
 import express from "express";
-import { 
-  createCompany, getCompanies, getCompanyById, 
-  updateCompany, deleteCompany 
-} from "../controllers/companyController.js";
+import { createCompany, getCompanies, getCompanyById, updateCompany, deleteCompany } from "../controllers/companyController.js";
 import { authenticateUser, validateCompanyData } from "../middlewares/middleware.js";
 
 const router = express.Router();
@@ -44,7 +41,7 @@ router.get("/", getCompanies);
  *       404:
  *         description: Azienda non trovata
  */
-router.get("/:id", getCompanyById);
+router.get("/:id", authenticateUser, getCompanyById);
 /**
  * @swagger
  * /companies:

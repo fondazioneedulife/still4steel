@@ -1,11 +1,5 @@
 import express from "express";
-import {
-    getDiscounts,
-    getDiscountById,
-    createDiscount,
-    updateDiscount,
-    deleteDiscount
-} from "../controllers/discountController.js";
+import { getDiscounts, getDiscountById, createDiscount, updateDiscount, deleteDiscount } from "../controllers/discountController.js";
 
 const router = express.Router();
 

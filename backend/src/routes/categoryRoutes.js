@@ -1,21 +1,58 @@
 import express from "express";
+import { getCategories, getCategoryById, createCategory, updateCategory, deleteCategory } from "../controllers/categoryController.js";
 
 const router = express.Router();
 
 /**
  * @swagger
  * tags:
- *   name: Auth
- *   description: API per l'autenticazione
+ *   name: Categories
+ *   description: API per la gestione delle categorie di prodotti
  */
 
 /**
  * @swagger
- * /auth/register:
+ * /categories:
+ *   get:
+ *     summary: Ottiene tutte le categorie
+ *     tags: [Categories]
+ *     responses:
+ *       200:
+ *         description: Lista di tutte le categorie
+ *       500:
+ *         description: Errore interno del server
+ */
+router.get("/", getCategories);
+
+/**
+ * @swagger
+ * /categories/{id}:
+ *   get:
+ *     summary: Ottiene una categoria per ID
+ *     tags: [Categories]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID della categoria
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Dettagli della categoria richiesta
+ *       404:
+ *         description: Categoria non trovata
+ *       500:
+ *         description: Errore interno del server
+ */
+router.get("/:id", getCategoryById);
+
+/**
+ * @swagger
+ * /categories:
  *   post:
- *     summary: Registra una nuova azienda
- *     description: Crea un nuovo account aziendale nel gestionale.
- *     tags: [Auth]
+ *     summary: Crea una nuova categoria
+ *     tags: [Categories]
  *     requestBody:
  *       required: true
  *       content:
@@ -25,30 +62,31 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Azienda XYZ"
- *               email:
+ *               description:
  *                 type: string
- *                 example: "azienda@example.com"
- *               password:
- *                 type: string
- *                 example: "password123"
  *     responses:
  *       201:
- *         description: Registrazione avvenuta con successo
+ *         description: Categoria creata con successo
  *       400:
- *         description: Errore nei dati di registrazione
+ *         description: Dati non validi
+ *       500:
+ *         description: Errore interno del server
  */
-router.post("/register", (req, res) => {
-  res.status(201).json({ message: "Registrazione completata" });
-});
+router.post("/", createCategory);
 
 /**
  * @swagger
- * /auth/login:
- *   post:
- *     summary: Effettua il login
- *     description: Permette a un'azienda di autenticarsi nel sistema.
- *     tags: [Auth]
+ * /categories/{id}:
+ *   put:
+ *     summary: Aggiorna una categoria esistente
+ *     tags: [Categories]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID della categoria da aggiornare
+ *         schema:
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
@@ -56,24 +94,43 @@ router.post("/register", (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               name:
  *                 type: string
- *                 example: "azienda@example.com"
- *               password:
+ *               description:
  *                 type: string
- *                 example: "password123"
  *     responses:
  *       200:
- *         description: Login effettuato con successo
- *       401:
- *         description: Credenziali errate
+ *         description: Categoria aggiornata con successo
+ *       400:
+ *         description: Dati non validi
+ *       404:
+ *         description: Categoria non trovata
+ *       500:
+ *         description: Errore interno del server
  */
-router.post("/login", (req, res) => {
-  res.status(200).json({ token: "jwt_token" });
-});
+router.put("/:id", updateCategory);
 
-router.get("/login", (req, res) => {
-  res.status(200).json({ message: "Login endpoint is active" });
-});
+/**
+ * @swagger
+ * /categories/{id}:
+ *   delete:
+ *     summary: Elimina una categoria
+ *     tags: [Categories]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID della categoria da eliminare
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Categoria eliminata con successo
+ *       404:
+ *         description: Categoria non trovata
+ *       500:
+ *         description: Errore interno del server
+ */
+router.delete("/:id", deleteCategory);
 
-export { router };
+export default router;

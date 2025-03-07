@@ -1,86 +1,86 @@
 import pool from "../config/db.js";
 
-export const getCustomers = async (req, res) => {
-    console.log("✅ GET /customers chiamata"); // DEBUG
+
+export const getDiscounts = async (req, res) => {
+    console.log("✅ GET /discounts chiamata"); // DEBUG
     try {
-        const result = await pool.query("SELECT * FROM customers");
+        const result = await pool.query("SELECT * FROM discounts");
         res.status(200).json(result.rows);
     } catch (error) {
-        console.error("Errore nel recupero dei clienti:", error);
+        console.error("Errore nel recupero degli sconti:", error);
         res.status(500).json({ error: "Errore interno del server" });
     }
 };
 
-export const getCustomerById = async (req, res) => {
+export const getDiscountById = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query("SELECT * FROM customers WHERE customer_id = $1", [id]);
+        const result = await pool.query("SELECT * FROM discounts WHERE discount_id = $1", [id]);
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: "Cliente non trovato" });
+            return res.status(404).json({ error: "Sconto non trovato" });
         }
         res.status(200).json(result.rows[0]);
     } catch (error) {
-        console.error("Errore nel recupero del cliente:", error);
+        console.error("Errore nel recupero dello sconto:", error);
         res.status(500).json({ error: "Errore interno del server" });
     }
 };
 
-export const createCustomer = async (req, res) => {
+export const createDiscount = async (req, res) => {
     try {
-        const { first_name, last_name, email, age, note } = req.body;
+        const { type, value, date_start, date_end, state, description, note } = req.body;
 
-        if (!first_name || !last_name || !email) {
-            return res.status(400).json({ error: "I campi first_name, last_name ed email sono obbligatori" });
+        if (!type || !value || !date_start || !date_end || !state) {
+            return res.status(400).json({ error: "I campi obbligatori devono essere compilati" });
         }
 
         const result = await pool.query(
-            `INSERT INTO customers (first_name, last_name, email, age, note) 
-             VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [first_name, last_name, email, age, note]
+            `INSERT INTO discounts (type, value, date_start, date_end, state, description, note) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [type, value, date_start, date_end, state, description, note]
         );
 
-        res.status(201).json({ message: "Cliente creato", customer: result.rows[0] });
+        res.status(201).json({ message: "Sconto creato", discount: result.rows[0] });
     } catch (error) {
-        console.error("Errore nella creazione del cliente:", error);
+        console.error("Errore nella creazione dello sconto:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
 };
 
-export const updateCustomer = async (req, res) => {
+export const updateDiscount = async (req, res) => {
     try {
         const { id } = req.params;
-        const { first_name, last_name, email, age, note } = req.body;
+        const { type, value, date_start, date_end, state, description, note } = req.body;
 
         const result = await pool.query(
-            `UPDATE customers 
-             SET first_name = $1, last_name = $2, email = $3, age = $4, note = $5
-             WHERE customer_id = $6 RETURNING *`,
-            [first_name, last_name, email, age, note, id]
+            `UPDATE discounts SET type = $1, value = $2, date_start = $3, date_end = $4, 
+            state = $5, description = $6, note = $7 WHERE discount_id = $8 RETURNING *`,
+            [type, value, date_start, date_end, state, description, note, id]
         );
 
         if (result.rowCount === 0) {
-            return res.status(404).json({ error: "Cliente non trovato" });
+            return res.status(404).json({ error: "Sconto non trovato" });
         }
 
-        res.json({ message: "Cliente aggiornato", customer: result.rows[0] });
+        res.json({ message: "Sconto aggiornato", discount: result.rows[0] });
     } catch (error) {
-        console.error("Errore nell'aggiornamento del cliente:", error);
+        console.error("Errore nell'aggiornamento dello sconto:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
 };
 
-export const deleteCustomer = async (req, res) => {
+export const deleteDiscount = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query("DELETE FROM customers WHERE customer_id = $1", [id]);
+        const result = await pool.query("DELETE FROM discounts WHERE discount_id = $1", [id]);
 
         if (result.rowCount === 0) {
-            return res.status(404).json({ error: "Cliente non trovato" });
+            return res.status(404).json({ error: "Sconto non trovato" });
         }
 
-        res.json({ message: "Cliente eliminato con successo" });
+        res.json({ message: "Sconto eliminato con successo" });
     } catch (error) {
-        console.error("Errore nell'eliminazione del cliente:", error);
+        console.error("Errore nell'eliminazione dello sconto:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
 };

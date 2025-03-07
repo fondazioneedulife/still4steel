@@ -1,11 +1,5 @@
 import express from "express";
-import {
-    getCustomers,
-    getCustomerById,
-    createCustomer,
-    updateCustomer,
-    deleteCustomer
-} from "../controllers/customerController.js";
+import { getCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer } from "../controllers/customerController.js";
 
 const router = express.Router();
 
