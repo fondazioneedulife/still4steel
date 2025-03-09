@@ -3,37 +3,20 @@ CREATE TABLE companies (
     name VARCHAR(255) NOT NULL,
     vat VARCHAR(50) UNIQUE NOT NULL,
     tax_code VARCHAR(20) UNIQUE NOT NULL,
-    phone VARCHAR(20),
+    phone VARCHAR(20) CHECK (phone ~ '^[0-9+\-\s]+$'),
     email VARCHAR(100) UNIQUE NOT NULL,
-    address VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL CHECK (email LIKE '%@%'),
     password VARCHAR(200) NOT NULL,
-    password_confirm VARCHAR(200) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     note TEXT
 );
 
-CREATE TABLE login (
-    login_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    phone VARCHAR(20) CHECK (phone ~ '^[0-9+\-\s]+$'), -- Accetta solo numeri, spazi, + e -
-    email VARCHAR(100) UNIQUE NOT NULL CHECK (email LIKE '%@%'), -- Controllo base sull'email
-    address VARCHAR(255) NOT NULL,
-    password VARCHAR(200) NOT NULL, -- Qui salviamo solo la password hashata
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    note TEXT
-);
-
-INSERT INTO login (name, phone, email, address, password, created_at, note)
-VALUES  ('Tech Innovations Srl', '0412345678', 'alessandronicolis1@gmail.com', 'Via Roma 45, Milano', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.');
-        
-
-CREATE TABLE password_resets (
+CREATE TABLE companies_token (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    reset_token VARCHAR(200) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    token VARCHAR(200) NOT NULL,
+    expires_at TIMESTAMP NOT NULL, -- 🕒 Scadenza token
+    company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE warehouses (
     warehouse_id SERIAL PRIMARY KEY,
@@ -44,19 +27,19 @@ CREATE TABLE warehouses (
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
 );
 
-INSERT INTO companies (name, vat, tax_code, phone, email, address, password, password_confirm, created_at, note)
-VALUES  ('Tech Innovations Srl', 'IT12345678901', 'TIN1234XYZ', '0412345678', 'info@techinnovations.com', 'Via Roma 45, Milano', 'password2025', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.'),
-        ('Green Energy Solutions', 'IT98765432109', 'GES9876ABC', '0398765432', 'contact@greenenergy.com', 'Viale Europa 12, Torino', 'securePass123', 'securePass123', NOW(), 'Fornitore di soluzioni per energie rinnovabili.'),
-        ('Foodie Delight Srl', 'IT11223344556', 'FDL1122QWE', '0634567890', 'support@foodiedelight.com', 'Piazza Maggiore 20, Bologna', 'gusto2025', 'gusto2025', NOW(), 'Ristorante con cucina gourmet.'),
-        ('AutoTech Italia', 'IT66778899000', 'ATI7788RTY', '0551234567', 'info@autotechitalia.com', 'Via Firenze 10, Firenze', 'automotive@123', 'automotive@123', NOW(), 'Specializzati in componenti per automobili.'),
-        ('Fashion Trends Srl', 'IT99887766554', 'FTS9988WER', '0301234567', 'sales@fashiontrends.com', 'Corso Vittorio Emanuele 120, Napoli', 'style2025', 'style2025', NOW(), 'Azienda di abbigliamento e moda.');
+INSERT INTO companies (name, vat, tax_code, phone, email, address, password, created_at, note)
+VALUES  ('Tech Innovations Srl', 'IT12345678901', 'TIN1234XYZ', '0412345678', 'alessandronicolis1@gmail.com', 'Via Roma 45, Milano', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.'),
+        ('Green Energy Solutions', 'IT98765432109', 'GES9876ABC', '0398765432', 'contact@greenenergy.com', 'Viale Europa 12, Torino', 'securePass123', NOW(), 'Fornitore di soluzioni per energie rinnovabili.'),
+        ('Foodie Delight Srl', 'IT11223344556', 'FDL1122QWE', '0634567890', 'support@foodiedelight.com', 'Piazza Maggiore 20, Bologna', 'gusto2025', NOW(), 'Ristorante con cucina gourmet.'),
+        ('AutoTech Italia', 'IT66778899000', 'ATI7788RTY', '0551234567', 'info@autotechitalia.com', 'Via Firenze 10, Firenze', 'automotive@123', NOW(), 'Specializzati in componenti per automobili.'),
+        ('Fashion Trends Srl', 'IT99887766554', 'FTS9988WER', '0301234567', 'sales@fashiontrends.com', 'Corso Vittorio Emanuele 120, Napoli', 'style2025', NOW(), 'Azienda di abbigliamento e moda.');
 
 INSERT INTO warehouses (name, address, type, note, company_id)
 VALUES  ('Magazzino Centrale Milano', 'Via Milano 100, Milano', 'Stoccaggio', 'Magazzino principale per la gestione delle merci.', 1),
         ('Deposito Torino', 'Strada Torino 45, Torino', 'Logistica', 'Magazzino utilizzato per la distribuzione regionale.', 2),
         ('Centro Distribuzione Bologna', 'Via Bologna 120, Bologna', 'Logistica', 'Magazzino per la gestione degli ordini online.', 3),
-        ('Stoccaggio Materie Prime Firenze', 'Via Firenze 55, Firenze', 'Stoccaggio', 'Deposito per materie prime utilizzate nella produzione.', 4),
-        ('Magazzino Rimini', 'Via Rimini 10, Rimini', 'Distribuzione', 'Magazzino destinato alla spedizione dei prodotti finiti.', 5);
+        ('Stoccaggio Materie Prime Firenze', 'Via Firenze 55, Firenze', 'Stoccaggio', 'Deposito per materie prime utilizzate nella produzione.', 1),
+        ('Magazzino Rimini', 'Via Rimini 10, Rimini', 'Distribuzione', 'Magazzino destinato alla spedizione dei prodotti finiti.', 2);
 
 
 CREATE TABLE iva (
@@ -85,9 +68,9 @@ CREATE TABLE products (
 INSERT INTO products (name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id)
 VALUES  ('Laptop X100', 'LAPX100', 1200.00, 50, 'Laptop di ultima generazione', 1, 1, 1),
         ('Pannello Solare 200W', 'SOL200W', 300.00, 100, 'Pannello solare ad alta efficienza', 2, 2, 2),
-        ('Pizza Gourmet', 'PZ123', 12.00, 200, 'Pizza gourmet con ingredienti freschi', 3, 3, 3),
-        ('Freni Auto 3000', 'FR3000', 150.00, 80, 'Freni per auto ad alte prestazioni', 4, 4, 1),
-        ('Giacca Fashion Trend', 'GIACFT01', 75.00, 150, 'Giacca elegante per stagione autunno-inverno', 5, 5, 2);
+        ('Pizza Gourmet', 'PZ123', 12.00, 200, 'Pizza gourmet con ingredienti freschi', 1, 3, 3),
+        ('Freni Auto 3000', 'FR3000', 150.00, 80, 'Freni per auto ad alte prestazioni', 3, 2, 1),
+        ('Giacca Fashion Trend', 'GIACFT01', 75.00, 150, 'Giacca elegante per stagione autunno-inverno', 1, 1, 2);
 
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,

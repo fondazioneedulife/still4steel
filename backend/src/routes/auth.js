@@ -3,9 +3,11 @@ import dotenv from "dotenv";
 import {
     registerAccount,
     loginAccount,
-    forgetPassword,
-    resetPassword
 } from "../controllers/authController.js";
+import {
+    forgotPassword,
+    resetPassword
+} from "../controllers/authlogin.js";
 
 dotenv.config();
 const router = express.Router();
@@ -71,7 +73,7 @@ router.post("/register", registerAccount);
 
 router.post("/login", loginAccount);
 
-router.post("/forgot-password", forgetPassword);
+router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password/:token", resetPassword);
 
