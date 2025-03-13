@@ -1,24 +1,24 @@
-const Koa = require('koa');
-const Router = require('@koa/router');
-const pool = require('./db');
+import nodemailer from 'nodemailer';
 
-const app = new Koa();
-const router = new Router();
+    // Configura il trasportatore per le email
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: { 
+            user: 'alessandronicolis1@gmail.com', 
+            pass: 'bqae bpij mill dhmk'
+        },
+    });
 
-router.get('/test-db', async (ctx) => {
-  try {
-    const result = await pool.query('SELECT NOW()');
-    ctx.body = {
-      success: true,
-      time: result.rows[0].now
-    };
-  } catch (err) {
-    ctx.status = 500;
-    ctx.body = { success: false, error: err.message };
-  }
-});
-
-app.use(router.routes()).use(router.allowedMethods());
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+    // Invia email
+    await transporter.sendMail({
+        from: "alessandronicolis1@gmail.com",
+        to: "ggiulia.mmazzi@gmail.com",
+        subject: "Recupero password",
+        html: `<p>Per reimpostare la tua password, clicca qui: Reset Password</p>`,
+    }).then(() => {
+        console.log('email sent');
+    }).catch(err => {
+        console.error(err);
+    })

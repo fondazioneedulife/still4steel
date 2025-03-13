@@ -1,23 +1,27 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-koa');
+import swaggerJSDoc from "swagger-jsdoc";
+import express from "express";
+import swaggerUi from "swagger-ui-express";
 
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Memo API',
-            version: '1.0.0',
-            description: 'Documentazione API con Swagger e Koa',
-        },
+
+const app = express();
+
+// Configurazione di Swagger
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Memo API",
+      version: "1.0.0",
+      description: "Documentazione delle API con Swagger e Express",
     },
-    apis: ['./server.js'], // Percorso ai file con le API documentate
+    servers: [
+      {
+        url: "http://127.0.0.1:3000",
+        description: "Server locale",
+      },
+    ], 
+  },
+  apis: ["./src/routes/*.js"],
 };
 
-const swaggerSpec = swaggerJsdoc(options);
-
-function setupSwagger(app, router) {
-    app.use(swaggerUi.serve);
-    router.get('/docs', swaggerUi.setup(swaggerSpec));
-}
-
-module.exports = setupSwagger;
+export const swaggerSpec = swaggerJSDoc(swaggerOptions);
