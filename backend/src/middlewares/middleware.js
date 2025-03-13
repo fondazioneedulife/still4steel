@@ -1,20 +1,18 @@
 import jwt from "jsonwebtoken";
 
 // Middleware per autenticazione JWT
-export const authenticateUser = (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) {
-    return res.status(401).json({ error: "Accesso negato. Nessun token fornito." });
-  }
+export function authenticateUser(req, res, next) {
+  const token = req.header("Authorization")?.split(" ")[1]; // Prende il token dall'header
+  if (!token) return res.status(401).json({ message: "Accesso negato. Nessun token fornito." });
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified;
-    next();
-  } catch (error) {
-    res.status(400).json({ error: "Token non valido." });
+      const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verifica il token
+      req.user = decoded; // Aggiunge i dati dell'utente alla richiesta
+      next(); // Passa al prossimo middleware
+  } catch (err) {
+      res.status(403).json({ message: "Token non valido." });
   }
-};
+}
 
 // Middleware per validare i dati della creazione di un'azienda
 export const validateCompanyData = (req, res, next) => {
