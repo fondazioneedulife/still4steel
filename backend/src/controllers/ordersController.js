@@ -1,8 +1,7 @@
-import express from "express";
 import pool from "../config/db.js";
 
 // Ottieni tutti gli ordini
-export const getOrders = async (req, res) => {
+export const getAllOrders = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM orders");
         res.status(200).json(result.rows);

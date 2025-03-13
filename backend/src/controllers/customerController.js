@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-export const getCustomers = async (req, res) => {
+export const getAllCustomers = async (req, res) => {
     console.log("✅ GET /customers chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM customers");

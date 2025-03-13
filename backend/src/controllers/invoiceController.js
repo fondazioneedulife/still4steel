@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-// **1. Ottieni tutte le fatture**
+// Ottieni tutte le fatture
 export const getAllInvoices = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM invoices;");
@@ -11,7 +11,7 @@ export const getAllInvoices = async (req, res) => {
     }
 };
 
-// **2. Ottieni una singola fattura per ID**
+// Ottieni una singola fattura per ID
 export const getInvoiceById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -31,7 +31,7 @@ export const getInvoiceById = async (req, res) => {
     }
 };
 
-// **3. Crea una nuova fattura**
+// Crea una nuova fattura
 export const createInvoice = async (req, res) => {
     const { type, description, state, note } = req.body;
 
@@ -49,7 +49,7 @@ export const createInvoice = async (req, res) => {
     }
 };
 
-// **4. Modifica una fattura esistente**
+// Modifica una fattura esistente
 export const updateInvoice = async (req, res) => {
     const { id } = req.params;
     const { type, description, state, note } = req.body;
@@ -73,7 +73,7 @@ export const updateInvoice = async (req, res) => {
     }
 };
 
-// **5. Elimina una fattura**
+// Elimina una fattura
 export const deleteInvoice = async (req, res) => {
     const { id } = req.params;
 

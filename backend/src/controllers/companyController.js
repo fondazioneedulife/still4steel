@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutte le aziende
-export const getCompanies = async (req, res) => {
+export const getAllCompanies = async (req, res) => {
     console.log("✅ GET /companies chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM companies");

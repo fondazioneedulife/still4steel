@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutti i magazzini
-export const getWarehouses = async (req, res) => {
+export const getAllWarehouses = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM warehouses");
         res.status(200).json(result.rows);

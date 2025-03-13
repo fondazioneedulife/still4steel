@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-// **1. Ottieni tutti i dettagli degli ordini**
+// Ottieni tutti i dettagli degli ordini
 export const getAllOrderDetails = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM order_details;");
@@ -11,7 +11,7 @@ export const getAllOrderDetails = async (req, res) => {
     }
 };
 
-// **2. Ottieni un dettaglio ordine per ID**
+// Ottieni un dettaglio ordine per ID
 export const getOrderDetailById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -31,7 +31,7 @@ export const getOrderDetailById = async (req, res) => {
     }
 };
 
-// **3. Crea un nuovo dettaglio ordine**
+// Crea un nuovo dettaglio ordine
 export const createOrderDetail = async (req, res) => {
     const { quantity, note, product_id, order_id } = req.body;
 
@@ -49,7 +49,7 @@ export const createOrderDetail = async (req, res) => {
     }
 };
 
-// **4. Modifica un dettaglio ordine esistente**
+// Modifica un dettaglio ordine esistente
 export const updateOrderDetail = async (req, res) => {
     const { id } = req.params;
     const { quantity, note, product_id, order_id } = req.body;
@@ -73,7 +73,7 @@ export const updateOrderDetail = async (req, res) => {
     }
 };
 
-// **5. Elimina un dettaglio ordine**
+// Elimina un dettaglio ordine
 export const deleteOrderDetail = async (req, res) => {
     const { id } = req.params;
 
