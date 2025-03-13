@@ -232,7 +232,6 @@ const Home: React.FC = () => {
       onDragEnd={handleDragEnd}
     >
       <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
-        <h1>Dashboard</h1>
         <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
           +
         </Button>
