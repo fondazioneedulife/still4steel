@@ -1,33 +1,32 @@
-import express from "express";
 import pool from "../config/db.js";
 
-// Ottieni tutte le associazioni azienda-fornitura
-export const getCompanySupplies = async (req, res) => {
+// Ottieni tutte le relazioni azienda-fornitura
+export const getAllCompanySupplies = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM company_supply");
         res.status(200).json(result.rows);
     } catch (error) {
-        console.error("Errore nel recupero delle associazioni azienda-fornitura:", error);
+        console.error("Errore nel recupero delle relazioni azienda-fornitura:", error);
         res.status(500).json({ error: "Errore interno del server" });
     }
 };
 
-// Ottieni un'associazione azienda-fornitura per ID
+// Ottieni una relazione azienda-fornitura per ID
 export const getCompanySupplyById = async (req, res) => {
     const { id } = req.params;
     try {
         const result = await pool.query("SELECT * FROM company_supply WHERE company_supply_id = $1", [id]);
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: "Associazione non trovata" });
+            return res.status(404).json({ error: "Relazione non trovata" });
         }
         res.status(200).json(result.rows[0]);
     } catch (error) {
-        console.error("Errore nel recupero dell'associazione:", error);
+        console.error("Errore nel recupero della relazione:", error);
         res.status(500).json({ error: "Errore interno del server" });
     }
 };
 
-// Crea una nuova associazione azienda-fornitura
+// Crea una nuova relazione azienda-fornitura
 export const createCompanySupply = async (req, res) => {
     try {
         const { company_id, supply_id } = req.body;
@@ -36,14 +35,14 @@ export const createCompanySupply = async (req, res) => {
             VALUES ($1, $2) RETURNING *`,
             [company_id, supply_id]
         );
-        res.status(201).json({ message: "Associazione creata", companySupply: result.rows[0] });
+        res.status(201).json({ message: "Relazione creata", companySupply: result.rows[0] });
     } catch (error) {
-        console.error("Errore nella creazione dell'associazione:", error);
+        console.error("Errore nella creazione della relazione:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
 };
 
-// Aggiorna un'associazione azienda-fornitura
+// Aggiorna una relazione azienda-fornitura
 export const updateCompanySupply = async (req, res) => {
     try {
         const { id } = req.params;
@@ -55,26 +54,26 @@ export const updateCompanySupply = async (req, res) => {
             [company_id, supply_id, id]
         );
         if (result.rowCount === 0) {
-            return res.status(404).json({ error: "Associazione non trovata" });
+            return res.status(404).json({ error: "Relazione non trovata" });
         }
-        res.json({ message: "Associazione aggiornata", companySupply: result.rows[0] });
+        res.json({ message: "Relazione aggiornata", companySupply: result.rows[0] });
     } catch (error) {
-        console.error("Errore nell'aggiornamento dell'associazione:", error);
+        console.error("Errore nell'aggiornamento della relazione:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
 };
 
-// Elimina un'associazione azienda-fornitura
+// Elimina una relazione azienda-fornitura
 export const deleteCompanySupply = async (req, res) => {
     try {
         const { id } = req.params;
         const result = await pool.query("DELETE FROM company_supply WHERE company_supply_id = $1", [id]);
         if (result.rowCount === 0) {
-            return res.status(404).json({ error: "Associazione non trovata" });
+            return res.status(404).json({ error: "Relazione non trovata" });
         }
-        res.json({ message: "Associazione eliminata con successo" });
+        res.json({ message: "Relazione eliminata con successo" });
     } catch (error) {
-        console.error("Errore nell'eliminazione dell'associazione:", error);
+        console.error("Errore nell'eliminazione della Relazione:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
 };
