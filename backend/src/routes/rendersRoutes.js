@@ -1,11 +1,12 @@
 import express from "express";
 import {
-  createRender,
-  getRenders,
+  getAllRenders,
   getRenderById,
+  createRender,
   updateRender,
   deleteRender
 } from "../controllers/rendersController.js";
+
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ const router = express.Router();
  *   name: Renders
  *   description: API per la gestione dei resi
  */
+
 
 /**
  * @swagger
@@ -29,7 +31,8 @@ const router = express.Router();
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getRenders);       
+router.get("/", getAllRenders);       
+
 
 /**
  * @swagger
@@ -67,11 +70,34 @@ router.get("/:id", getRenderById);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - quantity
+ *               - state
+ *               - accept
+ *               - order_detail_id
  *             properties:
- *               name:
+ *               quantity:
+ *                 type: integer
+ *                 description: Quantità associata al reso (deve essere maggiore di 0)
+ *               date:
  *                 type: string
+ *                 format: date-time
+ *                 description: Data del reso (opzionale, di default corrente)
+ *               state:
+ *                 type: boolean
+ *                 description: Stato del reso (true per completato, false per non completato)
+ *               accept:
+ *                 type: boolean
+ *                 description: Stato di accettazione del reso (true per accettato, false per rifiutato)
  *               description:
  *                 type: string
+ *                 description: Descrizione del reso
+ *               note:
+ *                 type: string
+ *                 description: Note aggiuntive per il reso
+ *               order_detail_id:
+ *                 type: integer
+ *                 description: ID del dettaglio dell'ordine associato
  *     responses:
  *       201:
  *         description: Reso creato con successo
@@ -103,10 +129,28 @@ router.post("/", createRender);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               quantity:
+ *                 type: integer
+ *                 description: Quantità aggiornata
+ *               date:
  *                 type: string
+ *                 format: date-time
+ *                 description: Data aggiornata del reso
+ *               state:
+ *                 type: boolean
+ *                 description: Stato aggiornato del reso
+ *               accept:
+ *                 type: boolean
+ *                 description: Stato aggiornato di accettazione
  *               description:
  *                 type: string
+ *                 description: Descrizione aggiornata
+ *               note:
+ *                 type: string
+ *                 description: Note aggiuntive aggiornate
+ *               order_detail_id:
+ *                 type: integer
+ *                 description: ID aggiornato del dettaglio dell'ordine
  *     responses:
  *       200:
  *         description: Reso aggiornato con successo
@@ -142,5 +186,6 @@ router.put("/:id", updateRender);
  *         description: Errore interno del server
  */
 router.delete("/:id", deleteRender);
+
 
 export default router;

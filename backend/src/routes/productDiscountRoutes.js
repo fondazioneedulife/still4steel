@@ -1,5 +1,12 @@
 import express from "express";
-import { getProductDiscounts, getProductDiscountById, createProductDiscount, updateProductDiscount, deleteProductDiscount } from "../controllers/productDiscountController.js";
+import { 
+    getAllProductDiscounts, 
+    getProductDiscountById, 
+    createProductDiscount, 
+    updateProductDiscount, 
+    deleteProductDiscount 
+} from "../controllers/productDiscountController.js";
+
 
 const router = express.Router();
 
@@ -8,42 +15,43 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: ProductDiscounts
- *   description: API per la gestione delle associazioni tra prodotti e sconti
+ *   description: API per la gestione delle relazioni tra prodotti e sconti
  */
+
 
 /**
  * @swagger
  * /product-discounts:
  *   get:
- *     summary: Ottiene tutte le associazioni tra prodotti e sconti
+ *     summary: Ottiene tutte le relazioni tra prodotti e sconti
  *     tags: [ProductDiscounts]
  *     responses:
  *       200:
- *         description: Lista delle associazioni tra prodotti e sconti
+ *         description: Lista delle relazioni tra prodotti e sconti
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getProductDiscounts);
+router.get("/", getAllProductDiscounts);
 
 
 /**
  * @swagger
  * /product-discounts/{id}:
  *   get:
- *     summary: Ottiene un'associazione prodotto-sconto per ID
+ *     summary: Ottiene una relazione prodotto-sconto per ID
  *     tags: [ProductDiscounts]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione prodotto-sconto
+ *         description: ID della relazione prodotto-sconto
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Dettagli dell'associazione richiesta
+ *         description: Dettagli della relazione richiesta
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
@@ -54,7 +62,7 @@ router.get("/:id", getProductDiscountById);
  * @swagger
  * /product-discounts:
  *   post:
- *     summary: Crea una nuova associazione tra un prodotto e uno sconto
+ *     summary: Crea una nuova relazione tra un prodotto e uno sconto
  *     tags: [ProductDiscounts]
  *     requestBody:
  *       required: true
@@ -62,14 +70,19 @@ router.get("/:id", getProductDiscountById);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - product_id
+ *               - discount_id
  *             properties:
  *               product_id:
  *                 type: integer
+ *                 description: ID del prodotto
  *               discount_id:
  *                 type: integer
+ *                 description: ID dello sconto
  *     responses:
  *       201:
- *         description: Associazione creata con successo
+ *         description: Relazione creata con successo
  *       400:
  *         description: Dati non validi
  *       500:
@@ -82,13 +95,13 @@ router.post("/", createProductDiscount);
  * @swagger
  * /product-discounts/{id}:
  *   put:
- *     summary: Aggiorna un'associazione prodotto-sconto
+ *     summary: Aggiorna una relazione prodotto-sconto esistente
  *     tags: [ProductDiscounts]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione da aggiornare
+ *         description: ID della relazione da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -100,15 +113,17 @@ router.post("/", createProductDiscount);
  *             properties:
  *               product_id:
  *                 type: integer
+ *                 description: Nuovo ID del prodotto (opzionale)
  *               discount_id:
  *                 type: integer
+ *                 description: Nuovo ID dello sconto (opzionale)
  *     responses:
  *       200:
- *         description: Associazione aggiornata con successo
+ *         description: Relazione aggiornata con successo
  *       400:
  *         description: Dati non validi
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
@@ -119,23 +134,24 @@ router.put("/:id", updateProductDiscount);
  * @swagger
  * /product-discounts/{id}:
  *   delete:
- *     summary: Elimina un'associazione tra un prodotto e uno sconto
+ *     summary: Elimina una relazione tra un prodotto e uno sconto
  *     tags: [ProductDiscounts]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione da eliminare
+ *         description: ID della relazione da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Associazione eliminata con successo
+ *         description: Relazione eliminata con successo
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
 router.delete("/:id", deleteProductDiscount);
+
 
 export default router;

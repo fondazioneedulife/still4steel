@@ -7,21 +7,24 @@ import {
     deleteCompanySupplier
 } from "../controllers/companySupplierController.js";
 
+
 const router = express.Router();
+
 
 /**
  * @swagger
  * tags:
- *   name: Company-Supplier
- *   description: API per la gestione della relazione tra aziende e fornitori
+ *   name: CompanySuppliers
+ *   description: API per la gestione delle relazioni tra aziende e fornitori
  */
+
 
 /**
  * @swagger
- * /company-supplier:
+ * /company-suppliers:
  *   get:
  *     summary: Ottiene tutte le relazioni tra aziende e fornitori
- *     tags: [Company-Supplier]
+ *     tags: [CompanySuppliers]
  *     responses:
  *       200:
  *         description: Lista delle relazioni
@@ -33,15 +36,15 @@ router.get("/", getAllCompanySuppliers);
 
 /**
  * @swagger
- * /company-supplier/{id}:
+ * /company-suppliers/{id}:
  *   get:
  *     summary: Ottiene una relazione azienda-fornitore per ID
- *     tags: [Company-Supplier]
+ *     tags: [CompanySuppliers]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID della relazione
+ *         description: ID della relazione azienda-fornitore
  *         schema:
  *           type: integer
  *     responses:
@@ -57,21 +60,26 @@ router.get("/:id", getCompanySupplierById);
 
 /**
  * @swagger
- * /company-supplier:
+ * /company-suppliers:
  *   post:
  *     summary: Crea una nuova relazione azienda-fornitore
- *     tags: [Company-Supplier]
+ *     tags: [CompanySuppliers]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - company_id
+ *               - supplier_id
  *             properties:
  *               company_id:
  *                 type: integer
+ *                 description: ID dell'azienda
  *               supplier_id:
  *                 type: integer
+ *                 description: ID del fornitore
  *     responses:
  *       201:
  *         description: Relazione creata con successo
@@ -85,15 +93,15 @@ router.post("/", createCompanySupplier);
 
 /**
  * @swagger
- * /company-supplier/{id}:
+ * /company-suppliers/{id}:
  *   put:
- *     summary: Aggiorna un'associazione tra azienda e fornitore
- *     tags: [CompanySupplier]
+ *     summary: Aggiorna una relazione esistente tra azienda e fornitore
+ *     tags: [CompanySuppliers]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione da aggiornare
+ *         description: ID della relazione da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -105,15 +113,17 @@ router.post("/", createCompanySupplier);
  *             properties:
  *               company_id:
  *                 type: integer
+ *                 description: Nuovo ID dell'azienda
  *               supplier_id:
  *                 type: integer
+ *                 description: Nuovo ID del fornitore
  *     responses:
  *       200:
- *         description: Associazione aggiornata con successo
+ *         description: Relazione aggiornata con successo
  *       400:
  *         description: Dati non validi
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
@@ -122,25 +132,26 @@ router.put("/:id", updateCompanySupplier);
 
 /**
  * @swagger
- * /company-supplier/{id}:
+ * /company-suppliers/{id}:
  *   delete:
- *     summary: Elimina un'associazione tra azienda e fornitore
- *     tags: [CompanySupplier]
+ *     summary: Elimina una relazione tra azienda e fornitore
+ *     tags: [CompanySuppliers]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione da eliminare
+ *         description: ID della relazione da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Associazione eliminata con successo
+ *         description: Relazione eliminata con successo
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
-router.delete("/:id", deleteCompanySupplier); // Elimina un'associazione
+router.delete("/:id", deleteCompanySupplier);
+
 
 export default router;

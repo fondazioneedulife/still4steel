@@ -1,8 +1,19 @@
 import express from "express";
-import { createWarehouse, getWarehouses, getWarehouseById, updateWarehouse, deleteWarehouse } from "../controllers/warehouseController.js";
-import { authenticateUser, validateCompanyData } from "../middlewares/middleware.js";
+import { 
+    getAllWarehouses, 
+    getWarehouseById, 
+    createWarehouse, 
+    updateWarehouse, 
+    deleteWarehouse 
+} from "../controllers/warehouseController.js";
+import { 
+    authenticateUser, 
+    validateCompanyData 
+} from "../middlewares/middleware.js";
+
 
 const router = express.Router();
+
 
 /**
  * @swagger
@@ -10,6 +21,7 @@ const router = express.Router();
  *   name: Warehouses
  *   description: API per la gestione dei magazzini
  */
+
 
 /**
  * @swagger
@@ -19,9 +31,12 @@ const router = express.Router();
  *     tags: [Warehouses]
  *     responses:
  *       200:
- *         description: Lista di magazzini
+ *         description: Lista di tutti i magazzini
+ *       500:
+ *         description: Errore interno del server
  */
-router.get("/", getWarehouses);
+router.get("/", getAllWarehouses);
+
 
 /**
  * @swagger
@@ -33,13 +48,19 @@ router.get("/", getWarehouses);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID del magazzino
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Dettagli del magazzino
+ *         description: Dettagli del magazzino richiesto
+ *       404:
+ *         description: Magazzino non trovato
+ *       500:
+ *         description: Errore interno del server
  */
 router.get("/:id", getWarehouseById);
+
 
 /**
  * @swagger
@@ -53,23 +74,37 @@ router.get("/:id", getWarehouseById);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, address, type, company_id]
+ *             required:
+ *               - name
+ *               - address
+ *               - type
+ *               - company_id
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Nome del magazzino
  *               address:
  *                 type: string
+ *                 description: Indirizzo del magazzino
  *               type:
  *                 type: string
+ *                 description: Tipo del magazzino (es. deposito, negozio, ecc.)
  *               note:
  *                 type: string
+ *                 description: Note aggiuntive sul magazzino
  *               company_id:
  *                 type: integer
+ *                 description: ID dell'azienda proprietaria del magazzino
  *     responses:
  *       201:
  *         description: Magazzino creato con successo
+ *       400:
+ *         description: Dati non validi
+ *       500:
+ *         description: Errore interno del server
  */
 router.post("/", createWarehouse);
+
 
 /**
  * @swagger
@@ -81,6 +116,7 @@ router.post("/", createWarehouse);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID del magazzino da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -92,19 +128,31 @@ router.post("/", createWarehouse);
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Nome aggiornato del magazzino
  *               address:
  *                 type: string
+ *                 description: Indirizzo aggiornato del magazzino
  *               type:
  *                 type: string
+ *                 description: Tipo aggiornato del magazzino
  *               note:
  *                 type: string
+ *                 description: Note aggiornate sul magazzino
  *               company_id:
  *                 type: integer
+ *                 description: ID aggiornato dell'azienda proprietaria
  *     responses:
  *       200:
  *         description: Magazzino aggiornato con successo
+ *       400:
+ *         description: Dati non validi
+ *       404:
+ *         description: Magazzino non trovato
+ *       500:
+ *         description: Errore interno del server
  */
 router.put("/:id", updateWarehouse);
+
 
 /**
  * @swagger
@@ -116,12 +164,18 @@ router.put("/:id", updateWarehouse);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID del magazzino da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
  *         description: Magazzino eliminato
+ *       404:
+ *         description: Magazzino non trovato
+ *       500:
+ *         description: Errore interno del server
  */
 router.delete("/:id", deleteWarehouse);
+
 
 export default router;

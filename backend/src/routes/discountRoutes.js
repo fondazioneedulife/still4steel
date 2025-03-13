@@ -1,7 +1,15 @@
 import express from "express";
-import { getDiscounts, getDiscountById, createDiscount, updateDiscount, deleteDiscount } from "../controllers/discountController.js";
+import { 
+    getAllDiscounts, 
+    getDiscountById, 
+    createDiscount, 
+    updateDiscount, 
+    deleteDiscount 
+} from "../controllers/discountController.js";
+
 
 const router = express.Router();
+
 
 /**
  * @swagger
@@ -9,6 +17,7 @@ const router = express.Router();
  *   name: Discounts
  *   description: API per la gestione degli sconti
  */
+
 
 /**
  * @swagger
@@ -22,7 +31,8 @@ const router = express.Router();
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getDiscounts);
+router.get("/", getAllDiscounts);
+
 
 /**
  * @swagger
@@ -34,7 +44,7 @@ router.get("/", getDiscounts);
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dello sconto
+ *         description: ID dello sconto da recuperare
  *         schema:
  *           type: integer
  *     responses:
@@ -60,24 +70,38 @@ router.get("/:id", getDiscountById);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - type
+ *               - value
+ *               - date_start
+ *               - date_end
+ *               - state
  *             properties:
  *               type:
  *                 type: string
+ *                 description: Tipo di sconto
  *               value:
  *                 type: number
+ *                 format: float
+ *                 description: Valore dello sconto (deve essere maggiore di 0)
  *               date_start:
  *                 type: string
  *                 format: date-time
+ *                 description: Data di inizio dello sconto
  *               date_end:
  *                 type: string
  *                 format: date-time
+ *                 description: Data di fine dello sconto
  *               state:
  *                 type: string
  *                 enum: [attivo, scaduto, inattivo]
+ *                 description: Stato dello sconto
  *               description:
  *                 type: string
+ *                 description: Descrizione opzionale dello sconto
  *               note:
  *                 type: string
+ *                 description: Note opzionali sullo sconto
  *     responses:
  *       201:
  *         description: Sconto creato con successo
@@ -93,7 +117,7 @@ router.post("/", createDiscount);
  * @swagger
  * /discounts/{id}:
  *   put:
- *     summary: Aggiorna uno sconto
+ *     summary: Aggiorna uno sconto esistente
  *     tags: [Discounts]
  *     parameters:
  *       - in: path
@@ -111,21 +135,29 @@ router.post("/", createDiscount);
  *             properties:
  *               type:
  *                 type: string
+ *                 description: Tipo di sconto aggiornato
  *               value:
  *                 type: number
+ *                 format: float
+ *                 description: Valore dello sconto aggiornato
  *               date_start:
  *                 type: string
  *                 format: date-time
+ *                 description: Data di inizio aggiornata
  *               date_end:
  *                 type: string
  *                 format: date-time
+ *                 description: Data di fine aggiornata
  *               state:
  *                 type: string
  *                 enum: [attivo, scaduto, inattivo]
+ *                 description: Stato aggiornato dello sconto
  *               description:
  *                 type: string
+ *                 description: Descrizione aggiornata dello sconto
  *               note:
  *                 type: string
+ *                 description: Note aggiornate sullo sconto
  *     responses:
  *       200:
  *         description: Sconto aggiornato con successo
@@ -161,5 +193,6 @@ router.put("/:id", updateDiscount);
  *         description: Errore interno del server
  */
 router.delete("/:id", deleteDiscount);
+
 
 export default router;

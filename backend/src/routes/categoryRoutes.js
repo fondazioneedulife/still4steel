@@ -1,13 +1,15 @@
 import express from "express";
 import { 
-  getCategories, 
+  getAllCategories, 
   getCategoryById, 
   createCategory, 
   updateCategory, 
   deleteCategory 
 } from "../controllers/categoryController.js";
 
+
 const router = express.Router();
+
 
 /**
  * @swagger
@@ -15,6 +17,7 @@ const router = express.Router();
  *   name: Categories
  *   description: API per la gestione delle categorie di prodotti
  */
+
 
 /**
  * @swagger
@@ -28,7 +31,8 @@ const router = express.Router();
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getCategories);
+router.get("/", getAllCategories);
+
 
 /**
  * @swagger
@@ -53,6 +57,7 @@ router.get("/", getCategories);
  */
 router.get("/:id", getCategoryById);
 
+
 /**
  * @swagger
  * /categories:
@@ -65,11 +70,15 @@ router.get("/:id", getCategoryById);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - name
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Nome della categoria
  *               description:
  *                 type: string
+ *                 description: Descrizione della categoria
  *     responses:
  *       201:
  *         description: Categoria creata con successo
@@ -79,6 +88,7 @@ router.get("/:id", getCategoryById);
  *         description: Errore interno del server
  */
 router.post("/", createCategory);
+
 
 /**
  * @swagger
@@ -100,10 +110,12 @@ router.post("/", createCategory);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *             name:
  *                 type: string
- *               description:
+ *                 description: Nome aggiornato della categoria
+ *             description:
  *                 type: string
+ *                 description: Descrizione aggiornata della categoria
  *     responses:
  *       200:
  *         description: Categoria aggiornata con successo
@@ -115,6 +127,7 @@ router.post("/", createCategory);
  *         description: Errore interno del server
  */
 router.put("/:id", updateCategory);
+
 
 /**
  * @swagger
@@ -138,5 +151,6 @@ router.put("/:id", updateCategory);
  *         description: Errore interno del server
  */
 router.delete("/:id", deleteCategory);
+
 
 export default router;

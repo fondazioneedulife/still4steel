@@ -1,5 +1,12 @@
 import express from "express";
-import { getCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer } from "../controllers/customerController.js";
+import { 
+    getAllCustomers, 
+    getCustomerById, 
+    createCustomer, 
+    updateCustomer, 
+    deleteCustomer 
+} from "../controllers/customerController.js";
+
 
 const router = express.Router();
 
@@ -10,6 +17,7 @@ const router = express.Router();
  *   name: Customers
  *   description: API per la gestione dei clienti
  */
+
 
 /**
  * @swagger
@@ -23,7 +31,7 @@ const router = express.Router();
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getCustomers);
+router.get("/", getAllCustomers);
 
 
 /**
@@ -62,17 +70,27 @@ router.get("/:id", getCustomerById);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - first_name
+ *               - last_name
+ *               - email
  *             properties:
  *               first_name:
  *                 type: string
+ *                 description: Nome del cliente
  *               last_name:
  *                 type: string
+ *                 description: Cognome del cliente
  *               email:
  *                 type: string
+ *                 format: email
+ *                 description: Email univoca del cliente
  *               age:
  *                 type: string
+ *                 description: Fascia di età del cliente
  *               note:
  *                 type: string
+ *                 description: Note aggiuntive
  *     responses:
  *       201:
  *         description: Cliente creato con successo
@@ -88,7 +106,7 @@ router.post("/", createCustomer);
  * @swagger
  * /customers/{id}:
  *   put:
- *     summary: Aggiorna un cliente
+ *     summary: Aggiorna un cliente esistente
  *     tags: [Customers]
  *     parameters:
  *       - in: path
@@ -106,14 +124,20 @@ router.post("/", createCustomer);
  *             properties:
  *               first_name:
  *                 type: string
+ *                 description: Nome aggiornato del cliente
  *               last_name:
  *                 type: string
+ *                 description: Cognome aggiornato del cliente
  *               email:
  *                 type: string
+ *                 format: email
+ *                 description: Email aggiornata del cliente
  *               age:
  *                 type: string
+ *                 description: Fascia di età aggiornata del cliente
  *               note:
  *                 type: string
+ *                 description: Note aggiornate
  *     responses:
  *       200:
  *         description: Cliente aggiornato con successo
@@ -149,5 +173,6 @@ router.put("/:id", updateCustomer);
  *         description: Errore interno del server
  */
 router.delete("/:id", deleteCustomer);
+
 
 export default router;
