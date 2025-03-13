@@ -25,12 +25,6 @@ services:
       - .backend-env
     ports:
       - "3001:3000"
-    environment:
-      EMAIL_HOST: smtp.gmail.com
-      EMAIL_PORT: 587
-      EMAIL_USER: alessandronicolis1@gmail.com
-      EMAIL_PASSWORD: alexinter004
-      EMAIL_SECURE: "false"
     depends_on:
       - db
 

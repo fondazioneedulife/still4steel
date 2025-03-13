@@ -31,19 +31,28 @@ export const forgotPassword = async (req, res) => {
 
         // Configura il trasportatore per le email
         const transporter = nodemailer.createTransport({
-            service: "Gmail",
-            auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD },
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: { 
+                user: 'alessandronicolis1@gmail.com', 
+                pass: 'bqae bpij mill dhmk'
+            },
         });
 
-        const resetLink = `http://localhost:3001/reset-password?token=${resetToken}`;
+        //const resetLink = `http://localhost:3001/reset-password?token=${resetToken}`;
 
         // Invia email
         await transporter.sendMail({
             from: "alessandronicolis1@gmail.com",
-            to: email,
+            to: "ggiulia.mmazzi@gmail.com",
             subject: "Recupero password",
-            html: `<p>Per reimpostare la tua password, clicca qui: <a href="${resetLink}">Reset Password</a></p>`,
-        });
+            html: `<p>Per reimpostare la tua password, clicca qui: Reset Password</p>`,
+        }).then(() => {
+            console.log('email sent');
+        }).catch(err => {
+            console.error(err);
+        })
 
         res.json({ message: "Email di recupero inviata" });
     } catch (error) {

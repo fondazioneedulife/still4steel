@@ -33,8 +33,6 @@ import endpointRoutes from "./endpoint/endpointRoutes.js";
 const app = express();
 app.use(express.json());
 
-
-
 // Token
 app.use("/api/token", tokenRoutes);
 
