@@ -1,6 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutti i log
+
 export const getAllLogs = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM logs ORDER BY created_at DESC;");
@@ -32,6 +33,7 @@ export const getLogById = async (req, res) => {
 };
 
 // Crea un nuovo log
+
 export const createLog = async (req, res) => {
     const { action, description, company_id } = req.body;
 
@@ -50,6 +52,7 @@ export const createLog = async (req, res) => {
 };
 
 // Elimina un log
+
 export const deleteLog = async (req, res) => {
     const { id } = req.params;
 

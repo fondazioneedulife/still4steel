@@ -85,4 +85,5 @@ export const deleteCategory = async (req, res) => {
         console.error("Errore nell'eliminazione della categoria:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
+
 };

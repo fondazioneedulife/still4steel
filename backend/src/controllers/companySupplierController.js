@@ -1,6 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutte le relazioni azienda-fornitore
+
 export const getAllCompanySuppliers = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM company_supplier;");
@@ -12,6 +13,7 @@ export const getAllCompanySuppliers = async (req, res) => {
 };
 
 // Ottieni una singola relazione per ID
+
 export const getCompanySupplierById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -48,6 +50,7 @@ export const createCompanySupplier = async (req, res) => {
         res.status(500).json({ error: "Errore del server" });
     }
 };
+
 
 // Modifica una relazione esistente
 export const updateCompanySupplier = async (req, res) => {

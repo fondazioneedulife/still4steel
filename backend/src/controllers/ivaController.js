@@ -1,6 +1,5 @@
 import pool from "../config/db.js";
 
-
 export const getAllIvas = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM iva');

@@ -30,6 +30,7 @@ export const createCustomer = async (req, res) => {
         const { first_name, last_name, email, age, note } = req.body;
 
         if (!first_name  !last_name  !email) {
+
             return res.status(400).json({ error: "I campi first_name, last_name ed email sono obbligatori" });
         }
 

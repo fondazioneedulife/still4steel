@@ -2,6 +2,7 @@ import pool from "../config/db.js";
 
 
 export const getAllDiscounts = async (req, res) => {
+
     console.log("✅ GET /discounts chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM discounts");
@@ -30,7 +31,7 @@ export const createDiscount = async (req, res) => {
     try {
         const { type, value, date_start, date_end, state, description, note } = req.body;
 
-        if (!type  !value  !date_start  !date_end  !state) {
+        if (!type || !value || !date_start || !date_end || !state) {
             return res.status(400).json({ error: "I campi obbligatori devono essere compilati" });
         }
 

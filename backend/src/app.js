@@ -42,7 +42,6 @@ app.use("/endpoint", endpointRoutes);
 // Rotte API
 app.use("/api/auth", authRoutes);
 
-
 // CRUD companies
 app.use("/api/companies", companiesRoutes);
 
@@ -93,7 +92,6 @@ app.use("/api/saleCustomers", salesRoutes);
 
 // CRUD salePayments
 app.use("/api/salePayments", salePaymentsRoutes);
-
 
 // CRUD companySuppliers
 app.use("/api/companySuppliers", companySuppliersRoutes);

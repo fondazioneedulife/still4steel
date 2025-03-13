@@ -87,5 +87,6 @@ export const deleteCompany = async (req, res) => {
   } catch (error) {
     console.error("Errore nell'eliminazione dell'azienda:", error);
     res.status(500).json({ error: "Errore nel server" });
-  }
+  } 
 };
+
