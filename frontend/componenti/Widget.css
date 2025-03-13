@@ -1,11 +1,11 @@
 /* Stile per la griglia */
 .widget-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colonne */
-  gap: 26px; /* Spazio tra i widget */
-  max-width: 1200px; /* Limita la larghezza massima */
-  margin: 0 auto; /* Centra la griglia */
-  padding: 0 16px; /* Aggiungi un po' di padding ai lati */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 /* Stile base del widget */
@@ -122,26 +122,11 @@
   background: #3d566e;
 }
 
-/* Stile per il widget Stato Vendite */
-.sales-status-widget {
-  padding: 16px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-
-/* Stile per il widget Stato Magazzino */
-.inventory-level-widget {
-  padding: 16px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
 .level-bar {
   width: 100%;
-  height: 10px;
+  height: 100px;
   background-color: #e0e0e0;
   border-radius: 5px;
   margin-top: 12px;
@@ -365,7 +350,7 @@
   position: relative;
 }
 
-/* Responsive adjustments for different screen sizes */
+
 @media (max-width: 768px) {
   .widget {
     min-height: 250px;
@@ -386,13 +371,13 @@
   }
 }
 
-/* Ensure charts are responsive */
+
 .recharts-responsive-container {
   width: 100% !important;
   height: 100% !important;
 }
 
-/* Make other widget types responsive */
+
 .calculator,
 .simple-calendar,
 .notes-textarea,
@@ -407,7 +392,6 @@
   overflow: auto;
 }
 
-/* Ensure text and controls scale properly */
 @media (max-width: 480px) {
   .widget h3 {
     font-size: 1rem;
@@ -589,4 +573,53 @@
 .widget-dark .notes-textarea:focus {
   border-color: #3498db;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.widget-header {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.widget-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.theme-button, .remove-widget {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widget-dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.widget-light {
+  background-color: #ffffff;
+  color: #000000;
+}
+.remove-widget {
+  color: #ff0000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-widget:hover {
+  color: #cc0000;
 }

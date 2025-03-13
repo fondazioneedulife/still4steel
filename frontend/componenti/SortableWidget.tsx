@@ -27,6 +27,7 @@ type SortableWidgetProps = {
   widget: Widget;
   onRemove?: (id: string) => void;
   isInModal?: boolean;
+  onThemeToggle?: (id: string) => void;  // Add this prop
 };
 
 const CalculatorWidget: React.FC<{ value: string; onButtonClick: (value: string) => void }> = ({ value, onButtonClick }) => (
@@ -210,71 +211,73 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   };
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className={`widget ${isDark ? 'widget-dark' : 'widget-light'}`}
-      >
-        <div style={{ position: 'absolute', top: '12px', right: '50px', zIndex: '1000' }}>
-        </div>
-        <h3>{widget.title}</h3>
-        <div className="chart-container" onClick={(e) => e.stopPropagation()}>
-          {widget.type === 'calendar' ? (
-            <SimpleCalendarWidget events={events} onAddEvent={handleAddEvent} />
-          ) : widget.type === 'notes' ? (
-            <NotesWidget note={note} onNoteChange={handleNoteChange} />
-          ) : widget.type === 'tasklist' ? (
-            <TaskListWidget tasks={tasks} onAddTask={handleAddTask} onRemoveTask={handleRemoveTask} />
-          ) : widget.type === 'calcolatrice' ? (
-            <CalculatorWidget value={calcValue} onButtonClick={handleCalcButtonClick} />
-          ) : ['utenti', 'vendite', 'customer-trend'].includes(widget.type) ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={widget.data as { name: string; value: number }[]}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Line type="monotone" dataKey="value" stroke={widget.color} />
-              </LineChart>
-            </ResponsiveContainer>
-          ) : ['magazzino', 'dipendenti'].includes(widget.type) ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={widget.data as { name: string; value: number }[]}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Bar dataKey="value" fill={widget.color} />
-              </BarChart>
-            </ResponsiveContainer>
-          ) : null}
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`widget ${isDark ? 'widget-dark' : 'widget-light'}`}
+    >
+      <div className="widget-header">
+        <div className="widget-controls">
+          {!isInModal && (
+            <button
+              className="theme-button"
+              onClick={toggleTheme}
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              {isDark ? <MoonFill size={16} /> : <Moon size={16} />}
+            </button>
+          )}
+          {!isInModal && onRemove && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onRemove(widget.id);
+              }} 
+              className="remove-widget"
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <span style={{ fontSize: '24px' }}>×</span>
+            </button>
+          )}
         </div>
       </div>
-      {onRemove && (
-        <>
-          <button
-            className="remove-button"
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              onRemove(widget.id);
-            }}
-          >
-            X
-          </button>
-          <button
-            className="theme-button"
-            onClick={toggleTheme}
-            onPointerDown={(e) => e.stopPropagation()}
-            onMouseDown={(e) => e.stopPropagation()}
-          >
-            {isDark ? <MoonFill size={16} /> : <Moon size={16} />}
-          </button>
-        </>
-      )}
+      <h3>{widget.title}</h3>
+      <div className="chart-container" onClick={(e) => e.stopPropagation()}>
+        {widget.type === 'calendar' ? (
+          <SimpleCalendarWidget events={events} onAddEvent={handleAddEvent} />
+        ) : widget.type === 'notes' ? (
+          <NotesWidget note={note} onNoteChange={handleNoteChange} />
+        ) : widget.type === 'tasklist' ? (
+          <TaskListWidget tasks={tasks} onAddTask={handleAddTask} onRemoveTask={handleRemoveTask} />
+        ) : widget.type === 'calcolatrice' ? (
+          <CalculatorWidget value={calcValue} onButtonClick={handleCalcButtonClick} />
+        ) : ['utenti', 'vendite', 'customer-trend'].includes(widget.type) ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={widget.data as { name: string; value: number }[]}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Line type="monotone" dataKey="value" stroke={widget.color} />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : ['magazzino', 'dipendenti'].includes(widget.type) ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={widget.data as { name: string; value: number }[]}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar dataKey="value" fill={widget.color} />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : null}
+      </div>
     </div>
   );
 };

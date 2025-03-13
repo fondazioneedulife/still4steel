@@ -232,9 +232,12 @@ const Home: React.FC = () => {
       onDragEnd={handleDragEnd}
     >
       <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
-        <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
-          +
-        </Button>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h1>Dashboard</h1>
+          <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
+            +
+          </Button>
+        </div>
 
         <div className="mt-3 droppable-area">
           <SortableContext items={homeWidgets} strategy={verticalListSortingStrategy}>
