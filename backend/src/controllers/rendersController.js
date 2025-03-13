@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutti i renders
-export const getRenders = async (req, res) => {
+export const getAllRenders = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM renders");
         res.status(200).json(result.rows);

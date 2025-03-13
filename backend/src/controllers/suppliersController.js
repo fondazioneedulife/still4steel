@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutti i fornitori
-export const getSuppliers = async (req, res) => {
+export const getAllSuppliers = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM suppliers");
         res.status(200).json(result.rows);

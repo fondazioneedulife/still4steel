@@ -12,7 +12,6 @@ export const getAllOrderDetails = async (req, res) => {
 };
 
 // Ottieni un dettaglio ordine per ID
-
 export const getOrderDetailById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -33,7 +32,6 @@ export const getOrderDetailById = async (req, res) => {
 };
 
 // Crea un nuovo dettaglio ordine
-
 export const createOrderDetail = async (req, res) => {
     const { quantity, note, product_id, order_id } = req.body;
 
@@ -52,7 +50,6 @@ export const createOrderDetail = async (req, res) => {
 };
 
 // Modifica un dettaglio ordine esistente
-
 export const updateOrderDetail = async (req, res) => {
     const { id } = req.params;
     const { quantity, note, product_id, order_id } = req.body;
@@ -77,7 +74,6 @@ export const updateOrderDetail = async (req, res) => {
 };
 
 // Elimina un dettaglio ordine
-
 export const deleteOrderDetail = async (req, res) => {
     const { id } = req.params;
 

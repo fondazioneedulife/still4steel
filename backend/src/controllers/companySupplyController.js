@@ -21,7 +21,7 @@ export const getCompanySupplyById = async (req, res) => {
         }
         res.status(200).json(result.rows[0]);
     } catch (error) {
-        console.error("Errore nel recupero della relazione:", error);    
+        console.error("Errore nel recupero della relazione:", error);
         res.status(500).json({ error: "Errore interno del server" });
     }
 };

@@ -2,7 +2,6 @@ import pool from "../config/db.js";
 
 
 export const getAllDiscounts = async (req, res) => {
-
     console.log("✅ GET /discounts chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM discounts");

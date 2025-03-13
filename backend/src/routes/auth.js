@@ -24,6 +24,7 @@ const router = express.Router();
  * /auth/register:
  *   post:
  *     summary: Registra una nuova azienda
+ *     description: Crea un nuovo account aziendale nel gestionale.
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -34,15 +35,18 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "Azienda XYZ"
  *               email:
  *                 type: string
+ *                 example: "azienda@example.com"
  *               password:
  *                 type: string
+ *                 example: "password123"
  *     responses:
  *       201:
  *         description: Registrazione avvenuta con successo
  *       400:
- *         description: Email già in uso o errore nei dati
+ *         description: Errore nei dati di registrazione
  */
 
 router.post("/register", registerAccount);
@@ -52,6 +56,7 @@ router.post("/register", registerAccount);
  * /auth/login:
  *   post:
  *     summary: Effettua il login
+ *     description: Permette a un'azienda di autenticarsi nel sistema.
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -62,8 +67,10 @@ router.post("/register", registerAccount);
  *             properties:
  *               email:
  *                 type: string
+ *                 example: "azienda@example.com"
  *               password:
  *                 type: string
+ *                 example: "password123"
  *     responses:
  *       200:
  *         description: Login effettuato con successo
