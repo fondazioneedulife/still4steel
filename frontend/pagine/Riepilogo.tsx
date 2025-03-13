@@ -18,7 +18,6 @@ const Riepilogo: React.FC = () => {
 
   useEffect(() => {
     try {
-      // Safely parse data from sessionStorage with fallbacks
       const aggiungiProdottoData = JSON.parse(sessionStorage.getItem('aggiungiProdottoData') || '{}');
       const variantiData = JSON.parse(sessionStorage.getItem('variantiData') || '{}');
       const secondaSottopaginaData = JSON.parse(sessionStorage.getItem('secondaSottopaginaData') || '{}');
@@ -32,7 +31,6 @@ const Riepilogo: React.FC = () => {
       });
     } catch (error) {
       console.error('Error parsing form data:', error);
-      // Set default empty state if parsing fails
       setFormData({
         datiProdotto: {},
         datiVarianti: {},

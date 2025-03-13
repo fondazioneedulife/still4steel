@@ -7,7 +7,7 @@ import {
 } from 'recharts';
 import './Widget.css';
 import React from 'react';
-import { Moon, MoonFill } from 'react-bootstrap-icons';  // Add this import at the top
+import { Moon, MoonFill } from 'react-bootstrap-icons';  
 
 type Event = {
   date: string;

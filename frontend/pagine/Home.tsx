@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
-import { useProductData } from './ContestoProdotto';  // Simplified import path
+import { useProductData } from './ContestoProdotto';  
 import {
   DndContext,
   closestCenter,
@@ -233,7 +233,6 @@ const Home: React.FC = () => {
     >
       <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h1>Dashboard</h1>
           <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
             +
           </Button>

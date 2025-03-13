@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Form, Button, Card, Row, Col, Modal } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, PlusCircle, Trash, Pencil } from 'react-bootstrap-icons';
 import Stepper from '../componenti/Stepper';

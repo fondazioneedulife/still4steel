@@ -44,7 +44,6 @@ const TerzaSottopagina: React.FC = () => {
         telefonoFornitore: telefonoFornitore
       };
   
-      // Save to sessionStorage
       sessionStorage.setItem('terzaSottopaginaData', JSON.stringify(fornitoreData));
       navigate('/riepilogo');
     }
