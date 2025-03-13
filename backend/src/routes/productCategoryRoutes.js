@@ -1,78 +1,87 @@
 import express from "express";
-import {
-    getProductCategories,
-    getProductCategoryById,
-    createProductCategory,
-    updateProductCategory,
-    deleteProductCategory
-} from "../controllers/product_categoryController.js";
+import { 
+    getAllProductCategories, 
+    getProductCategoryById, 
+    createProductCategory, 
+    updateProductCategory, 
+    deleteProductCategory 
+} from "../controllers/productCategoryController.js";
+
 
 const router = express.Router();
+
 
 /**
  * @swagger
  * tags:
- *   name: ProductCategory
- *   description: API per la gestione delle associazioni tra prodotti e categorie
+ *   name: ProductCategories
+ *   description: API per la gestione delle relazioni tra prodotti e categorie
  */
 
 /**
  * @swagger
- * /product-category:
+ * /product-categories:
  *   get:
- *     summary: Ottiene tutte le associazioni tra prodotti e categorie
- *     tags: [ProductCategory]
+ *     summary: Ottiene tutte le relazioni tra prodotti e categorie
+ *     tags: [ProductCategories]
  *     responses:
  *       200:
- *         description: Lista di tutte le associazioni
+ *         description: Lista di tutte le relazioni
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getProductCategories);
+router.get("/", getAllProductCategories);
+
 
 /**
  * @swagger
- * /product-category/{id}:
+ * /product-categories/{id}:
  *   get:
- *     summary: Ottiene un'associazione tra prodotto e categoria per ID
- *     tags: [ProductCategory]
+ *     summary: Ottiene una relazione tra prodotto e categoria per ID
+ *     tags: [ProductCategories]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione
+ *         description: ID della relazione
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Dettagli dell'associazione richiesta
+ *         description: Dettagli della relazione richiesta
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
 router.get("/:id", getProductCategoryById);
 
+
 /**
  * @swagger
- * /product-category:
+ * /product-categories:
  *   post:
- *     summary: Crea una nuova associazione tra prodotto e categoria
- *     tags: [ProductCategory]
+ *     summary: Crea una nuova relazione tra prodotto e categoria
+ *     tags: [ProductCategories]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - product_id
+ *               - category_id
  *             properties:
  *               product_id:
  *                 type: integer
+ *                 description: ID del prodotto
  *               category_id:
  *                 type: integer
+ *                 description: ID della categoria
  *     responses:
  *       201:
- *         description: Associazione creata con successo
+ *         description: Relazione creata con successo
  *       400:
  *         description: Dati non validi
  *       500:
@@ -83,15 +92,15 @@ router.post("/", createProductCategory);
 
 /**
  * @swagger
- * /product-category/{id}:
+ * /product-categories/{id}:
  *   put:
- *     summary: Aggiorna un'associazione tra prodotto e categoria
- *     tags: [ProductCategory]
+ *     summary: Aggiorna una relazione tra prodotto e categoria esistente
+ *     tags: [ProductCategories]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione da aggiornare
+ *         description: ID della relazione da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -100,18 +109,23 @@ router.post("/", createProductCategory);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - product_id
+ *               - category_id
  *             properties:
  *               product_id:
  *                 type: integer
+ *                 description: nuovo ID del prodotto
  *               category_id:
  *                 type: integer
+ *                 description: nuovo ID della categoria
  *     responses:
  *       200:
- *         description: Associazione aggiornata con successo
+ *         description: Relazione aggiornata con successo
  *       400:
  *         description: Dati non validi
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
@@ -120,25 +134,26 @@ router.put("/:id", updateProductCategory);
 
 /**
  * @swagger
- * /product-category/{id}:
+ * /product-categories/{id}:
  *   delete:
- *     summary: Elimina un'associazione tra prodotto e categoria
- *     tags: [ProductCategory]
+ *     summary: Elimina una relazione tra prodotto e categoria
+ *     tags: [ProductCategories]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'associazione da eliminare
+ *         description: ID della relazione da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Associazione eliminata con successo
+ *         description: Relazione eliminata con successo
  *       404:
- *         description: Associazione non trovata
+ *         description: Relazione non trovata
  *       500:
  *         description: Errore interno del server
  */
 router.delete("/:id", deleteProductCategory);
+
 
 export default router;
