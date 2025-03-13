@@ -46,6 +46,29 @@ export const createCompanyCustomer = async (req, res) => {
     }
 };
 
+export const updateCompanyCustomer = async (req, res) => {
+    const { id } = req.params;
+    const { company_id, customer_id } = req.body;
+
+    try {
+        const result = await pool.query(
+            `UPDATE company_customer
+            SET company_id = $1, customer_id = $2
+            WHERE company_customer_id = $3 RETURNING *;`,
+            [company_id, customer_id, id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Relazione non trovata" });
+        }
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error("Errore nella modifica della relazione azienda-cliente:", error);
+        res.status(500).json({ error: "Errore del server" });
+    }
+};
+
 export const deleteCompanyCustomer = async (req, res) => {
     try {
         const { id } = req.params;

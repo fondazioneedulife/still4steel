@@ -1,10 +1,15 @@
-// routes/ivaRouter.js
 import express from "express";
-import {
-  createIva, getIvas, getIvaById, updateIva, deleteIva
+import { 
+    getAllIvas, 
+    getIvaById, 
+    createIva, 
+    updateIva, 
+    deleteIva 
 } from "../controllers/ivaController.js";
 
+
 const router = express.Router();
+
 
 /**
  * @swagger
@@ -21,9 +26,12 @@ const router = express.Router();
  *     tags: [IVA]
  *     responses:
  *       200:
- *         description: Lista delle aliquote IVA
+ *         description: Lista di tutte le aliquote IVA
+ *       500:
+ *         description: Errore interno del server
  */
-router.get("/", getIvas);
+router.get("/", getAllIvas);
+
 
 /**
  * @swagger
@@ -35,13 +43,19 @@ router.get("/", getIvas);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID dell'aliquota IVA
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Dettagli dell'aliquota IVA
+ *         description: Dettagli dell'aliquota IVA richiesta
+ *       404:
+ *         description: Aliquota IVA non trovata
+ *       500:
+ *         description: Errore interno del server
  */
 router.get("/:id", getIvaById);
+
 
 /**
  * @swagger
@@ -55,18 +69,26 @@ router.get("/:id", getIvaById);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [rate]
+ *             required:
+ *               - rate
  *             properties:
  *               rate:
  *                 type: number
  *                 format: float
+ *                 description: Percentuale dell'aliquota IVA
  *               description:
  *                 type: string
+ *                 description: Descrizione dell'aliquota IVA
  *     responses:
  *       201:
  *         description: Aliquota IVA creata con successo
+ *       400:
+ *         description: Dati non validi
+ *       500:
+ *         description: Errore interno del server
  */
 router.post("/", createIva);
+
 
 /**
  * @swagger
@@ -78,6 +100,7 @@ router.post("/", createIva);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID dell'aliquota IVA da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -90,13 +113,22 @@ router.post("/", createIva);
  *               rate:
  *                 type: number
  *                 format: float
+ *                 description: Percentuale aggiornata dell'aliquota IVA
  *               description:
  *                 type: string
+ *                 description: Descrizione aggiornata dell'aliquota IVA
  *     responses:
  *       200:
  *         description: Aliquota IVA aggiornata con successo
+ *       400:
+ *         description: Dati non validi
+ *       404:
+ *         description: Aliquota IVA non trovata
+ *       500:
+ *         description: Errore interno del server
  */
 router.put("/:id", updateIva);
+
 
 /**
  * @swagger
@@ -108,12 +140,18 @@ router.put("/:id", updateIva);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID dell'aliquota IVA da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
  *         description: Aliquota IVA eliminata con successo
+ *       404:
+ *         description: Aliquota IVA non trovata
+ *       500:
+ *         description: Errore interno del server
  */
 router.delete("/:id", deleteIva);
+
 
 export default router;

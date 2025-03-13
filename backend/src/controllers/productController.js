@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-export const getProducts = async (req, res) => {
+export const getAllProducts = async (req, res) => {
     console.log("✅ GET /products chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM products");
@@ -24,7 +24,6 @@ export const getProductById = async (req, res) => {
         res.status(500).json({ error: "Errore interno del server" });
     }
 };
-
 
 export const createProduct = async (req, res) => {
     try {

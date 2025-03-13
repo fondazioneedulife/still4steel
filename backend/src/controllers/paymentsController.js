@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-// **1. Ottieni tutti i pagamenti**
+// Ottieni tutti i pagamenti
 export const getAllPayments = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM payments;");
@@ -11,7 +11,7 @@ export const getAllPayments = async (req, res) => {
     }
 };
 
-// **2. Ottieni un pagamento per ID**
+// Ottieni un pagamento per ID
 export const getPaymentById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -31,7 +31,7 @@ export const getPaymentById = async (req, res) => {
     }
 };
 
-// **3. Crea un nuovo pagamento**
+// Crea un nuovo pagamento
 export const createPayment = async (req, res) => {
     const { date_start, date_end, method, state, note } = req.body;
 
@@ -49,7 +49,7 @@ export const createPayment = async (req, res) => {
     }
 };
 
-// **4. Modifica un pagamento esistente**
+// Modifica un pagamento esistente
 export const updatePayment = async (req, res) => {
     const { id } = req.params;
     const { date_start, date_end, method, state, note } = req.body;
@@ -73,7 +73,7 @@ export const updatePayment = async (req, res) => {
     }
 };
 
-// **5. Elimina un pagamento**
+// Elimina un pagamento
 export const deletePayment = async (req, res) => {
     const { id } = req.params;
 
