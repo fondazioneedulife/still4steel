@@ -16,15 +16,15 @@ export function authenticateUser(req, res, next) {
 
 // Middleware per validare i dati della creazione di un'azienda
 export const validateCompanyData = (req, res, next) => {
-  const { name, vat, tax_code, email, address, password, password_confirm } = req.body;
-
-  if (!name || !vat || !tax_code || !email || !address || !password || !password_confirm) {
-    return res.status(400).json({ error: "Tutti i campi obbligatori devono essere compilati." });
-  }
-
-  if (password !== password_confirm) {
-    return res.status(400).json({ error: "Le password non corrispondono." });
-  }
-
-  next();
+    const { name, vat, tax_code, email, address, password, password_confirm } = req.body;
+  
+    if (!name || !vat || !tax_code || !email || !address || !password || !password_confirm) {
+      return res.status(400).json({ error: "Tutti i campi obbligatori devono essere compilati." });
+    }
+  
+    if (password !== password_confirm) {
+      return res.status(400).json({ error: "Le password non corrispondono." });
+    }
+  
+    next();
 };

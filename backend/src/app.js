@@ -30,6 +30,7 @@ import logsRoutes from "./routes/logsRoutes.js";
 // import endpointRoutes from "./endpoint/endpointRoutes.js";
 
 
+
 const app = express();
 app.use(express.json());
 
@@ -39,9 +40,9 @@ app.use(express.json());
 //endpoint
 // app.use("/endpoint", endpointRoutes);
 
+
 // Rotte API
 app.use("/api/auth", authRoutes);
-
 
 // CRUD companies
 app.use("/api/companies", companiesRoutes);
@@ -93,7 +94,6 @@ app.use("/api/saleCustomers", salesRoutes);
 
 // CRUD salePayments
 app.use("/api/salePayments", salePaymentsRoutes);
-
 
 // CRUD companySuppliers
 app.use("/api/companySuppliers", companySuppliersRoutes);

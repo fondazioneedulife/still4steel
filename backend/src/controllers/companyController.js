@@ -46,7 +46,7 @@ export const createCompany = async (req, res) => {
         ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
       RETURNING *`,
       [name, vat, tax_code, phone, email, address, password, password_confirm, note]
-    );
+
 
     res.status(201).json({ message: "Azienda creata", company: result.rows[0] });
   } catch (error) {

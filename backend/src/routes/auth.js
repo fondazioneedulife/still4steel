@@ -1,5 +1,15 @@
 import express from "express";
+import dotenv from "dotenv";
+import {
+    registerAccount,
+    loginAccount,
+} from "../controllers/authController.js";
+import {
+    forgotPassword,
+    resetPassword
+} from "../controllers/authlogin.js";
 
+dotenv.config();
 const router = express.Router();
 
 /**
@@ -38,9 +48,8 @@ const router = express.Router();
  *       400:
  *         description: Errore nei dati di registrazione
  */
-router.post("/register", (req, res) => {
-  res.status(201).json({ message: "Registrazione completata" });
-});
+
+router.post("/register", registerAccount);
 
 /**
  * @swagger
@@ -68,12 +77,11 @@ router.post("/register", (req, res) => {
  *       401:
  *         description: Credenziali errate
  */
-router.post("/login", (req, res) => {
-  res.status(200).json({ token: "jwt_token" });
-});
 
-router.get("/login", (req, res) => {
-  res.status(200).json({ message: "Login endpoint is active" });
-});
+router.post("/login", loginAccount);
+
+router.post("/forgot-password", forgotPassword);
+
+router.post("/reset-password/:token", resetPassword);
 
 export { router };
