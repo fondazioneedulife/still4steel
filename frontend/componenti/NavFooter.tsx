@@ -13,7 +13,6 @@ const NavFooter: React.FC = () => {
     { path: '/magazzino', icon: <Box size={24} />, label: 'Magazzino' },
     { path: '/', icon: <House size={24} />, label: 'Home' },
     { path: '/ordini', icon: <Cart size={24} />, label: 'Ordini' },
-    { path: '/calendario', icon: <Calendar size={24} />, label: 'Calendario' },
   ];
 
   return (

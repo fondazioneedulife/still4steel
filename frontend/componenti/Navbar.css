@@ -1,61 +1,134 @@
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 12px 24px;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background-color: #fff;
-  border-top: 2px solid #000;
-  transition: all 0.3s ease;
-}
-
-.navbar-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%; 
-  max-width: 100%; 
-  padding: 0 20px;
+.custom-navbar {
+  background-color: #ffffff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #e0e0e0;
+  padding: 10px 0;
 }
 
 .navbar-logo {
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
+  height: 30px;
+  width: auto;
 }
 
-.logo {
-  height: 45px;
-  max-width: 100%;
-}
-
-.navbar-icon {
+.notification-icon {
   position: relative;
-  z-index: 1;
-}
-
-.navbar-icon.left {
-  margin-right: auto;
-}
-
-.navbar-icon.right {
-  margin-left: auto;
-}
-
-.notification-wrapper {
-  position: relative;
+  cursor: pointer;
 }
 
 .notification-badge {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: -5px;
+  right: -5px;
   width: 10px;
   height: 10px;
-  background-color: #000;
+  background-color: #ff4d4d;
   border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.icon {
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #007bff;
+}
+
+.user-dropdown {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  padding: 8px; /* Riduci il padding */
+  width: 220px; /* Riduci la larghezza */
+}
+
+.user-dropdown .dropdown-item {
+  padding: 6px 12px; /* Riduci il padding */
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  font-size: 14px; /* Riduci leggermente la dimensione del font */
+}
+
+.user-dropdown .dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.user-dropdown .dropdown-header {
+  font-weight: bold;
+  color: #000000;
+  padding: 6px 12px; /* Riduci il padding */
+  display: flex;
+  align-items: center;
+  font-size: 14px; /* Riduci leggermente la dimensione del font */
+}
+
+.user-dropdown .dropdown-divider {
+  margin: 6px 0; /* Riduci il margine */
+}
+
+/* Stile per lo switch delle notifiche */
+.user-dropdown .form-check-input {
+  margin-right: 8px;
+}
+
+.user-dropdown .form-check-label {
+  flex-grow: 1;
+  font-size: 14px; /* Riduci leggermente la dimensione del font */
+}
+
+/* Allinea le icone con il testo */
+.user-dropdown .dropdown-item svg {
+  width: 16px; /* Riduci leggermente la dimensione delle icone */
+  height: 16px;
+  margin-right: 8px;
+}
+/* Tema Scuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode .custom-navbar {
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #333;
+}
+
+body.dark-mode .user-dropdown {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+}
+
+body.dark-mode .dropdown-item {
+  color: #ffffff;
+}
+
+body.dark-mode .dropdown-item:hover {
+  background-color: #333;
+}
+
+body.dark-mode .dropdown-header {
+  color: #ffffff;
+}
+
+/* Dimensione del Testo */
+body.text-small {
+  font-size: 14px;
+}
+
+body.text-medium {
+  font-size: 16px;
+}
+
+body.text-large {
+  font-size: 18px;
+}
+
+/* Bottoni per la Dimensione del Testo e la Lingua */
+.text-size-buttons .btn,
+.language-buttons .btn {
+  padding: 4px 8px;
+  font-size: 12px;
 }

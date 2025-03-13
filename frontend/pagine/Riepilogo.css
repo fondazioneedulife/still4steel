@@ -1,122 +1,140 @@
-.riepilogo-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+/* Stili generali */
+.riepilogo-container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef); 
+  padding-bottom: 2rem;
 }
 
-.form-card {
-  width: 100%;
-  max-width: 1000px; 
-  border: none;
-  border-radius: 15px;
-  background: #ffffff;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
-}
-
-.riepilogo-section {
-  margin-bottom: 20px;
-  padding: 20px;
-  border: none;
-  border-radius: 10px;
-  background: #f9f9f9;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.riepilogo-section:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
-}
-
-.section-title {
-  font-size: 18px;
+.riepilogo-title {
+  font-size: 2rem;
   font-weight: 600;
   color: #333;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #007bff; 
-  padding-bottom: 8px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.riepilogo-section p {
-  margin: 8px 0;
-  font-size: 16px;
-  color: #555;
+.riepilogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
-.navigation-buttons {
+.riepilogo-col {
+  width: 100%;
+}
+
+/* Card styles remain the same */
+.riepilogo-card {
+  height: 100%;  /* Make cards equal height */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 1200px) {
+  .riepilogo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .riepilogo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.riepilogo-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.riepilogo-card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+}
+
+.riepilogo-card-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+.riepilogo-icon {
+  margin-right: 8px;
+  color: #666;
+}
+
+.riepilogo-card-body {
+  padding: 20px;
+}
+
+/* Campi e valori */
+.riepilogo-field {
+  margin-bottom: 16px;
+}
+
+.riepilogo-field strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.riepilogo-value {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+}
+
+.riepilogo-description {
+  color: #666;
+  font-style: italic;
+}
+
+/* Pulsanti di navigazione */
+.riepilogo-navigation {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  max-width: 1000px;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
-.nav-button {
+.riepilogo-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  border: none;
+  padding: 10px 20px;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .form-card {
-    padding: 20px;
-  }
-
-  .riepilogo-section {
-    padding: 15px;
-  }
-
-  .section-title {
-    font-size: 16px;
-  }
-
-  .riepilogo-section p {
-    font-size: 14px;
-  }
-
-  .nav-button {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
+.riepilogo-btn-prev {
+  background-color: transparent;
+  border: 1px solid #666;
+  color: #666;
 }
 
-@media (max-width: 480px) {
-  .riepilogo-page {
-    padding: 15px;
-  }
+.riepilogo-btn-prev:hover {
+  background-color: #f8f9fa;
+}
 
-  .form-card {
-    padding: 15px;
-  }
+.riepilogo-btn-next {
+  background-color: #333;
+  border: none;
+  color: #fff;
+}
 
-  .riepilogo-section {
-    padding: 10px;
-  }
+.riepilogo-btn-next:hover {
+  background-color: #555;
+}
 
-  .section-title {
-    font-size: 14px;
-  }
-
-  .riepilogo-section p {
-    font-size: 12px;
-  }
-
-  .nav-button {
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+.riepilogo-btn-icon {
+  margin-right: 8px;
 }

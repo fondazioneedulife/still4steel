@@ -2,23 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
+import { useProductData } from './ContestoProdotto';
 import './QuintaSottopagina.css';
 
 const QuintaSottopagina: React.FC = () => {
-  const [isSuccess, setIsSuccess] = useState<boolean>(false); // Per vedere le 2 animazioni
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Stato di caricamento
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const { addProduct } = useProductData();
 
-  // Simula un caricamento con un timeout
   useEffect(() => {
     const timer = setTimeout(() => {
       // Logica per determinare se il prodotto è stato aggiunto correttamente
-      setIsSuccess(Math.random() > 0.5);
-      setIsLoading(false); // Fine del caricamento
-    }, 2000); // Simula un caricamento di 2 secondi
+      const success = Math.random() > 0.5;
+      setIsSuccess(success);
+
+      if (success) {
+        // Aggiungi il prodotto alla lista
+        const newProduct = {
+          id: Date.now(),
+          sku: 'SKU' + Math.floor(Math.random() * 1000),
+          name: 'Nuovo Prodotto',
+          image: 'https://placehold.co/100x100',
+          quantity: 10,
+          status: 'available',
+        };
+        addProduct(newProduct);
+      }
+
+      setIsLoading(false);
+    }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [addProduct]);
 
   const handleBackToHome = () => {
     navigate('/magazzino');
@@ -58,7 +74,7 @@ const QuintaSottopagina: React.FC = () => {
           Torna al Riepilogo
         </Button>
         <Button variant='dark' onClick={handleBackToHome} className="nav-button btn-next">
-          Torna alla Home
+          Torna al Magazzino
         </Button>
       </div>
     </Container>

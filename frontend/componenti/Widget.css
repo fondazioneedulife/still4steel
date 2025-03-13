@@ -1,218 +1,592 @@
-/* Stile principale per il widget */
+/* Stile per la griglia */
+.widget-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colonne */
+  gap: 26px; /* Spazio tra i widget */
+  max-width: 1200px; /* Limita la larghezza massima */
+  margin: 0 auto; /* Centra la griglia */
+  padding: 0 16px; /* Aggiungi un po' di padding ai lati */
+}
+
+/* Stile base del widget */
 .widget {
-  border: none;
+  border: 1px solid #e0e0e0;
   border-radius: 16px;
   padding: 20px;
   background-color: #ffffff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05); /* Ombra più morbida */
-  margin-bottom: 24px;
-  position: relative;
-  width: 100%; /* Larghezza al 100% per una gestione dinamica */
-  max-width: 600px; /* Larghezza massima per evitare che diventi troppo larga */
-  height: 400px; /* Altezza fissa per uniformità */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Transizioni fluide */
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 350px;
 }
 
 .widget:hover {
-  transform: translateY(-6px); /* Widget sollevato */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra marcata */
-  background-color: #f9f9f9; /* Colore di sfondo leggermente diverso quando si passa sopra */
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
 
-.widget h3 {
-  margin-top: 0;
-  color: #333;
-  font-size: 20px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 0.5px;
-  flex-shrink: 0; /* Evita che il titolo si rimpicciolisca */
-}
-
-.widget-content {
-  margin-top: 16px;
-  flex-grow: 1; /* Per permettere al contenuto di crescere */
-  overflow-y: auto; /* Aggiunge lo scroll se il contenuto è troppo lungo */
-}
-
-.data-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-family: 'Roboto', sans-serif;
-}
-
-.data-label {
-  font-weight: 600;
-  color: #555;
-}
-
-.data-value {
-  font-weight: 500;
-  color: #007bff;
-}
-
-.update-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 50px;
-  cursor: pointer;
+/* Calculator specific styles */
+.calculator {
   width: 100%;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Effetto di hover e animazione */
-  font-size: 16px;
-  margin-top: 16px;
+  max-width: 280px;
+  margin: 0 auto;
+  padding: 15px;
+  background: linear-gradient(145deg, #f6f7f9, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.update-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05); /* Pulsazione al passaggio del mouse */
+.calculator input {
+  width: 100%;
+  height: 60px;
+  margin-bottom: 15px;
+  background: #ffffff;
+  border: 2px solid #eef0f2;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: right;
+  padding: 10px 15px;
+  color: #2c3e50;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.remove-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: white;
-  background-color: #ff5c5c;
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.calculator-buttons button {
+  height: 50px;
+  font-size: 18px;
+  font-weight: 500;
   border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2c3e50;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.remove-button:hover {
-  background-color: #cc0000;
-  transform: scale(1.1); /* Aumenta la dimensione al passaggio del mouse */
+/* Operator buttons */
+.calculator-buttons button:nth-child(4n) {
+  background: #007bff;
+  color: white;
 }
 
-.remove-button:active {
-  transform: scale(0.95); /* Rende il pulsante un po' più piccolo quando cliccato */
+/* Numbers */
+.calculator-buttons button:not(:nth-child(4n)):not(:nth-child(15)):not(:last-child) {
+  background: linear-gradient(145deg, #ffffff, #f6f7f9);
 }
 
-.selected-widget .widget {
-  border: 3px solid #ff5c5c !important; /* Aggiungi un bordo rosso più evidente */
+/* Equal button */
+.calculator-buttons button:nth-child(15) {
+  background: #28a745;
+  color: white;
 }
 
-/* Stile per i widget nel popup */
-.widget-in-modal {
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+/* Clear button */
+.calculator-buttons button:last-child {
+  background: #dc3545;
+  color: white;
 }
 
-.widget-in-modal:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  transform: scale(1.03); /* Leggera espansione quando si passa sopra */
+/* Button hover effects */
+.calculator-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Aggiungi una transizione di colore e ombra per il fondo */
-.widget-in-modal:active {
-  transform: scale(0.98); /* Effetto di riduzione quando cliccato */
-}
-
-/* Media query per schermi piccoli */
-@media (max-width: 768px) {
-  .widget {
-    width: 100%; /* Prende tutta la larghezza disponibile per schermi più piccoli */
-    height: auto; /* Altezza automatica per gestire il contenuto */
-  }
-
-  .widget h3 {
-    font-size: 18px;
-  }
-
-  .update-button {
-    font-size: 14px;
-    padding: 8px 16px;
-  }
-}
-.color-picker-container {
-  position: absolute;
-  top: 3rem;
-  right: 0.5rem;
-  z-index: 1000;
-  background: white;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.calculator-buttons button:active {
+  transform: translateY(1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.customize-button {
-  font-size: 1.2rem;
-  z-index: 1001; /* Assicura che il pulsante sia sopra il selettore di colore */
+/* Dark theme */
+.widget-dark .calculator {
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+}
+
+.widget-dark .calculator input {
+  background: #2c3e50;
+  border-color: #34495e;
+  color: #ffffff;
+}
+
+.widget-dark .calculator-buttons button:not(:nth-child(4n)):not(:nth-child(15)):not(:last-child) {
+  background: #34495e;
+  color: #ffffff;
+}
+
+.widget-dark .calculator-buttons button:hover {
+  background: #3d566e;
+}
+
+/* Stile per il widget Stato Vendite */
+.sales-status-widget {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
-/* Media query per schermi più piccoli (mobile-first) */
-@media (max-width: 480px) {
-  .widget {
-    width: 100%; /* I widget saranno responsivi al 100% della larghezza */
-    max-width: 100%; /* Rimuove il limite massimo per schermi molto piccoli */
-    margin: 8px 0; /* Riduce il margine tra i widget */
+/* Stile per il widget Stato Magazzino */
+.inventory-level-widget {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.level-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.level-fill {
+  height: 100%;
+  background-color: #0088fe;
+  border-radius: 5px;
+  transition: width 0.5s ease;
+}
+
+.level-text {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Stile per il widget Andamento Clienti */
+.customer-trend-widget {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trend-indicator {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* Stile per il widget Stato Dipendenti */
+.employee-status-widget {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-container {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+/* Stile per il widget Stato Fornitori */
+.supplier-status-widget {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-container {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+/* Responsive: 2 colonne su schermi medi */
+@media (max-width: 992px) {
+  .widget-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .update-button {
-    font-size: 14px;
-    padding: 6px 12px;
+/* Responsive: 1 colonna su schermi piccoli */
+@media (max-width: 768px) {
+  .widget-grid {
+    grid-template-columns: 1fr;
   }
 }
-/* Tema scuro */
-.widget-dark-mode {
-  background-color: #2d2d2d !important;
-  color: #f0f0f0 !important;
-  border-color: #444 !important;
+
+.widget {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.widget-dark-mode h3 {
-  color: #f0f0f0 !important;
+.chart-container {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
 }
 
-.widget-dark-mode .data-label {
-  color: #ccc !important;
+/* Calendar Widget */
+.simple-calendar {
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-.widget-dark-mode .data-value {
-  color: #82ca9d !important;
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
-.widget-dark-mode .update-button {
-  background-color: #444 !important;
-  color: #f0f0f0 !important;
-}
-
-.widget-dark-mode .remove-button {
-  background-color: #666 !important;
-}
-
-.widget-dark-mode .chart-container {
-  filter: brightness(0.8);
-}
-
-/* Stile per il pulsante della luna */
-.dark-mode-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 2.5rem;
-  background: transparent;
+.calendar-header button {
+  padding: 0.5rem;
+  background: none;
   border: none;
   cursor: pointer;
-  color: #333;
-  transition: color 0.3s ease;
+  font-size: 1rem;
 }
 
-.dark-mode-button:hover {
-  color: #007bff;
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.calendar-day-header {
+  text-align: center;
+  padding: 0.25rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.calendar-date {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.25rem;
+}
+
+.calendar-date.selected {
+  background-color: #333;
+  color: white;
+}
+
+.calendar-date.empty {
+  background-color: transparent;
+  cursor: default;
+}
+
+.calendar-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.event-item {
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
+  transition: background-color 0.2s;
+}
+
+.event-item:hover {
+  background-color: #e0e0e0;
+}
+
+/* Dark theme support for Calendar */
+.widget-dark .calendar-date {
+  border-color: #444;
+  color: #fff;
+}
+
+.widget-dark .calendar-event-form,
+.widget-dark .events-list {
+  background-color: #2c3e50;
+}
+
+.widget-dark .event-item {
+  background-color: #34495e;
+  border-color: #2c3e50;
+  color: #fff;
+}
+
+.widget-dark .event-item:hover {
+  background-color: #3d566e;
+}
+
+.chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 200px;
+  position: relative;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 768px) {
+  .widget {
+    min-height: 250px;
+  }
+  
+  .chart-container {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .widget {
+    min-height: 200px;
+  }
+  
+  .chart-container {
+    min-height: 150px;
+  }
+}
+
+/* Ensure charts are responsive */
+.recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Make other widget types responsive */
+.calculator,
+.simple-calendar,
+.notes-textarea,
+.tasklist-container,
+.sales-status-widget,
+.inventory-level-widget,
+.customer-trend-widget,
+.employee-status-widget,
+.supplier-status-widget {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Ensure text and controls scale properly */
+@media (max-width: 480px) {
+  .widget h3 {
+    font-size: 1rem;
+  }
+  
+  .widget button,
+  .widget input,
+  .widget textarea {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .widget h3 {
+    font-size: 1rem;
+  }
+
+  .chart-container {
+    min-height: 120px;
+  }
+
+  .calculator-buttons button {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  .status-item {
+    min-width: 90px;
+    font-size: 0.8rem;
+  }
+
+  .tasklist-container li {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+/* TaskList Widget */
+.tasklist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  height: 100%;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 12px;
+}
+
+.tasklist-container input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tasklist-container input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.tasklist-container button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tasklist-container button:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.tasklist-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  max-height: calc(100% - 100px);
+}
+
+.tasklist-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tasklist-container li:hover {
+  transform: translateX(5px);
+  border-color: #007bff;
+}
+
+.tasklist-container li button {
+  padding: 6px 12px;
+  background: #dc3545;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.tasklist-container li button:hover {
+  background: #c82333;
+  opacity: 1;
+}
+
+/* Dark theme support for TaskList */
+.widget-dark .tasklist-container {
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+}
+
+.widget-dark .tasklist-container input {
+  background: #2c3e50;
+  border-color: #34495e;
+  color: #ffffff;
+}
+
+.widget-dark .tasklist-container li {
+  background: #34495e;
+  border-color: #2c3e50;
+  color: #ffffff;
+}
+
+.widget-dark .tasklist-container li:hover {
+  border-color: #007bff;
+  background: #3d566e;
+}
+
+/* Notes Widget */
+.notes-textarea {
+  width: 100%;
+  height: calc(100% - 20px);
+  padding: 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.notes-textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  outline: none;
+}
+
+.notes-textarea::placeholder {
+  color: #95a5a6;
+  opacity: 0.7;
+}
+
+/* Dark theme support for Notes */
+.widget-dark .notes-textarea {
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+  border-color: #34495e;
+  color: #ffffff;
+}
+
+.widget-dark .notes-textarea::placeholder {
+  color: #bdc3c7;
+}
+
+.widget-dark .notes-textarea:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.15);
 }

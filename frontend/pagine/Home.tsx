@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
+import { useProductData } from './ProductContex';  // Simplified import path
 import {
   DndContext,
   closestCenter,
@@ -18,33 +19,32 @@ import {
 } from '@dnd-kit/sortable';
 import SortableWidget from '../componenti/SortableWidget';
 import { Widget } from '../Types/types';
-import '../componenti/Widget.css'; 
+import '../componenti/Widget.css';
 
-// Lista di widget disponibili
 const availableWidgets: Widget[] = [
   {
     id: 'widget-1',
-    type: 'entrate',
-    title: 'Entrate Mensili',
+    type: 'utenti',
+    title: 'Nuovi Utenti Mensili',
     data: [
-      { name: 'Gen', value: 10000 },
-      { name: 'Feb', value: 12000 },
-      { name: 'Mar', value: 8000 },
+      { name: 'Gen', value: 120 },
+      { name: 'Feb', value: 150 },
+      { name: 'Mar', value: 200 },
     ],
-    theme: 'light', 
+    theme: 'light',
     color: '#8884d8',
   },
   {
     id: 'widget-2',
-    type: 'uscite',
-    title: 'Uscite Annuali',
+    type: 'vendite',
+    title: 'Vendite Annuali',
     data: [
-      { name: 'Gen', value: 5000 },
-      { name: 'Feb', value: 6000 },
-      { name: 'Mar', value: 4000 },
+      { name: 'Gen', value: 50000 },
+      { name: 'Feb', value: 60000 },
+      { name: 'Mar', value: 70000 },
     ],
-    theme: 'dark',
-    color: '#82ca9d', 
+    theme: 'light',
+    color: '#82ca9d',
   },
   {
     id: 'widget-3',
@@ -56,50 +56,110 @@ const availableWidgets: Widget[] = [
       { name: 'Esaurito', value: 10 },
     ],
     theme: 'light',
-    color: '#FF8042', 
+    color: '#FF8042',
   },
   {
     id: 'widget-4',
-    type: 'vendite',
-    title: 'Vendite Giornaliere',
+    type: 'dipendenti',
+    title: 'Produttività Dipendenti',
     data: [
-      { name: 'Lun', value: 200 },
-      { name: 'Mar', value: 300 },
-      { name: 'Mer', value: 400 },
-      { name: 'Gio', value: 350 },
-      { name: 'Ven', value: 500 },
-    ],
-    theme: 'dark',
-    color: '#0088FE', 
-  },
-  {
-    id: 'widget-5',
-    type: 'ordini',
-    title: 'Stato Ordini',
-    data: [
-      { name: 'In Attesa', value: 15 },
-      { name: 'Spediti', value: 30 },
-      { name: 'Consegnati', value: 55 },
+      { name: 'Lun', value: 80 },
+      { name: 'Mar', value: 90 },
+      { name: 'Mer', value: 85 },
+      { name: 'Gio', value: 95 },
+      { name: 'Ven', value: 100 },
     ],
     theme: 'light',
-    color: '#FFBB28', 
+    color: '#0088FE',
+  },
+  {
+    id: 'widget-8',
+    type: 'calcolatrice',
+    title: 'Calcolatrice',
+    data: [],
+    theme: 'light',
+    color: '#82ca9d',
+  },
+  {
+    id: 'widget-9',
+    type: 'tasklist',
+    title: 'Tasklist',
+    data: [],
+    theme: 'light',
+    color: '#0088FE',
+  },
+  {
+    id: 'widget-10',
+    type: 'notes',
+    title: 'Notes',
+    data: [{ start: new Date(), end: new Date(), title: '' }],
+    theme: 'light',
+    color: '#FFBB28',
+  },
+  {
+    id: 'widget-11',
+    type: 'sales-status',
+    title: 'Stato Vendite',
+    data: [],
+    theme: 'light',
+    color: '#82ca9d',
+  },
+  {
+    id: 'widget-12',
+    type: 'inventory-level',
+    title: 'Stato Magazzino',
+    data: [],
+    theme: 'light',
+    color: '#FF8042',
+  },
+  {
+    id: 'widget-13',
+    type: 'customer-trend',
+    title: 'Andamento Clienti',
+    data: [
+      { name: 'Gen', value: 120 },
+      { name: 'Feb', value: 150 },
+      { name: 'Mar', value: 200 },
+    ],
+    theme: 'light',
+    color: '#8884d8',
+  },
+  {
+    id: 'widget-14',
+    type: 'employee-status',
+    title: 'Stato Dipendenti',
+    data: [],
+    theme: 'light',
+    color: '#0088FE',
+  },
+  {
+    id: 'widget-15',
+    type: 'supplier-status',
+    title: 'Stato Fornitori',
+    data: [],
+    theme: 'light',
+    color: '#FFBB28',
+  },
+  {
+    id: 'widget-16',
+    type: 'calendar',
+    title: 'Calendario',
+    data: [],
+    theme: 'light',
+    color: '#82ca9d',
   },
 ];
 
-// Home
 const Home: React.FC = () => {
   const [homeWidgets, setHomeWidgets] = useState<Widget[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [activeWidget, setActiveWidget] = useState<Widget | null>(null);
-  const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null); // Stato per il widget selezionato
+  const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
 
-  // Sensori per il drag & drop
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
-  // Genera un ID univoco per i widget nella home
   const generateUniqueId = (baseId: string) => `${baseId}-${Date.now()}`;
 
-  // Inizia il drag
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
     const widget = availableWidgets.find((w) => w.id === active.id) || homeWidgets.find((w) => w.id === active.id);
@@ -108,15 +168,13 @@ const Home: React.FC = () => {
     }
   };
 
-  // Termina il drag
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    setActiveWidget(null); // Resetta il widget attivo
+    setActiveWidget(null);
 
     if (!over) return;
 
     if (!homeWidgets.some((w) => w.id === active.id)) {
-      // Se il widget viene trascinato nella home dalla lista dei disponibili
       const widgetToAdd = availableWidgets.find((w) => w.id === active.id);
       if (widgetToAdd) {
         const newWidget = {
@@ -126,7 +184,6 @@ const Home: React.FC = () => {
         setHomeWidgets([...homeWidgets, newWidget]);
       }
     } else {
-      // Se il widget viene riordinato all'interno della home
       const activeIndex = homeWidgets.findIndex((w) => w.id === active.id);
       const overIndex = homeWidgets.findIndex((w) => w.id === over.id);
 
@@ -137,32 +194,19 @@ const Home: React.FC = () => {
     }
   };
 
-  // Rimuove un widget dalla home
   const handleRemoveWidget = (id: string) => {
     setHomeWidgets(homeWidgets.filter((widget) => widget.id !== id));
   };
 
-  // Aggiorna il colore di un widget
-  const handleUpdateColor = (id: string, newColor: string) => {
-    setHomeWidgets((prevWidgets) =>
-      prevWidgets.map((widget) =>
-        widget.id === id ? { ...widget, color: newColor } : widget
-      )
-    );
-  };
-
-  // Alterna la visibilità della modale
   const toggleModal = () => {
     setShowModal(!showModal);
-    setSelectedWidgetId(null); // Resetta il widget selezionato quando la modale viene chiusa
+    setSelectedWidgetId(null);
   };
 
-  // Gestisce il clic su un widget nel popup
   const handleWidgetClick = (id: string) => {
-    setSelectedWidgetId(id); // Imposta il widget selezionato
+    setSelectedWidgetId(id);
   };
 
-  // Aggiunge il widget selezionato alla home
   const handleAddWidget = () => {
     if (selectedWidgetId) {
       const widgetToAdd = availableWidgets.find((w) => w.id === selectedWidgetId);
@@ -172,30 +216,13 @@ const Home: React.FC = () => {
           id: generateUniqueId(widgetToAdd.id),
         };
         setHomeWidgets([...homeWidgets, newWidget]);
-        setSelectedWidgetId(null); // Resetta il widget selezionato
-        setShowModal(false); // Chiudi la modale
+        setSelectedWidgetId(null);
+        setShowModal(false);
       } else {
         alert('Questo widget è già stato aggiunto.');
       }
     }
   };
-
-  // Simula l'aggiornamento automatico dei dati
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHomeWidgets((prevWidgets) =>
-        prevWidgets.map((widget) => ({
-          ...widget,
-          data: widget.data.map((item) => ({
-            ...item,
-            value: item.value + Math.floor(Math.random() * 10), 
-          })),
-        }))
-      );
-    }, 5000); 
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <DndContext
@@ -204,37 +231,30 @@ const Home: React.FC = () => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <Container className="mt-4">
-        <h1></h1>
+      <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
+        <h1>Dashboard</h1>
         <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
           +
         </Button>
 
-        {/* Zona droppabile della Home */}
-        <div
-          className="mt-3 droppable-area"
-        >
+        <div className="mt-3 droppable-area">
           <SortableContext items={homeWidgets} strategy={verticalListSortingStrategy}>
-            <Row>
+            <div className="widget-grid">
               {homeWidgets.map((widget) => (
-                <Col key={widget.id} xs={12} md={6} className="mb-3">
-                  <SortableWidget
-                    widget={widget}
-                    onRemove={handleRemoveWidget}
-                    onUpdateColor={handleUpdateColor}
-                  />
-                </Col>
+                <SortableWidget
+                  key={widget.id}
+                  widget={widget}
+                  onRemove={handleRemoveWidget}
+                />
               ))}
-            </Row>
+            </div>
           </SortableContext>
         </div>
 
-        {/* Overlay per il widget trascinato */}
         <DragOverlay>
           {activeWidget ? <SortableWidget widget={activeWidget} /> : null}
         </DragOverlay>
 
-        {/* Modale per i widget disponibili */}
         <Modal show={showModal} onHide={toggleModal} centered size="lg">
           <Modal.Header closeButton>
             <Modal.Title>Widget Disponibili</Modal.Title>
@@ -247,7 +267,6 @@ const Home: React.FC = () => {
                     className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
                     onClick={() => handleWidgetClick(widget.id)}
                   >
-                    
                     <SortableWidget widget={widget} isInModal />
                   </div>
                 </Col>

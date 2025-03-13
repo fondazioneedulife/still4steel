@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button, Card, Form } from 'react-bootstrap'; 
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button, Card, Form } from 'react-bootstrap';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Spedizioni.css';
 
 const Spedizioni: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedStatus, setSelectedStatus] = useState<string>('');
-  const navigate = useNavigate(); 
+  const [shipments, setShipments] = useState([
+    { id: 1, trackingNumber: 'TRK123456', status: 'In transito', date: '2024-10-01', sender: 'Mittente A', recipient: 'Destinatario X', weight: '2 kg' },
+    { id: 2, trackingNumber: 'TRK789012', status: 'Consegnato', date: '2024-09-28', sender: 'Mittente B', recipient: 'Destinatario Y', weight: '5 kg' },
+    { id: 3, trackingNumber: 'TRK345678', status: 'In elaborazione', date: '2025-02-05', sender: 'Mittente C', recipient: 'Destinatario Z', weight: '1 kg' },
+    { id: 4, trackingNumber: 'TRK901234', status: 'In transito', date: '2025-02-03', sender: 'Mittente D', recipient: 'Destinatario W', weight: '3 kg' },
+    { id: 5, trackingNumber: 'TRK567890', status: 'Consegnato', date: '2025-02-30', sender: 'Mittente E', recipient: 'Destinatario V', weight: '4 kg' },
+    { id: 6, trackingNumber: 'TRK123890', status: 'In elaborazione', date: '2025-03-06', sender: 'Mittente F', recipient: 'Destinatario U', weight: '2.5 kg' },
+  ]);
 
-  // Lista di spedizioni di esempio
-  const shipments = [
-    { id: 1, trackingNumber: 'TRK123456', status: 'In transito', date: '2023-10-01', sender: 'Mittente A', recipient: 'Destinatario X', weight: '2 kg' },
-    { id: 2, trackingNumber: 'TRK789012', status: 'Consegnato', date: '2023-09-28', sender: 'Mittente B', recipient: 'Destinatario Y', weight: '5 kg' },
-    { id: 3, trackingNumber: 'TRK345678', status: 'In elaborazione', date: '2023-10-05', sender: 'Mittente C', recipient: 'Destinatario Z', weight: '1 kg' },
-    { id: 4, trackingNumber: 'TRK901234', status: 'In transito', date: '2023-10-03', sender: 'Mittente D', recipient: 'Destinatario W', weight: '3 kg' },
-    { id: 5, trackingNumber: 'TRK567890', status: 'Consegnato', date: '2023-09-30', sender: 'Mittente E', recipient: 'Destinatario V', weight: '4 kg' },
-    { id: 6, trackingNumber: 'TRK123890', status: 'In elaborazione', date: '2023-10-06', sender: 'Mittente F', recipient: 'Destinatario U', weight: '2.5 kg' },
-  ];
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Aggiungi le spedizioni importate alla lista
+  useEffect(() => {
+    const importedShipments = location.state?.importedShipments || [];
+    if (importedShipments.length > 0) {
+      setShipments((prevShipments) => [...prevShipments, ...importedShipments]);
+    }
+  }, [location.state]);
 
   // Filtra le spedizioni in base al termine di ricerca e allo stato
   const filteredShipments = shipments.filter((shipment) => {
@@ -27,10 +35,16 @@ const Spedizioni: React.FC = () => {
 
   return (
     <Container className="spedizioni-page">
-      {/* Titolo della pagina */}
       <h1 className="page-title">Spedizioni</h1>
+      <Row className="mb-4">
+        <Col>
+          <Button variant="dark" style={{ fontSize: '0.9rem'}} onClick={() => navigate('/importa-spedizioni')}>
+            Importa
+          </Button>
+        </Col>
+      </Row>
 
-      {/* Filtri */}
+      {/* Filtri e pulsante di importazione */}
       <Row className="mb-4">
         <Col md={6} className="mb-2">
           <Form.Control
@@ -52,7 +66,6 @@ const Spedizioni: React.FC = () => {
           </Form.Select>
         </Col>
       </Row>
-
       {/* Lista delle spedizioni */}
       <Row>
         {filteredShipments.map((shipment) => (
