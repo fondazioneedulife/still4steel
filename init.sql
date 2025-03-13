@@ -35,7 +35,6 @@ VALUES  ('Magazzino Centrale Milano', 'Via Milano 100, Milano', 'Stoccaggio', 'M
         ('Stoccaggio Materie Prime Firenze', 'Via Firenze 55, Firenze', 'Stoccaggio', 'Deposito per materie prime utilizzate nella produzione.', 4),
         ('Magazzino Rimini', 'Via Rimini 10, Rimini', 'Distribuzione', 'Magazzino destinato alla spedizione dei prodotti finiti.', 5);
 
-
 CREATE TABLE iva (
     iva_id SERIAL PRIMARY KEY,
     rate DECIMAL(5,2) NOT NULL,
