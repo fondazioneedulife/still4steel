@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 
-export const getCategories = async (req, res) => {
+export const getAllCategories = async (req, res) => {
     console.log("✅ GET /categories chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM categories");
@@ -85,4 +85,5 @@ export const deleteCategory = async (req, res) => {
         console.error("Errore nell'eliminazione della categoria:", error);
         res.status(500).json({ error: "Errore nel server" });
     }
+
 };

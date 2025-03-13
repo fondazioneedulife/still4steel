@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 // Ottieni tutte le aziende
-export const getCompanies = async (req, res) => {
+export const getAllCompanies = async (req, res) => {
     console.log("✅ GET /companies chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM companies");
@@ -32,20 +32,17 @@ export const createCompany = async (req, res) => {
   try {
     const { 
       name, vat, tax_code, phone, email, address, 
-      password, password_confirm, note 
+      password, note 
     } = req.body;
 
-    if (password !== password_confirm) {
-      return res.status(400).json({ error: "Le password non corrispondono" });
-    }
 
     const result = await pool.query(
       `INSERT INTO companies 
-        (name, vat, tax_code, phone, email, address, password, password_confirm, note) 
+        (name, vat, tax_code, phone, email, address, password, note) 
       VALUES 
         ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
       RETURNING *`,
-      [name, vat, tax_code, phone, email, address, password, password_confirm, note]
+      [name, vat, tax_code, phone, email, address, password, note]
     );
 
     res.status(201).json({ message: "Azienda creata", company: result.rows[0] });
@@ -90,7 +87,6 @@ export const deleteCompany = async (req, res) => {
   } catch (error) {
     console.error("Errore nell'eliminazione dell'azienda:", error);
     res.status(500).json({ error: "Errore nel server" });
-  }
+  } 
 };
-
 

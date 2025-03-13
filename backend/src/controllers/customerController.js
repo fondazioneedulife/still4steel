@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-export const getCustomers = async (req, res) => {
+export const getAllCustomers = async (req, res) => {
     console.log("✅ GET /customers chiamata"); // DEBUG
     try {
         const result = await pool.query("SELECT * FROM customers");
@@ -29,7 +29,8 @@ export const createCustomer = async (req, res) => {
     try {
         const { first_name, last_name, email, age, note } = req.body;
 
-        if (!first_name || !last_name || !email) {
+        if (!first_name  !last_name  !email) {
+
             return res.status(400).json({ error: "I campi first_name, last_name ed email sono obbligatori" });
         }
 

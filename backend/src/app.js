@@ -2,29 +2,29 @@ import express from "express";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
 import { router as authRoutes } from "./routes/auth.js";
-import companyRoutes from "./routes/companyRoutes.js";
-import warehousesRouter from "./routes/warehouseRoutes.js";
-import ivaRouter from "./routes/ivaRoutes.js"
-import productRouter from "./routes/productRoutes.js"
-import categoryRoutes from "./routes/categoryRoutes.js";
-import product_categoryRoutes from "./routes/product_categoryRoutes.js"
-import discountRoutes from "./routes/discountRoutes.js"
-import product_discountRoutes from "./routes/product_discountRoutes.js"
-import customerRoutes from "./routes/customerRoutes.js"
-import company_customerRoutes from "./routes/company_customerRoutes.js";
+import companiesRoutes from "./routes/companiesRoutes.js";
+import warehousesRoutes from "./routes/warehousesRoutes.js";
+import ivaRoutes from "./routes/ivaRoutes.js"
+import productsRoutes from "./routes/productsRoutes.js"
+import categoriesRoutes from "./routes/categoriesRoutes.js";
+import productCategoriesRoutes from "./routes/productCategoriesRoutes.js"
+import discountsRoutes from "./routes/discountRoutes.js"
+import productDiscountsRoutes from "./routes/productDiscountsRoutes.js"
+import customersRoutes from "./routes/customerRoutes.js"
+import companyCustomersRoutes from "./routes/companyCustomersRoutes.js";
 import suppliersRoutes from "./routes/suppliersRoutes.js";
 import suppliesRoutes from "./routes/suppliesRoutes.js";
-import companySupplyRoutes from "./routes/companySupplyRoutes.js";
+import companySuppliesRoutes from "./routes/companySuppliesRoutes.js";
 import ordersRoutes from "./routes/ordersRoutes.js";
 import rendersRoutes from "./routes/rendersRoutes.js";
 import salesRoutes from "./routes/salesRoutes.js";
-import salePaymentRoutes from "./routes/salePaymentRoutes.js";
-import companySupplierRoutes from "./routes/companySupplierRoutes.js";
-import supplyProductRoutes from "./routes/supplyProductRoutes.js";
-import invoiceRoutes from "./routes/invoiceRoutes.js";
+import salePaymentsRoutes from "./routes/salePaymentsRoutes.js";
+import companySuppliersRoutes from "./routes/companySuppliersRoutes.js";
+import supplyProductsRoutes from "./routes/supplyProductsRoutes.js";
+import invoicesRoutes from "./routes/invoicesRoutes.js";
 import orderDetailsRoutes from "./routes/orderDetailsRoutes.js";
 import paymentsRoutes from "./routes/paymentsRoutes.js";
-import saleDiscountRoutes from "./routes/saleDiscountRoutes.js";
+import saleDiscountsRoutes from "./routes/saleDiscountsRoutes.js";
 import logsRoutes from "./routes/logsRoutes.js";
 import tokenRoutes from "./routes/token.js";
 import endpointRoutes from "./endpoint/endpointRoutes.js";
@@ -43,79 +43,80 @@ app.use("/endpoint", endpointRoutes);
 app.use("/api/auth", authRoutes);
 
 // CRUD companies
-app.use("/api/company", companyRoutes);
+app.use("/api/companies", companiesRoutes);
 
-// CRUD warehouse
-app.use("/api/warehouse", warehousesRouter);
+// CRUD warehouses
+app.use("/api/warehouses", warehousesRoutes);
 
-// CRUD iva
-app.use("/api/iva", ivaRouter);
+// CRUD IVA
+app.use("/api/iva", ivaRoutes);
 
-// CRUD product
-app.use("/api/product", productRouter);
+// CRUD products
+app.use("/api/products", productsRoutes);
 
-// CRUD category
-app.use("/api/category", categoryRoutes);
+// CRUD categories
+app.use("/api/categories", categoriesRoutes);
 
-// CRUD product_category
-app.use("/api/product_category", product_categoryRoutes);
+// CRUD productCategories
+app.use("/api/productCategories", productCategoriesRoutes);
 
-// CRUD discount
-app.use("/api/discount", discountRoutes);
+// CRUD discounts
+app.use("/api/discounts", discountsRoutes);
 
-// CRUD product_discount
-app.use("/api/product_discount", product_discountRoutes);
+// CRUD productDiscounts
+app.use("/api/productDiscounts", productDiscountsRoutes);
 
-// CRUD customer
-app.use("/api/customer", customerRoutes);
+// CRUD customers
+app.use("/api/customers", customersRoutes);
 
-// CRUD company_customer
-app.use("/api/company_customer", company_customerRoutes);
+// CRUD companyCustomers
+app.use("/api/companyCustomers", companyCustomersRoutes);
 
-// CRUD suppliersCustomer
-app.use("/api/suppliersCustomer", suppliersRoutes);
+// CRUD supplierCustomers
+app.use("/api/supplierCustomers", suppliersRoutes);
 
-// CRUD suppliesCustomer
-app.use("/api/suppliesCustomer", suppliesRoutes);
+// CRUD supplyCustomers
+app.use("/api/supplyCustomers", suppliesRoutes);
 
-// CRUD companySupplyCustomer
-app.use("/api/companySupplyCustomer", companySupplyRoutes);
+// CRUD companySupplies
+app.use("/api/companySupplies", companySuppliesRoutes);
 
-// CRUD ordersCustomer
-app.use("/api/order", ordersRoutes);
+// CRUD orders
+app.use("/api/orders", ordersRoutes);
 
-// CRUD rendersCustomer
-app.use("/api/rendersCustomer", rendersRoutes);
+// CRUD renderCustomers
+app.use("/api/renderCustomers", rendersRoutes);
 
-// CRUD salesCustomer
-app.use("/api/salesCustomer", salesRoutes);
+// CRUD saleCustomers
+app.use("/api/saleCustomers", salesRoutes);
 
-// CRUD salePaymentCustomer
-app.use("/api/salePaymentCustomer", salePaymentRoutes);
+// CRUD salePayments
+app.use("/api/salePayments", salePaymentsRoutes);
+
+// CRUD companySuppliers
+app.use("/api/companySuppliers", companySuppliersRoutes);
+
+// CRUD supplyProducts
+app.use("/api/supplyProducts", supplyProductsRoutes);
+
+// CRUD invoices
+app.use("/api/invoices", invoicesRoutes);
+
+// CRUD orderDetails
+app.use("/api/orderDetails", orderDetailsRoutes);
+
+// CRUD payments
+app.use("/api/payments", paymentsRoutes);
+
+// CRUD saleDiscounts
+app.use("/api/saleDiscounts", saleDiscountsRoutes);
+
+// Gestione di logs
+app.use("/api/logs", logsRoutes);
+
 
 // Documentazione Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 
-// Gestione delle associazioni azienda-fornitore
-app.use("/api/company_suppliers", companySupplierRoutes);
-
-// Gestione delle associazioni prodotto-fornitura
-app.use("/api/supply_products", supplyProductRoutes);
-
-// Gestione delle fatture
-app.use("/api/invoices", invoiceRoutes);
-
-// Gestione dei dettagli ordine
-app.use("/api/order_details", orderDetailsRoutes);
-
-// Gestione dei pagamenti
-app.use("/api/payments", paymentsRoutes);
-
-// Gestione delle associazioni vendita-sconto
-app.use("/api/sale_discounts", saleDiscountRoutes);
-
-// Gestione dei log
-app.use("/api/logs", logsRoutes);
 
 export default app;
-
