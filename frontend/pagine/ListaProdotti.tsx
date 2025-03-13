@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './ListaProdotti.css';
-import { useProductData } from './ProductContex';
+import { useProductData } from './ContestoProdotto';
 
 // const products = [
 //   { id: 1, sku: 'SKU123', name: 'Prodotto A', image: 'https://placehold.co/100x100', quantity: 10, status: 'available' },

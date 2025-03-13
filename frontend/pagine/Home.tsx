@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
-import { useProductData } from './ProductContex';  // Simplified import path
+import { useProductData } from './ContestoProdotto';  // Simplified import path
 import {
   DndContext,
   closestCenter,
