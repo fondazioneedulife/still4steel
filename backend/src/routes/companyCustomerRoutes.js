@@ -3,7 +3,7 @@ import {
     getAllCompanyCustomers, 
     getCompanyCustomerById, 
     createCompanyCustomer, 
-    updateCompanyCustomer, 
+    updateCompanyCustomer,
     deleteCompanyCustomer 
 } from "../controllers/companyCustomerController.js";
 
@@ -104,16 +104,16 @@ router.post("/", createCompanyCustomer);
  *         description: ID della relazione da aggiornare
  *         schema:
  *           type: object
- *             required:
- *               - company_id
- *               - customer_id
- *             properties:
- *               company_id:
- *                 type: integer
- *                 description: ID dell'azienda
- *               customer_id:
- *                 type: integer
- *                 description: ID del cliente
+ *           required:
+ *             - company_id
+ *             - customer_id
+ *           properties:
+ *             company_id:
+ *               type: integer
+ *               description: ID dell'azienda
+ *             customer_id:
+ *               type: integer
+ *               description: ID del cliente
  *     responses:
  *       200:
  *         description: Relazione aggiornata con successo

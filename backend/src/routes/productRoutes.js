@@ -91,7 +91,7 @@ router.get("/:id", getProductById);
  *                 description: Codice univoco del prodotto
  *               unit_price:
  *                 type: number
- *               format: float
+ *                 format: float
  *                 description: Prezzo unitario del prodotto
  *               quantity:
  *                 type: integer
