@@ -26,18 +26,18 @@ import orderDetailsRoutes from "./routes/orderDetailsRoutes.js";
 import paymentsRoutes from "./routes/paymentsRoutes.js";
 import saleDiscountsRoutes from "./routes/saleDiscountsRoutes.js";
 import logsRoutes from "./routes/logsRoutes.js";
-import tokenRoutes from "./routes/token.js";
-import endpointRoutes from "./endpoint/endpointRoutes.js";
+//import tokenRoutes from "./routes/token.js";
+//import endpointRoutes from "./endpoint/endpointRoutes.js";
 
 
 const app = express();
 app.use(express.json());
 
 // Token
-app.use("/api/token", tokenRoutes);
+//app.use("/api/token", tokenRoutes);
 
 //endpoint
-app.use("/endpoint", endpointRoutes);
+//app.use("/endpoint", endpointRoutes);
 
 // Rotte API
 app.use("/api/auth", authRoutes);
