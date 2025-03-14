@@ -5,7 +5,7 @@ import {
     createSupplyProduct,
     updateSupplyProduct,
     deleteSupplyProduct
-} from "../controllers/supplyProductController.js";
+} from "../controllers/supplyProductsController.js";
 
 
 const router = express.Router();

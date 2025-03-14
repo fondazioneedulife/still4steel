@@ -5,7 +5,7 @@ import {
     createDiscount, 
     updateDiscount, 
     deleteDiscount 
-} from "../controllers/discountController.js";
+} from "../controllers/discountsController.js";
 
 
 const router = express.Router();

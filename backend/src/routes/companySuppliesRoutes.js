@@ -1,11 +1,11 @@
 import express from "express";
 import { 
-    getAllCompanyCustomers, 
-    getCompanyCustomerById, 
-    createCompanyCustomer, 
-    updateCompanyCustomer,
-    deleteCompanyCustomer 
-} from "../controllers/companyCustomerController.js";
+  getAllCompanySupplies, 
+  getCompanySupplyById, 
+  createCompanySupply, 
+  updateCompanySupply, 
+  deleteCompanySupply 
+} from "../controllers/companySuppliesController.js";
 
 
 const router = express.Router();
@@ -14,32 +14,32 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: CompanyCustomers
- *   description: API per la gestione della relazione tra aziende e clienti
+ *   name: CompanySupplies
+ *   description: API per la gestione della relazione tra aziende e forniture
  */
 
 
 /**
  * @swagger
- * /company-customers:
+ * /company-supplies:
  *   get:
- *     summary: Ottiene tutte le relazioni tra aziende e clienti
- *     tags: [CompanyCustomers]
+ *     summary: Ottiene tutte le relazioni tra aziende e forniture
+ *     tags: [CompanySupplies]
  *     responses:
  *       200:
  *         description: Lista delle relazioni
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getAllCompanyCustomers);
+router.get("/", getAllCompanySupplies);      
 
 
 /**
  * @swagger
- * /company-customers/{id}:
+ * /company-supplies/{id}:
  *   get:
- *     summary: Ottiene una relazione azienda-cliente per ID
- *     tags: [CompanyCustomers]
+ *     summary: Ottiene una relazione azienda-fornitura per ID
+ *     tags: [CompanySupplies]
  *     parameters:
  *       - in: path
  *         name: id
@@ -55,15 +55,15 @@ router.get("/", getAllCompanyCustomers);
  *       500:
  *         description: Errore interno del server
  */
-router.get("/:id", getCompanyCustomerById);
+router.get("/:id", getCompanySupplyById); 
 
 
 /**
  * @swagger
- * /company-customers:
+ * /company-supplies:
  *   post:
- *     summary: Crea una nuova relazione azienda-cliente
- *     tags: [CompanyCustomers]
+ *     summary: Crea una nuova relazione tra azienda e fornitura
+ *     tags: [CompanySupplies]
  *     requestBody:
  *       required: true
  *       content:
@@ -72,14 +72,14 @@ router.get("/:id", getCompanyCustomerById);
  *             type: object
  *             required:
  *               - company_id
- *               - customer_id
+ *               - supply_id
  *             properties:
  *               company_id:
  *                 type: integer
  *                 description: ID dell'azienda
- *               customer_id:
+ *               supply_id:
  *                 type: integer
- *                 description: ID del cliente
+ *                 description: ID della fornitura
  *     responses:
  *       201:
  *         description: Relazione creata con successo
@@ -88,32 +88,35 @@ router.get("/:id", getCompanyCustomerById);
  *       500:
  *         description: Errore interno del server
  */
-router.post("/", createCompanyCustomer);
+router.post("/", createCompanySupply);   
 
 
 /**
  * @swagger
- * /company-customers/{id}:
+ * /company-supplies/{id}:
  *   put:
- *     summary: Aggiorna una relazione tra azienda e cliente esistente
- *     tags: [CompanyCustomers]
+ *     summary: Aggiorna una relazione tra azienda e fornitura
+ *     tags: [CompanySupplies]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         description: ID della relazione da aggiornare
  *         schema:
- *           type: object
- *           required:
- *             - company_id
- *             - customer_id
- *           properties:
- *             company_id:
- *               type: integer
- *               description: ID dell'azienda
- *             customer_id:
- *               type: integer
- *               description: ID del cliente
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               company_id:
+ *                 type: integer
+ *                 description: Nuovo ID dell'azienda
+ *               supply_id:
+ *                 type: integer
+ *                 description: Nuovo ID della fornitura
  *     responses:
  *       200:
  *         description: Relazione aggiornata con successo
@@ -124,15 +127,15 @@ router.post("/", createCompanyCustomer);
  *       500:
  *         description: Errore interno del server
  */
-router.put("/:id", updateCompanyCustomer);
+router.put("/:id", updateCompanySupply);  
 
 
 /**
  * @swagger
- * /company-customers/{id}:
+ * /company-supplies/{id}:
  *   delete:
- *     summary: Elimina una relazione azienda-cliente
- *     tags: [CompanyCustomers]
+ *     summary: Elimina una relazione tra azienda e fornitura
+ *     tags: [CompanySupplies]
  *     parameters:
  *       - in: path
  *         name: id
@@ -148,7 +151,7 @@ router.put("/:id", updateCompanyCustomer);
  *       500:
  *         description: Errore interno del server
  */
-router.delete("/:id", deleteCompanyCustomer);
+router.delete("/:id", deleteCompanySupply); 
 
 
 export default router;

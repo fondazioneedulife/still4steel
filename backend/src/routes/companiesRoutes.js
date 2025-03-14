@@ -5,7 +5,7 @@ import {
     createCompany, 
     updateCompany, 
     deleteCompany 
-} from "../controllers/companyController.js";
+} from "../controllers/companiesController.js";
 import { 
     authenticateUser, 
     validateCompanyData 

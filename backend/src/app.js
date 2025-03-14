@@ -8,9 +8,9 @@ import ivaRoutes from "./routes/ivaRoutes.js"
 import productsRoutes from "./routes/productsRoutes.js"
 import categoriesRoutes from "./routes/categoriesRoutes.js";
 import productCategoriesRoutes from "./routes/productCategoriesRoutes.js"
-import discountsRoutes from "./routes/discountRoutes.js"
+import discountsRoutes from "./routes/discountsRoutes.js"
 import productDiscountsRoutes from "./routes/productDiscountsRoutes.js"
-import customersRoutes from "./routes/customerRoutes.js"
+import customersRoutes from "./routes/customersRoutes.js"
 import companyCustomersRoutes from "./routes/companyCustomersRoutes.js";
 import suppliersRoutes from "./routes/suppliersRoutes.js";
 import suppliesRoutes from "./routes/suppliesRoutes.js";
@@ -26,8 +26,8 @@ import orderDetailsRoutes from "./routes/orderDetailsRoutes.js";
 import paymentsRoutes from "./routes/paymentsRoutes.js";
 import saleDiscountsRoutes from "./routes/saleDiscountsRoutes.js";
 import logsRoutes from "./routes/logsRoutes.js";
-// import tokenRoutes from "./routes/token.js";
-// import endpointRoutes from "./endpoint/endpointRoutes.js";
+import tokenRoutes from "./routes/token.js";
+import endpointsRoutes from "./endpoint/endpointsRoutes.js";
 
 
 
@@ -35,10 +35,10 @@ const app = express();
 app.use(express.json());
 
 // Token
-// app.use("/api/token", tokenRoutes);
+app.use("/api/token", tokenRoutes);
 
 //endpoint
-// app.use("/endpoint", endpointRoutes);
+app.use("/endpoints", endpointsRoutes);
 
 
 // Rotte API

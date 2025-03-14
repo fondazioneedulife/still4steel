@@ -5,7 +5,7 @@ import {
     createWarehouse, 
     updateWarehouse, 
     deleteWarehouse 
-} from "../controllers/warehouseController.js";
+} from "../controllers/warehousesController.js";
 import { 
     authenticateUser, 
     validateCompanyData 

@@ -5,7 +5,7 @@ import {
   createSalePayment, 
   updateSalePayment, 
   deleteSalePayment 
-} from "../controllers/salePaymentController.js";
+} from "../controllers/salePaymentsController.js";
 
 
 const router = express.Router();
