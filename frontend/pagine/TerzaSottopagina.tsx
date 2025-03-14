@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Person, Hash, Calendar, Envelope, Telephone } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../src/componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const TerzaSottopagina: React.FC = () => {
   const [step] = useState<number>(3);
@@ -29,15 +30,16 @@ const TerzaSottopagina: React.FC = () => {
 
   const handleNext = () => {
     if (validateForm()) {
-      navigate('/riepilogo');
+      navigate('/magazzino/riepilogo');
     }
   };
 
   const handlePrev = () => {
-    navigate('/seconda-sottopagina');
+    navigate('/magazzino/seconda-sottopagina');
   };
 
   return (
+    <LeftNavbar>
     <Container className="mt-4 terza-sottopagina-page">
       <Stepper steps={steps} currentStep={step} />
       <Card className="mb-3 form-card">
@@ -118,6 +120,7 @@ const TerzaSottopagina: React.FC = () => {
         </Button>
       </div>
     </Container>
+    </LeftNavbar>
   );
 };
 

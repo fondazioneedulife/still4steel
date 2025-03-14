@@ -1,0 +1,25 @@
+/* FONTS */
+.poppins-regular {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+  }
+.poppins-loading{font-size: 22px;}
+
+.poppins-bold {
+   font-family: "Poppins", serif;
+   font-weight: 700;
+   font-style: normal;
+}
+.poppins-semibold {
+   font-family: "Poppins", serif;
+   font-weight: 500;
+   font-style: normal;
+}
+
+
+.custom-control-bg{background-color: #DBDBDB!important;}
+.custom-submit-bg{background-color: #000000!important;}
+.font-small{font-size: 12px}
+.btn-primary{background-color: #000000!important;border: none!important; font-family: "Poppins",serif!important;font-weight: 500!important;font-size: 15px!important;}

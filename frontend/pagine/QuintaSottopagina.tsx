@@ -3,6 +3,7 @@ import { Container, Button } from 'react-bootstrap';
 import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import './QuintaSottopagina.css';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const QuintaSottopagina: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false); // Per vedere le 2 animazioni
@@ -25,10 +26,11 @@ const QuintaSottopagina: React.FC = () => {
   };
 
   const handlePrev = () => {
-    navigate('/riepilogo');
+    navigate('/magazzino/riepilogo');
   };
 
   return (
+    <LeftNavbar>
     <Container className="quinta-sottopagina-page text-center">
       {isLoading ? (
         <div className="loading-container">
@@ -62,6 +64,7 @@ const QuintaSottopagina: React.FC = () => {
         </Button>
       </div>
     </Container>
+  </LeftNavbar>
   );
 };
 

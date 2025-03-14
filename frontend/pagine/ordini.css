@@ -1,0 +1,2 @@
+.card{transition:  0.3s ease-in-out;}
+.card:hover{background-color: black;color: white;}

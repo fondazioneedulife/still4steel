@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Form } from 'react-bootstrap'; 
 import { useNavigate } from 'react-router-dom'; 
 import './Spedizioni.css';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
+import NavFooter from '../src/componenti/NavFooter';
 
 const Spedizioni: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -26,62 +28,71 @@ const Spedizioni: React.FC = () => {
   });
 
   return (
-    <Container className="spedizioni-page">
-      {/* Titolo della pagina */}
-      <h1 className="page-title">Spedizioni</h1>
+    <>
+    <LeftNavbar>
+  <Container className="spedizioni-page">
+    {/* Titolo della pagina */}
+    <h1 className="page-title">Spedizioni</h1>
 
-      {/* Filtri */}
-      <Row className="mb-4">
-        <Col md={6} className="mb-2">
-          <Form.Control
-            type="text"
-            placeholder="Cerca per numero di tracciamento..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </Col>
-        <Col md={6}>
-          <Form.Select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-          >
-            <option value="">Tutti gli stati</option>
-            <option value="Consegnato">Consegnato</option>
-            <option value="In transito">In transito</option>
-            <option value="In elaborazione">In elaborazione</option>
-          </Form.Select>
-        </Col>
-      </Row>
+    {/* Filtri */}
+    <Row className="mb-4">
+      <Col md={6} className="mb-2">
+        <Form.Control
+          type="text"
+          placeholder="Cerca per numero di tracciamento..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </Col>
+      <Col md={6}>
+        <Form.Select
+          value={selectedStatus}
+          onChange={(e) => setSelectedStatus(e.target.value)}
+        >
+          <option value="">Tutti gli stati</option>
+          <option value="Consegnato">Consegnato</option>
+          <option value="In transito">In transito</option>
+          <option value="In elaborazione">In elaborazione</option>
+        </Form.Select>
+      </Col>
+    </Row>
 
-      {/* Lista delle spedizioni */}
-      <Row>
-        {filteredShipments.map((shipment) => (
-          <Col key={shipment.id} md={6} lg={4} className="mb-3">
-            <Card className="shipment-card">
-              <Card.Body>
-                <div className="shipment-tracking">Tracking: {shipment.trackingNumber}</div>
-                <div className="shipment-status">
-                  Stato: <span className={`status-badge ${shipment.status.toLowerCase().replace(' ', '-')}`}>{shipment.status}</span>
-                </div>
-                <div className="shipment-date">Data: {shipment.date}</div>
-                <div className="shipment-details">
-                  <div><strong>Mittente:</strong> {shipment.sender}</div>
-                  <div><strong>Destinatario:</strong> {shipment.recipient}</div>
-                  <div><strong>Peso:</strong> {shipment.weight}</div>
-                </div>
-                <Button
-                  variant={shipment.status === 'Consegnato' ? 'success' : shipment.status === 'In transito' ? 'warning' : 'primary'}
-                  className="view-button"
-                  onClick={() => navigate('/dettagli-spedizione', { state: { shipment } })}
-                >
-                  Dettagli
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    {/* Lista delle spedizioni */}
+    <Row>
+      {filteredShipments.map((shipment) => (
+        <Col key={shipment.id} md={6} lg={4} className="mb-3">
+          <Card className="shipment-card">
+            <Card.Body>
+              <div className="shipment-tracking">Tracking: {shipment.trackingNumber}</div>
+              <div className="shipment-status">
+                Stato: <span className={`status-badge ${shipment.status.toLowerCase().replace(' ', '-')}`}>{shipment.status}</span>
+              </div>
+              <div className="shipment-date">Data: {shipment.date}</div>
+              <div className="shipment-details">
+                <div><strong>Mittente:</strong> {shipment.sender}</div>
+                <div><strong>Destinatario:</strong> {shipment.recipient}</div>
+                <div><strong>Peso:</strong> {shipment.weight}</div>
+              </div>
+              <Button
+                variant={shipment.status === 'Consegnato' ? 'success' : shipment.status === 'In transito' ? 'warning' : 'primary'}
+                className="view-button"
+                onClick={() => navigate('/magazzino/dettagli-spedizione', { state: { shipment } })}
+              >
+                Dettagli
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  </Container>
+</LeftNavbar>
+
+{/* Footer Navbar visibile solo su dispositivi mobili */}
+<div className="d-md-none">
+<NavFooter />
+</div>
+</>
   );
 };
 

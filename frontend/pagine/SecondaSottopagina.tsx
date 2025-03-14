@@ -3,7 +3,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Cash, Tag, Percent, Box, BoxArrowInDown } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../src/componenti/Stepper';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const SecondaSottopagina: React.FC = () => {
   const [step] = useState<number>(2);
@@ -32,15 +33,16 @@ const SecondaSottopagina: React.FC = () => {
 
   const handleNext = () => {
     if (validateForm()) {
-      navigate('/terza-sottopagina');
+      navigate('/magazzino/terza-sottopagina');
     }
   };
 
   const handlePrev = () => {
-    navigate('/aggiungi-prodotti');
+    navigate('/magazzino/aggiungi-prodotti');
   };
 
   return (
+    <LeftNavbar>
     <Container className="mt-4 seconda-sottopagina-page">
       <Stepper steps={steps} currentStep={step} />
       <Card className="mb-3 form-card">
@@ -129,6 +131,7 @@ const SecondaSottopagina: React.FC = () => {
               </Button>
         </div>
     </Container>
+    </LeftNavbar>
   );
 };
 

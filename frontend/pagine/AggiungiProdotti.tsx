@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Tag, List, FileText, InfoCircle } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../src/componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const AggiungiProdotti: React.FC = () => {
   const [step] = useState<number>(1);
@@ -30,7 +31,7 @@ const AggiungiProdotti: React.FC = () => {
 
   const handleNext = () => {
     if (validateForm()) {
-      navigate('/seconda-sottopagina');
+      navigate('/magazzino/seconda-sottopagina');
     }
   };
 
@@ -39,6 +40,7 @@ const AggiungiProdotti: React.FC = () => {
   };
 
   return (
+      <LeftNavbar>
     <Container className="mt-4 aggiungi-prodotti-page">
       <Stepper steps={steps} currentStep={step} />
       <Card className="mb-3 form-card">
@@ -120,6 +122,7 @@ const AggiungiProdotti: React.FC = () => {
         </Button>
       </div>
     </Container>
+      </LeftNavbar>
   );
 };
 

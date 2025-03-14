@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../src/componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const Riepilogo: React.FC = () => {
   const [step] = useState<number>(4);
@@ -10,14 +11,15 @@ const Riepilogo: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate('/quinta-sottopagina');
+    navigate('/magazzino/quinta-sottopagina');
   };
 
   const handlePrev = () => {
-    navigate('/terza-sottopagina');
+    navigate('/magazzino/terza-sottopagina');
   };
 
   return (
+    <LeftNavbar>
     <Container className="mt-4 riepilogo-page">
       <Stepper steps={steps} currentStep={step} />
       <Card className="mb-3 form-card">
@@ -94,6 +96,7 @@ const Riepilogo: React.FC = () => {
         </Button>
       </div>
     </Container>
+    </LeftNavbar>
   );
 };
 
