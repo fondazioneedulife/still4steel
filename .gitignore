@@ -1,1 +1,4 @@
 frontend/node_modules/
+.backend-env
+.db-env
+.pgadmin-env
