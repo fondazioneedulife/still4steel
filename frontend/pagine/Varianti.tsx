@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Form, Button, Card, Row, Col, Modal } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, PlusCircle, Trash, Pencil } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../componenti2/Stepper';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Varianti.css'
 

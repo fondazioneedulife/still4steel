@@ -7,7 +7,6 @@ import Riepilogo from '../pagine/Riepilogo'
 import Navbar from './componenti/Navbar';
 import QuintaSottopagina from '../pagine/QuintaSottopagina';
 import NavFooter from './componenti/NavFooter'
-import VisualizaProdotti from '../pagine/VisuaizzaProdotti'
 import DettagliSpedizioni from '../pagine/DettagliSpedizione'
 import Spedzioni from '../pagine/Spedizioni'
 import Login from './routes/login'
@@ -19,8 +18,10 @@ import Ordini from '../pagine/Ordini';
 import Fornitori from '../pagine/Fornitori';
 import ListaOrdini from '../pagine/ListaOrdini';
 import NuovoOrdine from '../pagine/NuovoOrdine';
+import ListaProdotti from '../pagine/ListaProdotti';
+import Home from '../pagine/Home';
 import './App.css';
-import CustomNavbar from '../componenti/Navbar';
+import CustomNavbar from '../componenti2/Navbar';
 import ImportaSpedizioni from '../pagine/ImportaSpedizioni';
 import Varianti from '../pagine/Varianti';
 import { ProductProvider } from '../pagine/ContestoProdotto';
@@ -37,7 +38,7 @@ function App() {
           <Route path="/magazzino/terza-sottopagina" element={<TerzaSottopagina />} />
           <Route path="/magazzino/riepilogo" element={<Riepilogo />} />
           <Route path="/magazzino/quinta-sottopagina" element={<QuintaSottopagina />} />
-          <Route path='/magazzino/visualizza-prodotti' element={<VisualizaProdotti/>} />
+          <Route path='/magazzino/lista-prodotti' element={<ListaProdotti/>} />
           <Route path="/magazzino/spedizioni" element={<Spedzioni />} />
           <Route path="/magazzino/dettagli-spedizione" element={<DettagliSpedizioni />}/>
           <Route path="/login" element={<Login />}/>
@@ -50,6 +51,8 @@ function App() {
           <Route path="/ordini/fornitori" element={<Fornitori/>} />
           <Route path="/ordini/lista-ordini" element={<ListaOrdini/>} />
           <Route path='/ordini/nuovo-ordine' element={<NuovoOrdine/>} />
+          <Route path='/home' element={<Home/>} />
+          
         </Routes>
       </Router>
       </ProductProvider>

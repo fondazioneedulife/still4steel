@@ -15,7 +15,7 @@ const Magazzino = () => {
         <Navbar />
         <div className="rectangles mb-1 d-flex ">
           <Rectangle titolo="AGGIUNGI PRODOTTO" imgSrc="/addIcon.png" imgHoverSrc="/addIconWhite.png" link='/magazzino/aggiungi-prodotti' />
-          <Rectangle titolo="VISUALIZZA PRODOTTI" imgSrc="/productsIcon.png" imgHoverSrc="/productsIconWhite.png" link='/magazzino/visualizza-prodotti'/>
+          <Rectangle titolo="VISUALIZZA PRODOTTI" imgSrc="/productsIcon.png" imgHoverSrc="/productsIconWhite.png" link='/magazzino/lista-prodotti'/>
         </div>
         <div className="rectangles  ">
           <Rectangle titolo="SPEDIZIONI" imgSrc="/shipmentIcon.png" imgHoverSrc="/shipmentIconWhite.png" link='/magazzino/spedizioni'/>

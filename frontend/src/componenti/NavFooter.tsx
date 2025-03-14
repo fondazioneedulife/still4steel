@@ -11,11 +11,10 @@ function FooterNavbar() {
   const location = useLocation(); // Ottieni il percorso attuale
 
   const footerItems = [
-    { path: '/vendite', icon: CurrencyDollar, label: "Vendite" },
+    { path: '/home', icon: House, label: "Home" },
     { path: '/magazzino', icon: Box, label: "Magazz." },
-    { path: '/', icon: House, label: "Home" },
     { path: '/ordini', icon: Cart, label: "Ordini" },
-    { path: '/calendario', icon: Calendar, label: "Calend." },
+    { path: '/vendite', icon: CurrencyDollar, label: "Vendite" },
   ];
 
   useEffect(() => {

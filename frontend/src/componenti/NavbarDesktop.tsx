@@ -16,7 +16,7 @@ export default function LeftNavbar({ children }) {
   }, []);
 
   const footerItems = [
-    { path: "/", icon: House, label: "Home" },
+    { path: "/home", icon: House, label: "Home" },
     { path: "/magazzino", icon: Box, label: "Magazzino" },
     { path: "/ordini", icon: Cart, label: "Ordini" },
     { path: "/vendite", icon: CurrencyDollar, label: "Vendite" },

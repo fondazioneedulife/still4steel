@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
 import { useProductData } from './ContestoProdotto';  
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 import {
   DndContext,
   closestCenter,
@@ -17,9 +18,10 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import SortableWidget from '../componenti/SortableWidget';
+import SortableWidget from '../src/componenti/SortableWidget';
 import { Widget } from '../Types/types';
-import '../componenti/Widget.css';
+import '../src/componenti/Widget.css';
+import NavFooter from '../src/componenti/NavFooter';
 
 const availableWidgets: Widget[] = [
   {
@@ -225,6 +227,8 @@ const Home: React.FC = () => {
   };
 
   return (
+    <>
+    <LeftNavbar>
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
@@ -285,6 +289,11 @@ const Home: React.FC = () => {
         </Modal>
       </Container>
     </DndContext>
+    </LeftNavbar>
+    <div className="d-md-none">
+    <NavFooter />
+</div>
+</>
   );
 };
 

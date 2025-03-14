@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
-import "./VisualizzaProdotti.css";
+import "./ListaProdotti.css";
 import LeftNavbar from "../src/componenti/NavbarDesktop";
 import NavFooter from "../src/componenti/NavFooter";
-import Navbar from "../src/componenti/Navbar";
 import ProductModal from "../src/componenti/SingleProduct";
 
-const products = [
+const allProducts = [
   { id: 1, sku: "SKU123", name: "Prodotto A", image: "https://placehold.co/100x100", quantity: 10, status: "available" },
   { id: 2, sku: "SKU456", name: "Prodotto B", image: "https://placehold.co/100x100", quantity: 0, status: "out_of_stock" },
   { id: 3, sku: "SKU789", name: "Prodotto C", image: "https://placehold.co/100x100", quantity: 2, status: "low_stock" },
@@ -21,7 +20,7 @@ const STATUS_LABELS = {
   out_of_stock: "Non disponibile",
 };
 
-const VisualizzaProdotti = () => {
+const ListaProdotti = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);

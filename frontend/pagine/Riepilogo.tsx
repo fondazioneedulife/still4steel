@@ -1,8 +1,10 @@
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import Stepper from '../src/componenti/Stepper';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LeftNavbar from '../src/componenti/NavbarDesktop';
+import { useState, useEffect } from 'react';
+
 
 const Riepilogo: React.FC = () => {
   const location = useLocation();
@@ -200,7 +202,7 @@ const Riepilogo: React.FC = () => {
         </Button>
       </div>
     </Container>
-    </LeftNavbar>
+    
   );
 };
 
