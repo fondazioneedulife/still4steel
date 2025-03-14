@@ -4,6 +4,7 @@ import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { useProductData } from './ContestoProdotto';
 import './QuintaSottopagina.css';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const QuintaSottopagina: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -41,10 +42,11 @@ const QuintaSottopagina: React.FC = () => {
   };
 
   const handlePrev = () => {
-    navigate('/riepilogo');
+    navigate('/magazzino/riepilogo');
   };
 
   return (
+    <LeftNavbar>
     <Container className="quinta-sottopagina-page text-center">
       {isLoading ? (
         <div className="loading-container">
@@ -78,6 +80,7 @@ const QuintaSottopagina: React.FC = () => {
         </Button>
       </div>
     </Container>
+  </LeftNavbar>
   );
 };
 

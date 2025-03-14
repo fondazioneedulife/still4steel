@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Cash, Tag, Percent, Box, BoxArrowInDown } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
+import Stepper from '../src/componenti/Stepper';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 import { useProductData } from './ContestoProdotto';
 
 const SecondaSottopagina: React.FC = () => {
@@ -27,25 +28,16 @@ const SecondaSottopagina: React.FC = () => {
 
   const handleNext = () => {
     if (validateForm()) {
-      const magazzinoData = {
-        prezzoAcquisto: productData.prezzoAcquisto,
-        prezzoVendita: productData.prezzoVendita,
-        iva: productData.iva,
-        quantita: productData.quantita,
-        quantitaMinima: productData.quantitaMinima
-      };
-
-      // Save to sessionStorage
-      sessionStorage.setItem('secondaSottopaginaData', JSON.stringify(magazzinoData));
-      navigate('/terza-sottopagina');
+      navigate('/magazzino/terza-sottopagina');
     }
   };
 
   const handlePrev = () => {
-    navigate('/varianti');
+    navigate('/magazzino/aggiungi-prodotti');
   };
 
   return (
+    <LeftNavbar>
     <Container className="mt-4 seconda-sottopagina-page">
       <Stepper steps={steps} currentStep={step} />
       <Card className="mb-3 form-card">
@@ -134,6 +126,7 @@ const SecondaSottopagina: React.FC = () => {
         </Button>
       </div>
     </Container>
+    </LeftNavbar>
   );
 };
 

@@ -1,10 +1,8 @@
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-import Stepper from '../componenti/Stepper';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import './Riepilogo.css'; 
-import React from 'react';
+import Stepper from '../src/componenti/Stepper';
+import { useNavigate } from 'react-router-dom';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const Riepilogo: React.FC = () => {
   const location = useLocation();
@@ -41,13 +39,11 @@ const Riepilogo: React.FC = () => {
   }, []);
 
   const handleNext = () => {
-    // Salva tutti i dati del form in sessionStorage prima di procedere
-    sessionStorage.setItem('riepilogoData', JSON.stringify(formData));
-    navigate('/quinta-sottopagina');
+    navigate('/magazzino/quinta-sottopagina');
   };
 
   const handlePrev = () => {
-    navigate('/terza-sottopagina');
+    navigate('/magazzino/terza-sottopagina');
   };
 
   return (
@@ -204,6 +200,7 @@ const Riepilogo: React.FC = () => {
         </Button>
       </div>
     </Container>
+    </LeftNavbar>
   );
 };
 

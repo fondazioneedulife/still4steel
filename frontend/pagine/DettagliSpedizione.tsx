@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Container } from 'react-bootstrap';
 import './DettagliSpedizione.css';
 import jsPDF from 'jspdf';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 
 const DettagliSpedizione: React.FC = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const DettagliSpedizione: React.FC = () => {
   };
 
   return (
+    <LeftNavbar>
     <Container className="dettagli-spedizione-page">
       <h1 className="page-title">Dettagli Spedizione</h1>
       <Card className="shipment-details-card">
@@ -53,6 +55,7 @@ const DettagliSpedizione: React.FC = () => {
         </Card.Body>
       </Card>
     </Container>
+    </LeftNavbar>
   );
 };
 

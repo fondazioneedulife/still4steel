@@ -1,6 +1,3 @@
-.visualizza-prodotti-page {
-  padding: 20px;
-}
 
 .product-card {
   border: 1px solid #333 !important; 
@@ -9,8 +6,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+<<<<<<< HEAD:frontend/pagine/ListaProdotti.css
   overflow: hidden;
   padding: 15px;
+=======
+
+>>>>>>> branch-filippo:frontend/pagine/VisualizzaProdotti.css
 }
 
 .product-card:hover {

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Container, Form, Button, Card, Row, Col, Modal } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Tag, List, FileText, InfoCircle, PlusCircle, Image } from 'react-bootstrap-icons';
 import Stepper from '../componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
 import { useProductData } from './ContestoProdotto';
+=======
+import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { ArrowLeft, ArrowRight, Tag, List, FileText, InfoCircle } from 'react-bootstrap-icons';
+import Stepper from '../src/componenti/Stepper';
+import { useNavigate } from 'react-router-dom';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
+>>>>>>> branch-filippo
 
 const AggiungiProdotti: React.FC = () => {
   const { productData, setProductData } = useProductData();
@@ -30,6 +38,7 @@ const AggiungiProdotti: React.FC = () => {
 
   const handleNext = () => {
     if (validateForm()) {
+<<<<<<< HEAD
       const prodottoData = {
         nomeProdotto: productData.nomeProdotto,
         sku: productData.sku,
@@ -39,6 +48,9 @@ const AggiungiProdotti: React.FC = () => {
       };
       sessionStorage.setItem('aggiungiProdottoData', JSON.stringify(prodottoData));
       navigate('/varianti');
+=======
+      navigate('/magazzino/seconda-sottopagina');
+>>>>>>> branch-filippo
     }
   };
 
@@ -72,6 +84,7 @@ const AggiungiProdotti: React.FC = () => {
 
   // In the return statement, add this inside the Row component, after the existing Col components
   return (
+      <LeftNavbar>
     <Container className="mt-4 aggiungi-prodotti-page">
       <Stepper steps={steps} currentStep={step} />
       <Card className="mb-3 form-card">
@@ -206,6 +219,7 @@ const AggiungiProdotti: React.FC = () => {
         </Modal.Footer>
       </Modal>
     </Container>
+      </LeftNavbar>
   );
 };
 
