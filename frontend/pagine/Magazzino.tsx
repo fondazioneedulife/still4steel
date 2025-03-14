@@ -8,15 +8,15 @@ const Magazzino = () => {
     <div className="magazzino-page">
       <div className="rectangle-container">
         <div className="rectangle" onClick={() => navigate('/aggiungi-prodotti')}>
-          <img src="/path/to/logo1.png" alt="Logo" className="rectangle-logo" />
+          <img src="/media/img/Agg-prodotti.svg" alt="Logo" className="rectangle-logo" />
           <h3 className="rectangle-title">Aggiungi Prodotti</h3>
         </div>
-        <div className="rectangle" onClick={() => navigate('/visualizza-prodotti')}>
-          <img src="/path/to/logo2.png" alt="Logo" className="rectangle-logo" />
+        <div className="rectangle" onClick={() => navigate('/lista-prodotti')}>
+          <img src="/media/img/Lista-Prodotti.svg" alt="Logo" className="rectangle-logo" />
           <h3 className="rectangle-title">Visualizza Prodotti</h3>
         </div>
         <div className="rectangle" onClick={() => navigate('/spedizioni')}>
-          <img src="/path/to/logo3.png" alt="Logo" className="rectangle-logo" />
+          <img src="/media/img/Spedizioni.svg" alt="Logo" className="rectangle-logo" />
           <h3 className="rectangle-title">Spedizioni</h3>
         </div>
       </div>

@@ -1,56 +1,64 @@
 .magazzino-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .rectangle-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: -33px;
-    gap: 20px; 
-    height: 84.9vh;
-    width: 100%;
-    max-width: 400px; 
-  }
-  
-  .rectangle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 120px;
-    border: 1px solid #000;
-    border-radius: 12px;
-    padding: 10px;
-    background-color: #111;
-    color: #fff;
-    cursor: pointer; 
-    transition: background-color 0.3s ease; /
-  }
-  
-  .rectangle:hover {
-    background-color: #fff;
-    color: #000;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  height: 80vh;}
 
-  .rectangle:active {
-    background-color: #fff;
-    color: #000;
-  }
-  .rectangle-logo {
-    width: 50px; 
-    height: 50px;
-    margin-bottom: 10px; 
-  }
-  
-  .rectangle-title {
-    margin: 0;
-    font-size: 16px;
-    text-align: center;
-    font-weight: 700;
-  }
+.rectangle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 450px;
+  margin-top: 30px;
+
+}
+
+.rectangle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 140px;
+  border-radius: 16px;
+  padding: 15px;
+  background: linear-gradient(145deg, #252525, #000000);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+  border: none;
+}
+
+.rectangle:hover {
+  background: linear-gradient(145deg, #161616, #111);
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.7), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
+}
+.rectangle:active {
+  background: linear-gradient(145deg, #222, #111);
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.7), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
+}
+
+
+.rectangle-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.rectangle-title {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+

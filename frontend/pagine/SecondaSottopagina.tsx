@@ -1,30 +1,25 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Cash, Tag, Percent, Box, BoxArrowInDown } from 'react-bootstrap-icons';
 import Stepper from '../componenti/Stepper';
+import { useProductData } from './ContestoProdotto';
 
 const SecondaSottopagina: React.FC = () => {
-  const [step] = useState<number>(2);
+  const { productData, setProductData } = useProductData();
+  const [step] = useState<number>(3);
   const steps = [1, 2, 3, 4, 5];
   const navigate = useNavigate();
-
-  const [prezzoAcquisto, setPrezzoAcquisto] = useState<string>('');
-  const [prezzoVendita, setPrezzoVendita] = useState<string>('');
-  const [iva, setIva] = useState<string>('');
-  const [quantita, setQuantita] = useState<string>('');
-  const [quantitaMinima, setQuantitaMinima] = useState<string>('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!prezzoAcquisto.trim()) newErrors.prezzoAcquisto = 'Il prezzo di acquisto è obbligatorio';
-    if (!prezzoVendita.trim()) newErrors.prezzoVendita = 'Il prezzo di vendita è obbligatorio';
-    if (!iva.trim()) newErrors.iva = 'L\'IVA è obbligatoria';
-    if (!quantita.trim()) newErrors.quantita = 'La quantità è obbligatoria';
-    if (!quantitaMinima.trim()) newErrors.quantitaMinima = 'La quantità minima è obbligatoria';
+    if (!productData.prezzoAcquisto.trim()) newErrors.prezzoAcquisto = 'Il prezzo di acquisto è obbligatorio';
+    if (!productData.prezzoVendita.trim()) newErrors.prezzoVendita = 'Il prezzo di vendita è obbligatorio';
+    if (!productData.iva.trim()) newErrors.iva = 'L\'IVA è obbligatoria';
+    if (!productData.quantita.trim()) newErrors.quantita = 'La quantità è obbligatoria';
+    if (!productData.quantitaMinima.trim()) newErrors.quantitaMinima = 'La quantità minima è obbligatoria';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -32,12 +27,22 @@ const SecondaSottopagina: React.FC = () => {
 
   const handleNext = () => {
     if (validateForm()) {
+      const magazzinoData = {
+        prezzoAcquisto: productData.prezzoAcquisto,
+        prezzoVendita: productData.prezzoVendita,
+        iva: productData.iva,
+        quantita: productData.quantita,
+        quantitaMinima: productData.quantitaMinima
+      };
+
+      // Save to sessionStorage
+      sessionStorage.setItem('secondaSottopaginaData', JSON.stringify(magazzinoData));
       navigate('/terza-sottopagina');
     }
   };
 
   const handlePrev = () => {
-    navigate('/aggiungi-prodotti');
+    navigate('/varianti');
   };
 
   return (
@@ -52,8 +57,8 @@ const SecondaSottopagina: React.FC = () => {
             <Form.Control
               type="text"
               placeholder="Inserisci il prezzo di acquisto..."
-              value={prezzoAcquisto}
-              onChange={(e) => setPrezzoAcquisto(e.target.value)}
+              value={productData.prezzoAcquisto}
+              onChange={(e) => setProductData({ ...productData, prezzoAcquisto: e.target.value })}
               isInvalid={!!errors.prezzoAcquisto}
               className="form-input"
             />
@@ -66,8 +71,8 @@ const SecondaSottopagina: React.FC = () => {
             <Form.Control
               type="text"
               placeholder="Inserisci il prezzo di vendita..."
-              value={prezzoVendita}
-              onChange={(e) => setPrezzoVendita(e.target.value)}
+              value={productData.prezzoVendita}
+              onChange={(e) => setProductData({ ...productData, prezzoVendita: e.target.value })}
               isInvalid={!!errors.prezzoVendita}
               className="form-input"
             />
@@ -78,8 +83,8 @@ const SecondaSottopagina: React.FC = () => {
               <Percent size={16} className="me-2" /> IVA
             </Form.Label>
             <Form.Select
-              value={iva}
-              onChange={(e) => setIva(e.target.value)}
+              value={productData.iva}
+              onChange={(e) => setProductData({ ...productData, iva: e.target.value })}
               isInvalid={!!errors.iva}
               className="form-input"
             >
@@ -97,8 +102,8 @@ const SecondaSottopagina: React.FC = () => {
             <Form.Control
               type="text"
               placeholder="Inserisci la quantità..."
-              value={quantita}
-              onChange={(e) => setQuantita(e.target.value)}
+              value={productData.quantita}
+              onChange={(e) => setProductData({ ...productData, quantita: e.target.value })}
               isInvalid={!!errors.quantita}
               className="form-input"
             />
@@ -111,8 +116,8 @@ const SecondaSottopagina: React.FC = () => {
             <Form.Control
               type="text"
               placeholder="Inserisci la quantità minima..."
-              value={quantitaMinima}
-              onChange={(e) => setQuantitaMinima(e.target.value)}
+              value={productData.quantitaMinima}
+              onChange={(e) => setProductData({ ...productData, quantitaMinima: e.target.value })}
               isInvalid={!!errors.quantitaMinima}
               className="form-input"
             />
@@ -121,13 +126,13 @@ const SecondaSottopagina: React.FC = () => {
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-between navigation-buttons">
-              <Button variant="outline-dark" onClick={handlePrev} className="nav-button btn-prev">
-                <ArrowLeft size={24} /> Precedente
-              </Button>
-              <Button variant="dark" onClick={handleNext} className="nav-button btn-next">
-                <ArrowRight size={24} /> Successivo
-              </Button>
-        </div>
+        <Button variant="outline-dark" onClick={handlePrev} className="nav-button btn-prev">
+          <ArrowLeft size={24} /> Precedente
+        </Button>
+        <Button variant="dark" onClick={handleNext} className="nav-button btn-next">
+          <ArrowRight size={24} /> Successivo
+        </Button>
+      </div>
     </Container>
   );
 };

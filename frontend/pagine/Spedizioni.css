@@ -1,105 +1,104 @@
 .spedizioni-page {
-    padding: 20px;
-  }
-  
+  padding: 20px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.shipment-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shipment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.shipment-tracking {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.shipment-status {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-badge.in-transito {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.status-badge.consegnato {
+  background-color: #198754;
+  color: #fff;
+}
+
+.status-badge.in-elaborazione {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.shipment-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.shipment-details {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.view-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
   .page-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: 20px;
   }
-  
+
   .shipment-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 15px;
   }
-  
-  .shipment-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
+
   .shipment-tracking {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 14px;
   }
-  
+
   .shipment-status {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
-  }
-  
-  .status-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
     font-size: 12px;
-    font-weight: bold;
   }
-  
-  .status-badge.in-transito {
-    background-color: #ffc107; /* Giallo per "In transito" */
-    color: #000;
-  }
-  
-  .status-badge.consegnato {
-    background-color: #28a745; /* Verde per "Consegnato" */
-    color: #fff;
-  }
-  
-  .status-badge.in-elaborazione {
-    background-color: #000; 
-    color: #fff;
-  }
-  
+
   .shipment-date {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
+    font-size: 12px;
   }
-  
+
   .shipment-details {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 10px;
+    font-size: 12px;
   }
-  
+
   .view-button {
-    width: 100%;
-    margin-top: 10px;
+    font-size: 14px;
   }
-  
-  /* Stili per dispositivi mobili */
-  @media (max-width: 768px) {
-    .page-title {
-      font-size: 20px;
-    }
-  
-    .shipment-card {
-      margin-bottom: 15px;
-    }
-  
-    .shipment-tracking {
-      font-size: 14px;
-    }
-  
-    .shipment-status {
-      font-size: 12px;
-    }
-  
-    .shipment-date {
-      font-size: 12px;
-    }
-  
-    .shipment-details {
-      font-size: 12px;
-    }
-  
-    .view-button {
-      font-size: 14px;
-    }
-  }
+}

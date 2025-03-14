@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Person, Hash, Calendar, Envelope, Telephone } from 'react-bootstrap-icons';
 import Stepper from '../componenti/Stepper';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const TerzaSottopagina: React.FC = () => {
   const [step] = useState<number>(3);
   const steps = [1, 2, 3, 4, 5];
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Recupera i dati passati dalla pagina precedente
+  const { datiProdotto, datiMagazzino } = location.state || {};
+
+  // Stato per i campi del form
   const [nomeFornitore, setNomeFornitore] = useState<string>('');
   const [codiceFornitore, setCodiceFornitore] = useState<string>('');
   const [data, setData] = useState<string>('');
@@ -16,6 +21,7 @@ const TerzaSottopagina: React.FC = () => {
   const [telefonoFornitore, setTelefonoFornitore] = useState<string>('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  // Validazione del form
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -27,14 +33,25 @@ const TerzaSottopagina: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Passa alla pagina di riepilogo
   const handleNext = () => {
     if (validateForm()) {
+      const fornitoreData = {
+        nomeFornitore: nomeFornitore,
+        codiceFornitore: codiceFornitore,
+        data: data,
+        emailFornitore: emailFornitore,
+        telefonoFornitore: telefonoFornitore
+      };
+  
+      sessionStorage.setItem('terzaSottopaginaData', JSON.stringify(fornitoreData));
       navigate('/riepilogo');
     }
   };
 
+  // Torna alla pagina precedente
   const handlePrev = () => {
-    navigate('/seconda-sottopagina');
+    navigate('/seconda-sottopagina', { state: { datiProdotto, datiMagazzino } });
   };
 
   return (

@@ -1,4 +1,46 @@
 .aggiungi-prodotti-page {
+  max-width: 1200px;
+}
+
+.image-upload-container {
+  min-height: 300px;
+}
+
+.upload-area {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+  border-color: #6c757d;
+  background-color: #f8f9fa;
+}
+
+.img-preview {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+}
+
+.form-control-lg {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+.form-label {
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aggiungi-prodotti-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,17 +48,22 @@
   min-height: 100vh;
   padding: 20px;
   background: linear-gradient(135deg, #f8f9fa, #e9ecef); 
-
 }
 
 .form-card {
   width: 100%;
-  max-width: 800px; /* Larghezza ottimale per il form */
+  max-width: 800px;
   padding: 30px;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   background: #ffffff;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Ombra più pronunciata */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05); /* Ombra più pronunciata per l'effetto 3D */
+  transition: all 0.3s ease-in-out;
+}
+
+.form-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1); /* Ombra più intensa al passaggio del mouse */
+  transform: translateY(-5px); /* Solleva il card al passaggio del mouse */
 }
 
 .input-container {
@@ -37,16 +84,18 @@
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 14px;
   color: #333;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: #f9f9f9; /* Leggero colore di sfondo per un effetto più morbido */
 }
 
 .form-input:focus {
   border-color: #007bff;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
   outline: none;
+  transform: translateY(-2px); /* Effetto di sollevamento */
 }
 
 .form-input.is-invalid {
@@ -55,6 +104,7 @@
 
 .form-input.is-invalid:focus {
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+  transform: translateY(-2px); /* Effetto di sollevamento in caso di errore */
 }
 
 .navigation-buttons {
@@ -78,6 +128,9 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.nav-button:hover {
+  transform: translateY(-3px); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -122,4 +175,5 @@
       padding: 8px 16px;
       font-size: 12px;
   }
+}
 }
