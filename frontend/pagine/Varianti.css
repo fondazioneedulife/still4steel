@@ -1,0 +1,70 @@
+.varianti-prodotto-page {
+  padding-bottom: 2rem;
+}
+
+.navigation-buttons {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.btn-prev:hover {
+  background-color: #343a40;
+  color: white;
+}
+
+.btn-next:hover {
+  background-color: #212529;
+}
+
+  .form-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navigation-buttons {
+    margin-top: 20px;
+  }
+  
+  .btn-prev {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+  }
+  
+  .btn-next {
+    background-color: #333;
+    border: none;
+    color: #fff;
+  }
+  
+  .btn-next:hover {
+    background-color: #555;
+  }
+  
+  .card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+  }
