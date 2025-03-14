@@ -30,7 +30,7 @@ const router = express.Router();
  *       500:
  *         description: Errore interno del server
  */
-router.get("/", getSupplies);      
+router.get("/", getAllSupplies);      
 
 
 /**

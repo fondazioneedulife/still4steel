@@ -8,7 +8,7 @@ import {
     getOrdersByCompany,
     getLowStockProducts,
     getTotalRevenue
-} from "./endpointController.js";
+} from "./endpointsController.js";
 const router = express.Router();
 
 /**
