@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
-import { useProductData } from './ContestoProdotto';  
-import LeftNavbar from '../src/componenti/NavbarDesktop';
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  DragEndEvent,
-  DragStartEvent,
-  DragOverlay,
-} from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent, DragStartEvent, DragOverlay } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import SortableWidget from '../src/componenti/SortableWidget';
 import { Widget } from '../Types/types';
 import '../src/componenti/Widget.css';
+import LeftNavbar from '../src/componenti/NavbarDesktop';
 import NavFooter from '../src/componenti/NavFooter';
 
 const availableWidgets: Widget[] = [
@@ -99,22 +84,6 @@ const availableWidgets: Widget[] = [
     color: '#FFBB28',
   },
   {
-    id: 'widget-11',
-    type: 'sales-status',
-    title: 'Stato Vendite',
-    data: [],
-    theme: 'light',
-    color: '#82ca9d',
-  },
-  {
-    id: 'widget-12',
-    type: 'inventory-level',
-    title: 'Stato Magazzino',
-    data: [],
-    theme: 'light',
-    color: '#FF8042',
-  },
-  {
     id: 'widget-13',
     type: 'customer-trend',
     title: 'Andamento Clienti',
@@ -127,22 +96,6 @@ const availableWidgets: Widget[] = [
     color: '#8884d8',
   },
   {
-    id: 'widget-14',
-    type: 'employee-status',
-    title: 'Stato Dipendenti',
-    data: [],
-    theme: 'light',
-    color: '#0088FE',
-  },
-  {
-    id: 'widget-15',
-    type: 'supplier-status',
-    title: 'Stato Fornitori',
-    data: [],
-    theme: 'light',
-    color: '#FFBB28',
-  },
-  {
     id: 'widget-16',
     type: 'calendar',
     title: 'Calendario',
@@ -151,7 +104,6 @@ const availableWidgets: Widget[] = [
     color: '#82ca9d',
   },
 ];
-
 const Home: React.FC = () => {
   const [homeWidgets, setHomeWidgets] = useState<Widget[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -160,7 +112,9 @@ const Home: React.FC = () => {
 
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
-  const generateUniqueId = (baseId: string) => `${baseId}-${Date.now()}`;
+  const generateUniqueId = () => {
+    return `widget-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+  };
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
@@ -181,7 +135,7 @@ const Home: React.FC = () => {
       if (widgetToAdd) {
         const newWidget = {
           ...widgetToAdd,
-          id: generateUniqueId(widgetToAdd.id),
+          id: generateUniqueId(),
         };
         setHomeWidgets([...homeWidgets, newWidget]);
       }
@@ -215,7 +169,7 @@ const Home: React.FC = () => {
       if (widgetToAdd && !homeWidgets.some((w) => w.type === widgetToAdd.type)) {
         const newWidget = {
           ...widgetToAdd,
-          id: generateUniqueId(widgetToAdd.id),
+          id: generateUniqueId(),
         };
         setHomeWidgets([...homeWidgets, newWidget]);
         setSelectedWidgetId(null);
@@ -228,72 +182,72 @@ const Home: React.FC = () => {
 
   return (
     <>
-    <LeftNavbar>
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
-            +
-          </Button>
-        </div>
-
-        <div className="mt-3 droppable-area">
-          <SortableContext items={homeWidgets} strategy={verticalListSortingStrategy}>
-            <div className="widget-grid">
-              {homeWidgets.map((widget) => (
-                <SortableWidget
-                  key={widget.id}
-                  widget={widget}
-                  onRemove={handleRemoveWidget}
-                />
-              ))}
+      <LeftNavbar>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
+                +
+              </Button>
             </div>
-          </SortableContext>
-        </div>
 
-        <DragOverlay>
-          {activeWidget ? <SortableWidget widget={activeWidget} /> : null}
-        </DragOverlay>
+            <div className="mt-3 droppable-area">
+              <SortableContext items={homeWidgets} strategy={verticalListSortingStrategy}>
+                <div className="widget-grid">
+                  {homeWidgets.map((widget) => (
+                    <SortableWidget
+                      key={widget.id}
+                      widget={widget}
+                      onRemove={handleRemoveWidget}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </div>
 
-        <Modal show={showModal} onHide={toggleModal} centered size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>Widget Disponibili</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Row>
-              {availableWidgets.map((widget) => (
-                <Col key={widget.id} xs={12} md={6} className="mb-3">
-                  <div
-                    className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
-                    onClick={() => handleWidgetClick(widget.id)}
-                  >
-                    <SortableWidget widget={widget} isInModal />
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={toggleModal}>
-              Chiudi
-            </Button>
-            <Button variant="primary" onClick={handleAddWidget} disabled={!selectedWidgetId}>
-              Aggiungi
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Container>
-    </DndContext>
-    </LeftNavbar>
-    <div className="d-md-none">
-    <NavFooter />
-</div>
-</>
+            <DragOverlay>
+              {activeWidget ? <SortableWidget widget={activeWidget} /> : null}
+            </DragOverlay>
+
+            <Modal show={showModal} onHide={toggleModal} centered size="lg">
+              <Modal.Header closeButton>
+                <Modal.Title>Widget Disponibili</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Row>
+                  {availableWidgets.map((widget) => (
+                    <Col key={widget.id} xs={12} md={6} className="mb-3">
+                      <div
+                        className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
+                        onClick={() => handleWidgetClick(widget.id)}
+                      >
+                        <SortableWidget widget={widget} isInModal />
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={toggleModal}>
+                  Chiudi
+                </Button>
+                <Button variant="primary" onClick={handleAddWidget} disabled={!selectedWidgetId}>
+                  Aggiungi
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </Container>
+        </DndContext>
+      </LeftNavbar>
+      <div className="d-md-none">
+        <NavFooter />
+      </div>
+    </>
   );
 };
 

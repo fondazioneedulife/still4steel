@@ -3,11 +3,11 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid,
-  PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
+  LineChart, Line
 } from 'recharts';
 import './Widget.css';
 import React from 'react';
-import { Moon, MoonFill } from 'react-bootstrap-icons';  
+import { Moon, MoonFill } from 'react-bootstrap-icons';
 
 type Event = {
   date: string;
@@ -27,15 +27,15 @@ type SortableWidgetProps = {
   widget: Widget;
   onRemove?: (id: string) => void;
   isInModal?: boolean;
-  onThemeToggle?: (id: string) => void;  // Add this prop
+  onThemeToggle?: (id: string) => void;
 };
 
-const CalculatorWidget: React.FC<{ value: string; onButtonClick: (value: string) => void }> = ({ value, onButtonClick }) => (
+const CalculatorWidget: React.FC<{ value: string; onButtonClick: (value: string) => void; disabled?: boolean }> = ({ value, onButtonClick, disabled }) => (
   <div className="calculator">
     <input type="text" value={value} readOnly />
     <div className="calculator-buttons">
       {['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+', 'C'].map((btn) => (
-        <button key={btn} onClick={() => onButtonClick(btn)}>
+        <button key={btn} onClick={() => !disabled && onButtonClick(btn)} disabled={disabled}>
           {btn}
         </button>
       ))}
@@ -43,18 +43,18 @@ const CalculatorWidget: React.FC<{ value: string; onButtonClick: (value: string)
   </div>
 );
 
-const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Event) => void }> = ({ events, onAddEvent }) => {
+const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Event) => void; disabled?: boolean }> = ({ events, onAddEvent, disabled }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [newEventTitle, setNewEventTitle] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const handleDateClick = (date: string) => {
-    setSelectedDate(date);
+    if (!disabled) setSelectedDate(date);
     setNewEventTitle('');
   };
 
   const handleAddEvent = () => {
-    if (selectedDate && newEventTitle.trim()) {
+    if (selectedDate && newEventTitle.trim() && !disabled) {
       onAddEvent({ date: selectedDate, title: newEventTitle });
       setSelectedDate(null);
       setNewEventTitle('');
@@ -62,6 +62,7 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
   };
 
   const changeMonth = (offset: number) => {
+    if (disabled) return;
     const newDate = new Date(currentDate);
     newDate.setMonth(currentDate.getMonth() + offset);
     setCurrentDate(newDate);
@@ -85,9 +86,9 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
   return (
     <div className="simple-calendar">
       <div className="calendar-header">
-        <button onClick={() => changeMonth(-1)}>⬅️</button>
+        <button onClick={() => changeMonth(-1)} disabled={disabled}>⬅️</button>
         <h4>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h4>
-        <button onClick={() => changeMonth(1)}>➡️</button>
+        <button onClick={() => changeMonth(1)} disabled={disabled}>➡️</button>
       </div>
       <div className="calendar-grid">
         {['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'].map((day) => (
@@ -113,8 +114,9 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
             placeholder="Titolo evento"
             value={newEventTitle}
             onChange={(e) => setNewEventTitle(e.target.value)}
+            disabled={disabled}
           />
-          <button onClick={handleAddEvent}>Aggiungi Evento</button>
+          <button onClick={handleAddEvent} disabled={disabled}>Aggiungi Evento</button>
         </div>
       )}
       <div className="events-list">
@@ -130,20 +132,21 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
   );
 };
 
-const NotesWidget: React.FC<{ note: string; onNoteChange: (value: string) => void }> = ({ note, onNoteChange }) => (
+const NotesWidget: React.FC<{ note: string; onNoteChange: (value: string) => void; disabled?: boolean }> = ({ note, onNoteChange, disabled }) => (
   <textarea
     className="notes-textarea"
     value={note}
-    onChange={(e) => onNoteChange(e.target.value)}
+    onChange={(e) => !disabled && onNoteChange(e.target.value)}
     placeholder="Scrivi le tue note qui..."
+    disabled={disabled}
   />
 );
 
-const TaskListWidget: React.FC<{ tasks: string[]; onAddTask: (task: string) => void; onRemoveTask: (index: number) => void }> = ({ tasks, onAddTask, onRemoveTask }) => {
+const TaskListWidget: React.FC<{ tasks: string[]; onAddTask: (task: string) => void; onRemoveTask: (index: number) => void; disabled?: boolean }> = ({ tasks, onAddTask, onRemoveTask, disabled }) => {
   const [newTask, setNewTask] = useState('');
 
   const handleAddTask = () => {
-    if (newTask.trim()) {
+    if (newTask.trim() && !disabled) {
       onAddTask(newTask);
       setNewTask('');
     }
@@ -156,20 +159,20 @@ const TaskListWidget: React.FC<{ tasks: string[]; onAddTask: (task: string) => v
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         placeholder="Aggiungi una task..."
+        disabled={disabled}
       />
-      <button onClick={handleAddTask}>Aggiungi</button>
+      <button onClick={handleAddTask} disabled={disabled}>Aggiungi</button>
       <ul>
         {tasks.map((task, index) => (
           <li key={index}>
             {task}
-            <button onClick={() => onRemoveTask(index)}>Rimuovi</button>
+            <button onClick={() => !disabled && onRemoveTask(index)} disabled={disabled}>Rimuovi</button>
           </li>
         ))}
       </ul>
     </div>
   );
 };
-
 
 const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInModal }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: widget.id, disabled: isInModal });
@@ -180,11 +183,21 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   const [calcValue, setCalcValue] = useState('');
   const [events, setEvents] = useState<Event[]>(widget.type === 'calendar' ? (widget.data as Event[]) : []);
 
-  const handleNoteChange = (value: string) => setNote(value);
-  const handleAddTask = (task: string) => setTasks([...tasks, task]);
-  const handleRemoveTask = (index: number) => setTasks(tasks.filter((_, i) => i !== index));
+  const handleNoteChange = (value: string) => {
+    if (!isInModal) setNote(value);
+  };
+
+  const handleAddTask = (task: string) => {
+    if (!isInModal) setTasks([...tasks, task]);
+  };
+
+  const handleRemoveTask = (index: number) => {
+    if (!isInModal) setTasks(tasks.filter((_, i) => i !== index));
+  };
 
   const handleCalcButtonClick = (value: string) => {
+    if (isInModal) return; // Disabilita la calcolatrice nel modale
+
     if (value === 'C') {
       setCalcValue('');
     } else if (value === '=') {
@@ -199,12 +212,13 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   };
 
   const handleAddEvent = (event: Event) => {
-    setEvents([...events, event]);
+    if (!isInModal) setEvents([...events, event]);
   };
 
   const [isDark, setIsDark] = useState(widget.theme === 'dark');
 
   const toggleTheme = (e: React.MouseEvent) => {
+    if (isInModal) return; // Disabilita il cambio tema nel modale
     e.stopPropagation();
     e.preventDefault();
     setIsDark(!isDark);
@@ -218,6 +232,15 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
       {...listeners}
       className={`widget ${isDark ? 'widget-dark' : 'widget-light'}`}
     >
+      {isInModal && (
+        <div
+          className="widget-overlay"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
+        />
+      )}
       <div className="widget-header">
         <div className="widget-controls">
           {!isInModal && (
@@ -241,7 +264,7 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
               onPointerDown={(e) => e.stopPropagation()}
               onMouseDown={(e) => e.stopPropagation()}
             >
-              <span style={{ fontSize: '24px' }}>×</span>
+              <span style={{ fontSize: '24px' }}>X</span>
             </button>
           )}
         </div>
@@ -249,13 +272,13 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
       <h3>{widget.title}</h3>
       <div className="chart-container" onClick={(e) => e.stopPropagation()}>
         {widget.type === 'calendar' ? (
-          <SimpleCalendarWidget events={events} onAddEvent={handleAddEvent} />
+          <SimpleCalendarWidget events={events} onAddEvent={handleAddEvent} disabled={isInModal} />
         ) : widget.type === 'notes' ? (
-          <NotesWidget note={note} onNoteChange={handleNoteChange} />
+          <NotesWidget note={note} onNoteChange={handleNoteChange} disabled={isInModal} />
         ) : widget.type === 'tasklist' ? (
-          <TaskListWidget tasks={tasks} onAddTask={handleAddTask} onRemoveTask={handleRemoveTask} />
+          <TaskListWidget tasks={tasks} onAddTask={handleAddTask} onRemoveTask={handleRemoveTask} disabled={isInModal} />
         ) : widget.type === 'calcolatrice' ? (
-          <CalculatorWidget value={calcValue} onButtonClick={handleCalcButtonClick} />
+          <CalculatorWidget value={calcValue} onButtonClick={handleCalcButtonClick} disabled={isInModal} />
         ) : ['utenti', 'vendite', 'customer-trend'].includes(widget.type) ? (
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={widget.data as { name: string; value: number }[]}>
