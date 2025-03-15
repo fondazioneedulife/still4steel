@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Form, Button, Card, Row, Col, Modal } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, PlusCircle, Trash, Pencil } from 'react-bootstrap-icons';
-import Stepper from '../componenti2/Stepper';
+import Stepper from '../componenti/Stepper';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Varianti.css'
 
@@ -89,135 +89,147 @@ const VariantiProdotto: React.FC = () => {
 
     // Save to sessionStorage
     sessionStorage.setItem('variantiData', JSON.stringify(variantiData));
-    navigate('/seconda-sottopagina');
+    navigate('/magazzino/seconda-sottopagina');
   };
 
   // Torna alla pagina precedente
   const handlePrev = () => {
-    navigate('/aggiungi-prodotti', { state: { datiProdotto } });
+    navigate('/magazzino/aggiungi-prodotti', { state: { datiProdotto } });
   };
 
-  return (
-    <Container className="mt-4 varianti-prodotto-page">
-      <Stepper steps={steps} currentStep={step} />
-      <Card className="mb-3 form-card">
-        <Card.Body>
-          <h3 className="mb-4">Varianti del Prodotto</h3>
+  // ... imports remain the same ...
 
-          {/* Varianti Base */}
-          <h5 className="mb-3">Varianti Base</h5>
-          <Row className="mb-4">
-            {variantiBase.map((variante, index) => (
-              <Col md={6} key={variante.id} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <Card.Title>{variante.nome}</Card.Title>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Tipo</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder={`Es: ${variante.nome === 'Materiale' ? 'Cotone' : variante.nome === 'Colore' ? 'Rosso' : '...'}`}
-                        value={variante.tipo}
-                        onChange={(e) => {
-                          const nuoveVarianti = [...variantiBase];
-                          nuoveVarianti[index].tipo = e.target.value;
-                          setVariantiBase(nuoveVarianti);
-                        }}
-                      />
-                    </Form.Group>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+return (
+  <Container className="mt-4 varianti-prodotto-page">
+    <Stepper steps={steps} currentStep={step} />
+    <Card className="mb-4 form-card shadow-sm">
+      <Card.Body className="p-4">
+        <h3 className="mb-4 fw-semibold text-dark">Varianti del Prodotto</h3>
 
-          {/* Varianti Personalizzate */}
-          <h5 className="mb-3">Varianti Personalizzate</h5>
-          <Button variant="primary" onClick={() => setShowModal(true)} className="mb-4">
-            <PlusCircle size={20} className="me-2" /> Aggiungi Variante
+        {/* Varianti Base */}
+        <h5 className="mb-3 fw-medium text-primary">Varianti Base</h5>
+        <Row className="g-4 mb-5">
+          {variantiBase.map((variante, index) => (
+            <Col md={6} key={variante.id}>
+              <Card className="variant-card border-0 shadow-sm">
+                <Card.Body className="p-3">
+                  <Card.Title className="mb-3 fw-medium">{variante.nome}</Card.Title>
+                  <Form.Group>
+                    <Form.Control
+                      type="text"
+                      placeholder={`Es: ${variante.nome === 'Materiale' ? 'Cotone' : variante.nome === 'Colore' ? 'Rosso' : '...'}`}
+                      value={variante.tipo}
+                      onChange={(e) => {
+                        const nuoveVarianti = [...variantiBase];
+                        nuoveVarianti[index].tipo = e.target.value;
+                        setVariantiBase(nuoveVarianti);
+                      }}
+                      className="form-input py-2"
+                    />
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Varianti Personalizzate */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h5 className="mb-0 fw-medium text-primary">Varianti Personalizzate</h5>
+          <Button 
+            variant="outline-primary" 
+            onClick={() => setShowModal(true)}
+            className="d-flex align-items-center gap-2"
+          >
+            <PlusCircle size={18} /> Aggiungi Variante
           </Button>
+        </div>
 
-          <Row>
-            {variantiPersonalizzate.map((variante, index) => (
-              <Col md={4} key={variante.id} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <Card.Title>{variante.nome}</Card.Title>
-                    <Card.Text>
-                      <strong>Tipo:</strong> {variante.tipo}
-                    </Card.Text>
-                    <div className="d-flex gap-2">
-                      <Button variant="link" onClick={() => handleModificaVariante(index)}>
-                        <Pencil size={16} />
-                      </Button>
-                      <Button variant="link" onClick={() => handleRimuoviVariante(variante.id)}>
-                        <Trash size={16} />
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Card.Body>
-      </Card>
+        <Row className="g-4">
+          {variantiPersonalizzate.map((variante, index) => (
+            <Col md={4} key={variante.id}>
+              <Card className="variant-card border-0 shadow-sm">
+                <Card.Body className="p-3">
+                  <Card.Title className="mb-3 fw-medium">{variante.nome}</Card.Title>
+                  <Card.Text className="text-muted mb-3">
+                    <strong>Tipo:</strong> {variante.tipo}
+                  </Card.Text>
+                  <div className="d-flex gap-2 justify-content-end">
+                    <Button 
+                      variant="link" 
+                      onClick={() => handleModificaVariante(index)}
+                      className="text-primary p-1"
+                    >
+                      <Pencil size={16} />
+                    </Button>
+                    <Button 
+                      variant="link" 
+                      onClick={() => handleRimuoviVariante(variante.id)}
+                      className="text-danger p-1"
+                    >
+                      <Trash size={16} />
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Card.Body>
+    </Card>
 
-      {/* Modal per aggiungere/modificare una variante personalizzata */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{editIndex !== null ? 'Modifica Variante' : 'Aggiungi Variante'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Nome Variante</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Es: Trama, Design"
-                value={nomeVariante}
-                onChange={(e) => setNomeVariante(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Tipo</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Es: Rigato, Floreale"
-                value={tipoVariante}
-                onChange={(e) => setTipoVariante(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Chiudi
-          </Button>
-          <Button variant="primary" onClick={handleAggiungiVariante}>
-            {editIndex !== null ? 'Salva Modifiche' : 'Aggiungi'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Pulsanti di navigazione */}
-      <div className="navigation-buttons">
-        <Button 
-          variant="outline-dark" 
-          onClick={handlePrev} 
-          className="nav-button btn-prev"
-        >
-          <ArrowLeft size={24} /> Precedente
+    {/* Modal styling */}
+    <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal.Header closeButton className="border-bottom-0 pb-0">
+        <Modal.Title className="fw-medium">
+          {editIndex !== null ? 'Modifica Variante' : 'Aggiungi Variante'}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="pt-4">
+        <Form>
+          <Form.Group className="mb-4">
+            <Form.Label className="fw-medium">Nome Variante</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Es: Trama, Design"
+              value={nomeVariante}
+              onChange={(e) => setNomeVariante(e.target.value)}
+              className="form-input py-2"
+            />
+          </Form.Group>
+          <Form.Group className="mb-4">
+            <Form.Label className="fw-medium">Tipo</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Es: Rigato, Floreale"
+              value={tipoVariante}
+              onChange={(e) => setTipoVariante(e.target.value)}
+              className="form-input py-2"
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer className="border-top-0">
+        <Button variant="outline-secondary" onClick={() => setShowModal(false)}>
+          Annulla
         </Button>
-        <Button 
-          variant="dark" 
-          onClick={handleNext} 
-          className="nav-button btn-next"
-        >
-          Succesivo <ArrowRight size={24} />
+        <Button variant="primary" onClick={handleAggiungiVariante}>
+          {editIndex !== null ? 'Salva Modifiche' : 'Aggiungi'}
         </Button>
-      </div>
-    </Container>
-  );
+      </Modal.Footer>
+    </Modal>
+
+    {/* Navigation buttons */}
+    <div className="d-flex justify-content-between mt-4">
+      <Button variant="outline-dark" onClick={handlePrev} className="nav-button px-4 py-2">
+        <ArrowLeft size={20} className="me-2" /> Precedente
+      </Button>
+      <Button variant="dark" onClick={handleNext} className="nav-button px-4 py-2">
+        Successivo <ArrowRight size={20} className="ms-2" />
+      </Button>
+    </div>
+  </Container>
+);
 };
 
 export default VariantiProdotto;

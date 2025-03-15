@@ -14,21 +14,49 @@ const QuintaSottopagina: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Logica per determinare se il prodotto è stato aggiunto correttamente
-      const success = Math.random() > 0.5;
-      setIsSuccess(success);
+      try {
+        // Get form data from sessionStorage
+        const datiProdotto = JSON.parse(sessionStorage.getItem('aggiungiProdottoData') || '{}');
+        const datiMagazzino = JSON.parse(sessionStorage.getItem('secondaSottopaginaData') || '{}');
+        const datiFornitore = JSON.parse(sessionStorage.getItem('terzaSottopaginaData') || '{}');
 
-      if (success) {
-        // Aggiungi il prodotto alla lista
-        const newProduct = {
-          id: Date.now(),
-          sku: 'SKU' + Math.floor(Math.random() * 1000),
-          name: 'Nuovo Prodotto',
-          image: 'https://placehold.co/100x100',
-          quantity: 10,
-          status: 'available',
+        // Create form data structure that matches ProductData interface
+        const formData = {
+          prodotto: {
+            nomeProdotto: datiProdotto.nomeProdotto || '',
+            sku: datiProdotto.sku || `SKU${Math.floor(Math.random() * 1000)}`,
+            categoria: datiProdotto.categoria || '',
+            descrizione: datiProdotto.descrizione || '',
+            prezzoAcquisto: datiMagazzino.prezzoAcquisto || '0',
+            prezzoVendita: datiMagazzino.prezzoVendita || '0',
+            iva: datiMagazzino.iva || '0'
+          },
+          magazzino: {
+            quantita: datiMagazzino.quantita || '0',
+            quantitaMinima: datiMagazzino.quantitaMinima || '0'
+          },
+          fornitore: {
+            nomeFornitore: datiFornitore.nomeFornitore || '',
+            codiceFornitore: datiFornitore.codiceFornitore || '',
+            data: datiFornitore.data || '',
+            emailFornitore: datiFornitore.emailFornitore || '',
+            telefonoFornitore: datiFornitore.telefonoFornitore || ''
+          }
         };
-        addProduct(newProduct);
+
+        // Add product to context
+        addProduct(formData);
+        
+        // Clear session storage
+        sessionStorage.removeItem('aggiungiProdottoData');
+        sessionStorage.removeItem('variantiData');
+        sessionStorage.removeItem('secondaSottopaginaData');
+        sessionStorage.removeItem('terzaSottopaginaData');
+
+        setIsSuccess(true);
+      } catch (error) {
+        console.error('Error adding product:', error);
+        setIsSuccess(false);
       }
 
       setIsLoading(false);

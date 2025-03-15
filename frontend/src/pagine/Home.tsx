@@ -423,7 +423,7 @@ const Home: React.FC = () => {
                     }}>+</strong> per aprire il menu dei widget disponibili
                   </li>
                   <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
-                    Seleziona un widget dalla lista e clicca <strong style={{ 
+                    Seleziona un widget dalla lista scorri in basso e clicca <strong style={{ 
                       color: '#007bff',
                       background: '#e7f2ff',
                       padding: '0.2rem 0.6rem',

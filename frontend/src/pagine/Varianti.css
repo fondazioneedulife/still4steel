@@ -68,3 +68,35 @@
     font-weight: 500;
     color: #333;
   }
+
+.variant-card {
+  transition: all 0.2s ease-in-out;
+  border-radius: 12px;
+}
+
+.variant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+}
+
+.form-input {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.nav-button {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

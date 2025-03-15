@@ -8,13 +8,17 @@ import NavFooter from '../componenti/NavFooter';
 const Spedizioni: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedStatus, setSelectedStatus] = useState<string>('');
+  // Add shipmentType to the state
+  const [selectedShipmentType, setSelectedShipmentType] = useState<string>('');
+  
+  // Update shipments data to include shipmentType
   const [shipments, setShipments] = useState([
-    { id: 1, trackingNumber: 'TRK123456', status: 'In transito', date: '2024-10-01', sender: 'Mittente A', recipient: 'Destinatario X', weight: '2 kg' },
-    { id: 2, trackingNumber: 'TRK789012', status: 'Consegnato', date: '2024-09-28', sender: 'Mittente B', recipient: 'Destinatario Y', weight: '5 kg' },
-    { id: 3, trackingNumber: 'TRK345678', status: 'In elaborazione', date: '2025-02-05', sender: 'Mittente C', recipient: 'Destinatario Z', weight: '1 kg' },
-    { id: 4, trackingNumber: 'TRK901234', status: 'In transito', date: '2025-02-03', sender: 'Mittente D', recipient: 'Destinatario W', weight: '3 kg' },
-    { id: 5, trackingNumber: 'TRK567890', status: 'Consegnato', date: '2025-02-30', sender: 'Mittente E', recipient: 'Destinatario V', weight: '4 kg' },
-    { id: 6, trackingNumber: 'TRK123890', status: 'In elaborazione', date: '2025-03-06', sender: 'Mittente F', recipient: 'Destinatario U', weight: '2.5 kg' },
+    { id: 1, trackingNumber: 'TRK123456', status: 'In transito', date: '2024-10-01', sender: 'Fornitore AcciaioTech', recipient: 'Still4Steel', weight: '200 kg', shipmentType: 'in-entrata' },
+    { id: 2, trackingNumber: 'TRK789012', status: 'Consegnato', date: '2024-09-28', sender: 'Still4Steel', recipient: 'Cliente MetalPro', weight: '150 kg', shipmentType: 'in-uscita' },
+    { id: 3, trackingNumber: 'TRK345678', status: 'In elaborazione', date: '2025-02-05', sender: 'Fornitore SteelMax', recipient: 'Still4Steel', weight: '300 kg', shipmentType: 'in-entrata' },
+    { id: 4, trackingNumber: 'TRK901234', status: 'In transito', date: '2025-02-03', sender: 'Still4Steel', recipient: 'Cliente BuildTech', weight: '180 kg', shipmentType: 'in-uscita' },
+    { id: 5, trackingNumber: 'TRK567890', status: 'Consegnato', date: '2025-02-30', sender: 'Fornitore IronWorks', recipient: 'Still4Steel', weight: '250 kg', shipmentType: 'in-entrata' },
+    { id: 6, trackingNumber: 'TRK123890', status: 'In elaborazione', date: '2025-03-06', sender: 'Still4Steel', recipient: 'Cliente SteelCraft', weight: '120 kg', shipmentType: 'in-uscita' },
   ]);
 
   const navigate = useNavigate();
@@ -29,12 +33,15 @@ const Spedizioni: React.FC = () => {
   }, [location.state]);
 
   // Filtra le spedizioni in base al termine di ricerca e allo stato
+  // Update the filter function
   const filteredShipments = shipments.filter((shipment) => {
     const matchesSearch = shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus === '' || shipment.status === selectedStatus;
-    return matchesSearch && matchesStatus;
+    const matchesType = selectedShipmentType === '' || shipment.shipmentType === selectedShipmentType;
+    return matchesSearch && matchesStatus && matchesType;
   });
-
+  
+  // In the return statement, add the new filter dropdown
   return (
     <>
     <LeftNavbar>
@@ -44,7 +51,7 @@ const Spedizioni: React.FC = () => {
 
     {/* Filtri */}
     <Row className="mb-4">
-      <Col md={6} className="mb-2">
+      <Col md={4} className="mb-2">
         <Form.Control
           type="text"
           placeholder="Cerca per numero di tracciamento..."
@@ -52,7 +59,7 @@ const Spedizioni: React.FC = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </Col>
-      <Col md={6}>
+      <Col md={4} className="mb-2">
         <Form.Select
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.target.value)}
@@ -61,6 +68,16 @@ const Spedizioni: React.FC = () => {
           <option value="Consegnato">Consegnato</option>
           <option value="In transito">In transito</option>
           <option value="In elaborazione">In elaborazione</option>
+        </Form.Select>
+      </Col>
+      <Col md={4}>
+        <Form.Select
+          value={selectedShipmentType}
+          onChange={(e) => setSelectedShipmentType(e.target.value)}
+        >
+          <option value="">Tutte le spedizioni</option>
+          <option value="in-entrata">In Entrata</option>
+          <option value="in-uscita">In Uscita</option>
         </Form.Select>
       </Col>
     </Row>

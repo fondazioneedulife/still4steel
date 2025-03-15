@@ -44,19 +44,47 @@ const CalculatorWidget: React.FC<{ value: string; onButtonClick: (value: string)
 
 const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Event) => void; disabled?: boolean }> = ({ events, onAddEvent, disabled }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
   const [newEventTitle, setNewEventTitle] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   const handleDateClick = (date: string) => {
-    if (!disabled) setSelectedDate(date);
-    setNewEventTitle('');
+    if (!disabled) {
+      setSelectedDate(date);
+      setShowPopup(true);
+      setNewEventTitle('');
+      setSelectedEvent(null);
+    }
+  };
+
+  const handleEventClick = (event: Event, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!disabled) {
+      setSelectedDate(event.date);
+      setNewEventTitle(event.title);
+      setSelectedEvent(event);
+      setShowPopup(true);
+    }
   };
 
   const handleAddEvent = () => {
     if (selectedDate && newEventTitle.trim() && !disabled) {
       onAddEvent({ date: selectedDate, title: newEventTitle });
+      setShowPopup(false);
       setSelectedDate(null);
       setNewEventTitle('');
+      setSelectedEvent(null);
+    }
+  };
+
+  const handleDeleteEvent = () => {
+    if (selectedEvent && !disabled) {
+      const updatedEvents = events.filter(e => e !== selectedEvent);
+      // You'll need to implement onDeleteEvent in parent component
+      onAddEvent({ ...selectedEvent, deleted: true });
+      setShowPopup(false);
+      setSelectedEvent(null);
     }
   };
 
@@ -118,11 +146,45 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
           <button onClick={handleAddEvent} disabled={disabled}>Aggiungi Evento</button>
         </div>
       )}
+      
+      {showPopup && (
+        <>
+          <div className="calendar-popup-overlay" onClick={() => setShowPopup(false)} />
+          <div className="calendar-popup">
+            <h4>{selectedEvent ? 'Edit Event' : 'Add Event'} for {selectedDate}</h4>
+            <input
+              type="text"
+              placeholder="Event title"
+              value={newEventTitle}
+              onChange={(e) => setNewEventTitle(e.target.value)}
+              disabled={disabled}
+            />
+            <div className="calendar-popup-buttons">
+              {selectedEvent && (
+                <button className="delete" onClick={handleDeleteEvent}>
+                  Delete
+                </button>
+              )}
+              <button className="cancel" onClick={() => setShowPopup(false)}>
+                Cancel
+              </button>
+              <button className="save" onClick={handleAddEvent}>
+                {selectedEvent ? 'Update' : 'Add'}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className="events-list">
         {events
           .filter((event) => event.date.startsWith(currentDate.toISOString().split('T')[0].slice(0, 7)))
           .map((event, index) => (
-            <div key={index} className="event-item">
+            <div
+              key={index}
+              className="event-item"
+              onClick={(e) => handleEventClick(event, e)}
+            >
               <strong>{event.date}</strong>: {event.title}
             </div>
           ))}

@@ -195,6 +195,51 @@
   max-width: 100%;
   padding: 1rem;
   box-sizing: border-box;
+  pointer-events: all;
+}
+
+.calendar-header button,
+.calendar-date,
+.calendar-event-form input,
+.calendar-event-form button {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.calendar-date {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  padding: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.calendar-date:not(.empty):hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.calendar-date.selected {
+  background-color: #1a1a1a;
+  color: white;
+  border-color: #1a1a1a;
+}
+
+.widget-dark .calendar-date:not(.empty):hover {
+  background-color: #404040;
+}
+
+.calendar-event-form {
+  pointer-events: all;
+  margin-top: 1rem;
+}
+
+.events-list {
+  pointer-events: all;
+  margin-top: 1rem;
 }
 
 .calendar-header {
@@ -725,4 +770,84 @@
 
 .widget-dark .chart-container {
   background: #1a1a1a;
+}
+
+
+/* Calendar Event Popup */
+.calendar-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 300px;
+}
+
+.calendar-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.calendar-popup input {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.calendar-popup-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.calendar-popup button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.calendar-popup button.save {
+  background: #1a1a1a;
+  color: white;
+}
+
+.calendar-popup button.delete {
+  background: #dc3545;
+  color: white;
+}
+
+.calendar-popup button.cancel {
+  background: #e0e0e0;
+  color: #333;
+}
+
+/* Dark theme support */
+.widget-dark .calendar-popup {
+  background: #2c3e50;
+  color: white;
+}
+
+.widget-dark .calendar-popup input {
+  background: #34495e;
+  border-color: #2c3e50;
+  color: white;
+}
+
+.widget-dark .calendar-popup button.cancel {
+  background: #34495e;
+  color: white;
 }

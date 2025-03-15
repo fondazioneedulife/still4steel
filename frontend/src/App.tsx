@@ -52,6 +52,10 @@ function App() {
           <Route path="/ordini/lista-ordini" element={<ListaOrdini/>} />
           <Route path='/ordini/nuovo-ordine' element={<NuovoOrdine/>} />
           <Route path='/home' element={<Home/>} />
+          <Route path='/importa-spedizioni' element={<ImportaSpedizioni/>} />
+          <Route path='/varianti' element={<Varianti/>} />
+          
+
           
         </Routes>
       </Router>

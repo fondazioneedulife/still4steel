@@ -1,21 +1,29 @@
 import { createContext, useContext, useState } from 'react';
 
 // Definisci i tipi per i dati del prodotto, magazzino e fornitore
-interface ProductData {
-  nomeProdotto: string;
-  sku: string;
-  categoria: string;
-  descrizione: string;
-  prezzoAcquisto: string;
-  prezzoVendita: string;
-  iva: string;
-  quantita: string;
-  quantitaMinima: string;
+interface FornitoreData {
   nomeFornitore: string;
   codiceFornitore: string;
   data: string;
   emailFornitore: string;
   telefonoFornitore: string;
+}
+
+interface ProductData {
+  prodotto: {
+    nomeProdotto: string;
+    sku: string;
+    categoria: string;
+    descrizione: string;
+    prezzoAcquisto: string;
+    prezzoVendita: string;
+    iva: string;
+  };
+  magazzino: {
+    quantita: string;
+    quantitaMinima: string;
+  };
+  fornitore: FornitoreData;
 }
 
 interface Product {
@@ -33,6 +41,7 @@ interface ProductContextType {
   setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
   products: Product[];
   addProduct: (product: Product) => void;
+  deleteProduct: (productId: number) => void; // Add this line
 }
 
 // Crea il contesto
@@ -41,20 +50,26 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 // Provider per il contesto
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [productData, setProductData] = useState<ProductData>({
-    nomeProdotto: '',
-    sku: '',
-    categoria: '',
-    descrizione: '',
-    prezzoAcquisto: '',
-    prezzoVendita: '',
-    iva: '',
-    quantita: '',
-    quantitaMinima: '',
-    nomeFornitore: '',
-    codiceFornitore: '',
-    data: '',
-    emailFornitore: '',
-    telefonoFornitore: '',
+    prodotto: {
+      nomeProdotto: '',
+      sku: '',
+      categoria: '',
+      descrizione: '',
+      prezzoAcquisto: '',
+      prezzoVendita: '',
+      iva: '',
+    },
+    magazzino: {
+      quantita: '',
+      quantitaMinima: '',
+    },
+    fornitore: {
+      nomeFornitore: '',
+      codiceFornitore: '',
+      data: '',
+      emailFornitore: '',
+      telefonoFornitore: '',
+    }
   });
 
   const [products, setProducts] = useState<Product[]>([
@@ -63,12 +78,29 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     { id: 3, sku: 'SKU789', name: 'Prodotto C', image: 'https://placehold.co/100x100', quantity: 2, status: 'low_stock' },
   ]);
 
-  const addProduct = (product: Product) => {
-    setProducts((prevProducts) => [...prevProducts, product]);
+  const addProduct = (formData: ProductData) => {
+    const newProduct: Product = {
+      id: Date.now(),
+      sku: formData.prodotto.sku,
+      name: formData.prodotto.nomeProdotto,
+      image: 'https://placehold.co/100x100',
+      quantity: parseInt(formData.magazzino.quantita) || 0,
+      status: parseInt(formData.magazzino.quantita) > parseInt(formData.magazzino.quantitaMinima) 
+        ? 'available' 
+        : parseInt(formData.magazzino.quantita) === 0 
+          ? 'out_of_stock' 
+          : 'low_stock',
+    };
+
+    setProducts(prevProducts => [...prevProducts, newProduct]);
+  };
+
+  const deleteProduct = (productId: number) => {
+    setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
   };
 
   return (
-    <ProductContext.Provider value={{ productData, setProductData, products, addProduct }}>
+    <ProductContext.Provider value={{ productData, setProductData, products, addProduct, deleteProduct }}>
       {children}
     </ProductContext.Provider>
   );

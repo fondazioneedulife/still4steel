@@ -1,18 +1,11 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
+import { X } from 'react-bootstrap-icons';  // Add this import
 import "./ListaProdotti.css";
 import LeftNavbar from "../componenti/NavbarDesktop";
 import NavFooter from "../componenti/NavFooter";
+import { useProductData } from './ContestoProdotto';
 import ProductModal from "../componenti/SingleProduct";
-
-const allProducts = [
-  { id: 1, sku: "SKU123", name: "Prodotto A", image: "https://placehold.co/100x100", quantity: 10, status: "available" },
-  { id: 2, sku: "SKU456", name: "Prodotto B", image: "https://placehold.co/100x100", quantity: 0, status: "out_of_stock" },
-  { id: 3, sku: "SKU789", name: "Prodotto C", image: "https://placehold.co/100x100", quantity: 2, status: "low_stock" },
-  { id: 4, sku: "SKU101", name: "Prodotto D", image: "https://placehold.co/100x100", quantity: 5, status: "available" },
-  { id: 5, sku: "SKU112", name: "Prodotto E", image: "https://placehold.co/100x100", quantity: 0, status: "out_of_stock" },
-  { id: 6, sku: "SKU113", name: "Prodotto F", image: "https://placehold.co/100x100", quantity: 3, status: "low_stock" },
-];
 
 const STATUS_LABELS = {
   available: "Disponibile",
@@ -25,8 +18,8 @@ const ListaProdotti = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const { products, deleteProduct } = useProductData();  // Update this line
 
-  // Funzioni per gestire la modale
   const handleShowModal = (product) => {
     setSelectedProduct(product);
     setShowModal(true);
@@ -37,16 +30,21 @@ const ListaProdotti = () => {
     setShowModal(false);
   };
 
-  // Filtraggio ottimizzato con useMemo
   const filteredProducts = useMemo(() => {
-    return allProducts.filter((product: { name: string; sku: string; status: string; }) => {
+    return products.filter((product: { name: string; sku: string; status: string; }) => {
       const matchesSearch =
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.sku.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "" || product.status === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchTerm, selectedCategory, allProducts]);
+  }, [searchTerm, selectedCategory, products]);
+
+  const handleDelete = (productId: number) => {
+    if (window.confirm('Sei sicuro di voler eliminare questo prodotto?')) {
+      deleteProduct(productId);
+    }
+  };
 
   return (
     <>
@@ -77,7 +75,24 @@ const ListaProdotti = () => {
       {filteredProducts.length > 0 ? (
         filteredProducts.map((product) => (
           <Col key={product.id} md={6} lg={4} className="mb-3">
-            <Card className="product-card">
+            <Card className="product-card" style={{ position: 'relative' }}>
+              <Button
+                onClick={() => handleDelete(product.id)}
+                variant="link"
+                className="delete-icon"
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '10px',
+                  padding: '4px',
+                  color: '#dc3545',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  zIndex: 2
+                }}
+              >
+                <X size={20} />
+              </Button>
               <div
                 className={`product-tab ${product.status}`}
                 style={{
