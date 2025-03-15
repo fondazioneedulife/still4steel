@@ -531,60 +531,198 @@
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 .widget-header {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   display: flex;
-  gap: 8px;
-  z-index: 1000;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .widget-controls {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
-.theme-button, .remove-widget {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.widget-dark {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
-.widget-light {
-  background-color: #ffffff;
-  color: #000000;
-}
+.theme-toggle,
 .remove-widget {
-  color: #ff0000;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px 8px;
-  position: relative;
-  z-index: 1000;
+  padding: 0.25rem;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
+.theme-toggle:hover,
 .remove-widget:hover {
-  color: #cc0000;
+  background: rgba(0, 0, 0, 0.1);
 }
-/* Widget.css */
+
+.widget-dark .theme-toggle:hover,
+.widget-dark .remove-widget:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.remove-widget {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.widget-dark .remove-widget {
+  color: #999;
+}
 .selected-widget {
   border: 2px solid red !important; /* Contorno rosso */
   border-radius: 8px; /* Bordi arrotondati */
 }
 
+/* Widget Selection Modal Styles */
 .widget-container {
-  cursor: pointer; /* Cambia il cursore per indicare che è cliccabile */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.widget-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.selected-widget {
+  border: 2px solid #1a1a1a !important;
+  background: #f8f9fa;
+}
+
+.selected-widget::before {
+  content: '✓';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #1a1a1a;
+  color: #ffffff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.widget-container:active {
+  transform: translateY(0);
+  transition: transform 0.1s;
+}
+
+/* Modal Header Enhancement */
+.modal-header {
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.modal-title {
+  color: #1a1a1a;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+/* Modal Body Enhancement */
+.modal-body {
+  background: #ffffff;
+  padding: 2rem;
+}
+
+/* Modal Footer Enhancement */
+.modal-footer {
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  border-top: 2px solid #e0e0e0;
+}
+
+/* Modal Buttons */
+.modal-footer .btn-secondary {
+  background: #ffffff;
+  border: 2px solid #1a1a1a;
+  color: #1a1a1a;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modal-footer .btn-secondary:hover {
+  background: #f5f5f5;
+}
+
+.modal-footer .btn-primary {
+  background: #1a1a1a;
+  border: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modal-footer .btn-primary:hover {
+  background: #333333;
+  transform: translateY(-2px);
+}
+
+.modal-footer .btn-primary:disabled {
+  background: #cccccc;
+  transform: none;
+}
+
+.widget {
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.widget-light {
+  background: #ffffff;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+}
+
+.widget-dark {
+  background: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #333333;
+}
+
+.widget-dark input,
+.widget-dark textarea,
+.widget-dark .calendar-date,
+.widget-dark .calculator input {
+  background: #2d2d2d;
+  color: #ffffff;
+  border-color: #404040;
+}
+
+.widget-dark .calendar-day-header,
+.widget-dark h3,
+.widget-dark h4 {
+  color: #ffffff;
+}
+
+.widget-dark .event-item {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
+.widget-dark button {
+  background: #333333;
+  color: #ffffff;
+  border-color: #404040;
+}
+
+.widget-dark button:hover {
+  background: #404040;
+}
+
+.widget-dark .chart-container {
+  background: #1a1a1a;
 }

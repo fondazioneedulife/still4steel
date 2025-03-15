@@ -231,16 +231,37 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
       {...listeners}
       className={`widget ${isDark ? 'widget-dark' : 'widget-light'}`}
     >
-      {isInModal && (
-        <div
-          className="widget-overlay"
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}
-        />
-      )}
-      <h3>{widget.title}</h3>
+      <div className="widget-header">
+        <h3>{widget.title}</h3>
+        <div className="widget-controls">
+          {!isInModal && (
+            <>
+              <button 
+                className="theme-toggle" 
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  toggleTheme(e);
+                }}
+                aria-label="Toggle theme"
+              >
+                {isDark ? '☀️' : '🌙'}
+              </button>
+              <button 
+                className="remove-widget" 
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  onRemove && onRemove(widget.id);
+                }}
+                aria-label="Remove widget"
+              >
+                ✕
+              </button>
+            </>
+          )}
+        </div>
+      </div>
       <div className="chart-container" onClick={(e) => e.stopPropagation()}>
         {widget.type === 'calendar' ? (
           <SimpleCalendarWidget events={events} onAddEvent={handleAddEvent} disabled={isInModal} />
@@ -276,4 +297,5 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   );
 };
 
+// Add this CSS to your Widget.css file:
 export default SortableWidget;
