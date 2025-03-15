@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Container } from 'react-bootstrap';
 import './DettagliProdotti.css';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 const DettagliProdotto: React.FC = () => {
   const location = useLocation();

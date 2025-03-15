@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid,
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   LineChart, Line
 } from 'recharts';
 import './Widget.css';
 import React from 'react';
-import { Moon, MoonFill } from 'react-bootstrap-icons';
 
 type Event = {
   date: string;
@@ -74,7 +73,7 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
 
-  const monthDates = [];
+  const monthDates: never[] = [];
   for (let i = 0; i < firstDayOfMonth; i++) {
     monthDates.push(null as never);
   }
@@ -241,34 +240,6 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
           }}
         />
       )}
-      <div className="widget-header">
-        <div className="widget-controls">
-          {!isInModal && (
-            <button
-              className="theme-button"
-              onClick={toggleTheme}
-              onPointerDown={(e) => e.stopPropagation()}
-              onMouseDown={(e) => e.stopPropagation()}
-            >
-              {isDark ? <MoonFill size={16} /> : <Moon size={16} />}
-            </button>
-          )}
-          {!isInModal && onRemove && (
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                onRemove(widget.id);
-              }} 
-              className="remove-widget"
-              onPointerDown={(e) => e.stopPropagation()}
-              onMouseDown={(e) => e.stopPropagation()}
-            >
-              <span style={{ fontSize: '24px' }}>X</span>
-            </button>
-          )}
-        </div>
-      </div>
       <h3>{widget.title}</h3>
       <div className="chart-container" onClick={(e) => e.stopPropagation()}>
         {widget.type === 'calendar' ? (

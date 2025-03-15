@@ -1,30 +1,30 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AggiungiProdotti from '../pagine/AggiungiProdotti';
-import Magazzino from '../pagine/Magazzino'; 
-import SecondaSottopagina from '../pagine/SecondaSottopagina';
-import TerzaSottopagina from '../pagine/TerzaSottopagina';
-import Riepilogo from '../pagine/Riepilogo'
+import AggiungiProdotti from './pagine/AggiungiProdotti';
+import Magazzino from './pagine/Magazzino'; 
+import SecondaSottopagina from './pagine/SecondaSottopagina';
+import TerzaSottopagina from './pagine/TerzaSottopagina';
+import Riepilogo from './pagine/Riepilogo'
 import Navbar from './componenti/Navbar';
-import QuintaSottopagina from '../pagine/QuintaSottopagina';
+import QuintaSottopagina from './pagine/QuintaSottopagina';
 import NavFooter from './componenti/NavFooter'
-import DettagliSpedizioni from '../pagine/DettagliSpedizione'
-import Spedzioni from '../pagine/Spedizioni'
+import DettagliSpedizioni from './pagine/DettagliSpedizione'
+import Spedzioni from './pagine/Spedizioni'
 import Login from './routes/login'
 import Register from './routes/register'
 import NewPsw from './routes/newPassword'
 import { Root } from './routes/root';
-import BeforeLogin from '../pagine/LoadingPage';
-import Ordini from '../pagine/Ordini';
-import Fornitori from '../pagine/Fornitori';
-import ListaOrdini from '../pagine/ListaOrdini';
-import NuovoOrdine from '../pagine/NuovoOrdine';
-import ListaProdotti from '../pagine/ListaProdotti';
-import Home from '../pagine/Home';
+import BeforeLogin from './pagine/LoadingPage';
+import Ordini from './pagine/Ordini';
+import Fornitori from './pagine/Fornitori';
+import ListaOrdini from './pagine/ListaOrdini';
+import NuovoOrdine from './pagine/NuovoOrdine';
+import ListaProdotti from './pagine/ListaProdotti';
+import Home from './pagine/Home';
 import './App.css';
 import CustomNavbar from '../componenti2/Navbar';
-import ImportaSpedizioni from '../pagine/ImportaSpedizioni';
-import Varianti from '../pagine/Varianti';
-import { ProductProvider } from '../pagine/ContestoProdotto';
+import ImportaSpedizioni from './pagine/ImportaSpedizioni';
+import Varianti from './pagine/Varianti';
+import { ProductProvider } from './pagine/ContestoProdotto';
 function App() {
     return (
       <ProductProvider>

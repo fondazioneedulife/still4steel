@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "pagine/DettagliProdotto.tsx"]
+  "include": ["src", "src/pagine/DettagliProdotto.tsx"]
 }

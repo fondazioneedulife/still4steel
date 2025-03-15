@@ -4,7 +4,7 @@ import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { useProductData } from './ContestoProdotto';
 import './QuintaSottopagina.css';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import LeftNavbar from '../componenti/NavbarDesktop';
 
 const QuintaSottopagina: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);

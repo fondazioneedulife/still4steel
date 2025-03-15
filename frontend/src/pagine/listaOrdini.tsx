@@ -1,9 +1,9 @@
 import React from 'react';
-import Navbar from '../src/componenti/Navbar';
-import NavFooter from '../src/componenti/NavFooter';
-import Ordine from '../src/componenti/Ordine';
-import SearchBar from '../src/componenti/SearchBar';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import Navbar from '../componenti/Navbar';
+import NavFooter from '../componenti/NavFooter';
+import Ordine from '../componenti/Ordine';
+import SearchBar from '../componenti/SearchBar';
+import LeftNavbar from '../componenti/NavbarDesktop';
 import { BsPlusCircleFill } from "react-icons/bs";
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';

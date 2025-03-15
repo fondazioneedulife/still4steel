@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Container } from 'react-bootstrap';
 import './DettagliSpedizione.css';
 import jsPDF from 'jspdf';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import LeftNavbar from '../componenti/NavbarDesktop';
 
 const DettagliSpedizione: React.FC = () => {
   const location = useLocation();

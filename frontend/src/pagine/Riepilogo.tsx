@@ -1,8 +1,8 @@
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-import Stepper from '../src/componenti/Stepper';
+import Stepper from '../componenti/Stepper';
 import { useLocation, useNavigate } from 'react-router-dom';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import LeftNavbar from '../componenti/NavbarDesktop';
 import { useState, useEffect } from 'react';
 
 

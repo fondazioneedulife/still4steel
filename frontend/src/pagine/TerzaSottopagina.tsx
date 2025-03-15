@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Person, Hash, Calendar, Envelope, Telephone } from 'react-bootstrap-icons';
-import Stepper from '../src/componenti/Stepper';
+import Stepper from '../componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import LeftNavbar from '../componenti/NavbarDesktop';
 
 const TerzaSottopagina: React.FC = () => {
   const [step] = useState<number>(3);

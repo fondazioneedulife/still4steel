@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Spedizioni.css';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
-import NavFooter from '../src/componenti/NavFooter';
+import LeftNavbar from '../componenti/NavbarDesktop';
+import NavFooter from '../componenti/NavFooter';
 
 const Spedizioni: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');

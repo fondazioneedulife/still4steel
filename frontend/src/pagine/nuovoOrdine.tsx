@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Card, CardBody } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 // import { useRouter } from "next/router";
-import LeftNavbar from "../src/componenti/NavbarDesktop";
-import NavFooter from "../src/componenti/NavFooter";
-import NavBar from "../src/componenti/NavBar";
+import LeftNavbar from "../componenti/NavbarDesktop";
+import NavFooter from "../componenti/NavFooter";
+import NavBar from "../componenti/NavBar";
 import React from "react";
 
 export default function NuovoOrdine() {

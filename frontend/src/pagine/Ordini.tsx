@@ -1,7 +1,7 @@
-import Navbar from '../src/componenti/Navbar';
-import NavFooter from '../src/componenti/NavFooter';
-import Rectangle from '../src/componenti/rectangle';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import Navbar from '../componenti/Navbar';
+import NavFooter from '../componenti/NavFooter';
+import Rectangle from '../componenti/rectangle';
+import LeftNavbar from '../componenti/NavbarDesktop';
 import React  from 'react';
 function Ordini() {
     return (

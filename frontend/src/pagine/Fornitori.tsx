@@ -1,11 +1,11 @@
 import { Button } from "react-bootstrap";
-import Navbar from "../src/componenti/Navbar";
-import FooterNavbar from '../src/componenti/NavFooter';
+import Navbar from "../componenti/Navbar";
+import FooterNavbar from '../componenti/NavFooter';
 import React, { useState } from "react";
-import OpenCanvas from "../src/componenti/Canvas";
-import Fornitore from "../src/componenti/Fornitore";
-import LeftNavbar from "../src/componenti/NavbarDesktop";
-import NavFooter from "../src/componenti/NavFooter";
+import OpenCanvas from "../componenti/Canvas";
+import Fornitore from "../componenti/Fornitore";
+import LeftNavbar from "../componenti/NavbarDesktop";
+import NavFooter from "../componenti/NavFooter";
 import { BsPlusCircleFill } from "react-icons/bs";
 
 function Fornitori() {

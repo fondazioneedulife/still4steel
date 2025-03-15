@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card, Row, Col, Modal } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Tag, List, FileText, InfoCircle, PlusCircle, Image } from 'react-bootstrap-icons';
-import Stepper from '../src/componenti/Stepper';
+import Stepper from '../componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
 import { useProductData } from './ContestoProdotto';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import LeftNavbar from '../componenti/NavbarDesktop';
 
 const AggiungiProdotti: React.FC = () => {
   const { productData, setProductData } = useProductData();

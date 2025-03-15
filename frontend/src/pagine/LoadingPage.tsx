@@ -4,7 +4,7 @@ import {Container} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import '../src/routes/login.css';
+import '../routes/login.css';
 function loadingPage(){
     const navigate = useNavigate();
     return (

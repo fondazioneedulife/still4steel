@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Card } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight, Cash, Tag, Percent, Box, BoxArrowInDown } from 'react-bootstrap-icons';
-import Stepper from '../src/componenti/Stepper';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
+import Stepper from '../componenti/Stepper';
+import LeftNavbar from '../componenti/NavbarDesktop';
 import { useProductData } from './ContestoProdotto';
 
 const SecondaSottopagina: React.FC = () => {

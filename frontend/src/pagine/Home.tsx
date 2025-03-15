@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent, DragStartEvent, DragOverlay } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import SortableWidget from '../src/componenti/SortableWidget';
-import { Widget } from '../Types/types';
-import '../src/componenti/Widget.css';
-import LeftNavbar from '../src/componenti/NavbarDesktop';
-import NavFooter from '../src/componenti/NavFooter';
+import SortableWidget from '../componenti/SortableWidget';
+import { Widget } from '../../Types/types';
+import '../componenti/Widget.css';
+import LeftNavbar from '../componenti/NavbarDesktop';
+import NavFooter from '../componenti/NavFooter';
 
 const availableWidgets: Widget[] = [
   {

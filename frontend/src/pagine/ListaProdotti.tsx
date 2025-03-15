@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import "./ListaProdotti.css";
-import LeftNavbar from "../src/componenti/NavbarDesktop";
-import NavFooter from "../src/componenti/NavFooter";
-import ProductModal from "../src/componenti/SingleProduct";
+import LeftNavbar from "../componenti/NavbarDesktop";
+import NavFooter from "../componenti/NavFooter";
+import ProductModal from "../componenti/SingleProduct";
 
 const allProducts = [
   { id: 1, sku: "SKU123", name: "Prodotto A", image: "https://placehold.co/100x100", quantity: 10, status: "available" },
