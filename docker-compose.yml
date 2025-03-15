@@ -31,6 +31,6 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3002:3000"
+      - "3002:5173"
     depends_on:
       - backend
