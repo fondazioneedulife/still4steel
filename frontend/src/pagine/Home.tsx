@@ -109,6 +109,7 @@ const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeWidget, setActiveWidget] = useState<Widget | null>(null);
   const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
@@ -191,7 +192,18 @@ const Home: React.FC = () => {
         >
           <Container className="mt-4" style={{ maxWidth: '1450px', margin: '0 auto', minHeight: '100vh', border: 'none' }}>
             <div className="d-flex justify-content-between align-items-center mb-4">
-              <Button variant="dark" style={{ fontWeight: '900' }} onClick={toggleModal}>
+              <Button 
+                variant="outline-dark" 
+                style={{ fontWeight: '900', height: '50px', width: '50px', borderRadius: '50%' }}
+                onClick={() => setShowHelpModal(true)}
+              >
+                ?
+              </Button>
+              <Button 
+                variant="dark" 
+                style={{ fontWeight: '900', height: '50px', width: '50px', borderRadius: '50%' }} 
+                onClick={toggleModal}
+              >
                 +
               </Button>
             </div>
@@ -215,29 +227,281 @@ const Home: React.FC = () => {
             </DragOverlay>
 
             <Modal show={showModal} onHide={toggleModal} centered size="lg">
-              <Modal.Header closeButton>
-                <Modal.Title>Widget Disponibili</Modal.Title>
+              <Modal.Header closeButton style={{ 
+                background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                borderBottom: '2px solid #dee2e6',
+                padding: '2rem',
+                borderRadius: '12px 12px 0 0'
+              }}>
+                <Modal.Title style={{ width: '100%' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1.5rem',
+                    marginBottom: '1rem'
+                  }}>
+                    <div style={{
+                      background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                      borderRadius: '50%',
+                      width: '60px',
+                      height: '60px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 15px rgba(79,172,254,0.3)'
+                    }}>
+                      <span style={{ fontSize: '2.5rem' }}>🎨</span>
+                    </div>
+                    <div>
+                      <h3 style={{ 
+                        color: '#2c3e50', 
+                        fontSize: '2rem', 
+                        fontWeight: 700,
+                        margin: 0
+                      }}>
+                        Gallery Widget
+                      </h3>
+                      <p style={{ 
+                        color: '#6c757d', 
+                        fontSize: '1.1rem',
+                        margin: '0.5rem 0 0 0'
+                      }}>
+                        Scegli e personalizza i tuoi widget preferiti
+                      </p>
+                    </div>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    marginTop: '1rem'
+                  }}>
+                    {['Grafici 📊', 'Strumenti 🛠️', 'Calendario 📅', 'Note 📝'].map((category) => (
+                      <div key={category} style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        background: '#fff',
+                        fontSize: '0.9rem',
+                        color: '#6c757d',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}>
+                        {category}
+                      </div>
+                    ))}
+                  </div>
+                </Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                <Row>
+
+              <Modal.Body style={{ 
+                padding: '2rem', 
+                background: '#ffffff',
+                maxHeight: '70vh',
+                overflowY: 'auto'
+              }}>
+                <div style={{
+                  background: 'linear-gradient(135deg, #fff6e6 0%, #ffe1b6 100%)',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  marginBottom: '2rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  boxShadow: '0 4px 15px rgba(255,225,182,0.3)'
+                }}>
+                  <div style={{
+                    background: '#fff',
+                    borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                  }}>
+                    <span style={{ fontSize: '1.5rem' }}>💡</span>
+                  </div>
+                  <p style={{ 
+                    margin: 0,
+                    color: '#b45309',
+                    fontSize: '1.1rem',
+                    fontWeight: 500,
+                    lineHeight: '1.5'
+                  }}>
+                    Clicca su un widget per selezionarlo e personalizza la tua dashboard
+                  </p>
+                </div>
+
+                {/* ... rest of the Modal.Body content ... */}
+                <p style={{ 
+                  marginBottom: '1.5rem', 
+                  color: '#6c757d', 
+                  fontSize: '1.1rem' 
+                }}>
+                  Clicca su un widget per selezionarlo e poi su "Aggiungi" per inserirlo nella dashboard
+                </p>
+                <Row className="g-4">
                   {availableWidgets.map((widget) => (
-                    <Col key={widget.id} xs={12} md={6} className="mb-3">
+                    <Col key={widget.id} xs={12} md={6}>
                       <div
                         className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
                         onClick={() => handleWidgetClick(widget.id)}
+                        style={{
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          transform: selectedWidgetId === widget.id ? 'scale(1.02)' : 'scale(1)',
+                          boxShadow: selectedWidgetId === widget.id 
+                            ? '0 8px 16px rgba(0,123,255,0.15)' 
+                            : '0 4px 8px rgba(0,0,0,0.05)',
+                          border: selectedWidgetId === widget.id 
+                            ? '2px solid #007bff' 
+                            : '2px solid transparent',
+                          borderRadius: '12px',
+                          position: 'relative'
+                        }}
                       >
+                        {selectedWidgetId === widget.id && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '10px',
+                            right: '10px',
+                            background: '#007bff',
+                            color: 'white',
+                            padding: '4px 8px',
+                            borderRadius: '4px',
+                            fontSize: '0.9rem',
+                            zIndex: 1
+                          }}>
+                            Selezionato ✓
+                          </div>
+                        )}
                         <SortableWidget widget={widget} isInModal />
                       </div>
                     </Col>
                   ))}
                 </Row>
               </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={toggleModal}>
-                  Chiudi
+              <Modal.Footer style={{ 
+                background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+                borderTop: '2px solid #dee2e6',
+                padding: '1.25rem',
+                borderRadius: '0 0 12px 12px',
+                gap: '1rem'
+              }}>
+                <Button 
+                  variant="outline-secondary" 
+                  onClick={toggleModal}
+                  style={{ 
+                    padding: '0.75rem 2rem',
+                    fontWeight: 500,
+                    borderRadius: '8px',
+                    transition: 'all 0.2s ease',
+                    minWidth: '120px'
+                  }}
+                >
+                  Annulla
                 </Button>
-                <Button variant="primary" onClick={handleAddWidget} disabled={!selectedWidgetId}>
-                  Aggiungi
+                <Button 
+                  variant="primary" 
+                  onClick={handleAddWidget} 
+                  disabled={!selectedWidgetId}
+                  style={{ 
+                    padding: '0.75rem 2rem',
+                    fontWeight: 500,
+                    borderRadius: '8px',
+                    background: selectedWidgetId ? '#007bff' : '#e9ecef',
+                    border: 'none',
+                    boxShadow: selectedWidgetId ? '0 4px 8px rgba(0,123,255,0.2)' : 'none',
+                    transition: 'all 0.2s ease',
+                    minWidth: '120px'
+                  }}
+                >
+                  {selectedWidgetId ? 'Aggiungi ✓' : 'Seleziona'}
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal show={showHelpModal} onHide={() => setShowHelpModal(false)} centered>
+              <Modal.Header closeButton style={{ 
+                background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+                borderBottom: '2px solid #dee2e6',
+                padding: '1.5rem'
+              }}>
+                <Modal.Title style={{ 
+                  color: '#2c3e50', 
+                  fontSize: '1.75rem', 
+                  fontWeight: 600,
+                  letterSpacing: '-0.5px'
+                }}>
+                  Come utilizzare la Dashboard
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ 
+                padding: '2rem', 
+                background: '#ffffff',
+                fontSize: '1.1rem'
+              }}>
+                <ol style={{ 
+                  paddingLeft: '1.5rem', 
+                  margin: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem'
+                }}>
+                  <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
+                    Clicca il pulsante <strong style={{ 
+                      color: '#000',
+                      background: '#f8f9fa',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '4px'
+                    }}>+</strong> per aprire il menu dei widget disponibili
+                  </li>
+                  <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
+                    Seleziona un widget dalla lista e clicca <strong style={{ 
+                      color: '#007bff',
+                      background: '#e7f2ff',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '4px'
+                    }}>Aggiungi</strong>
+                  </li>
+                  <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
+                    Puoi trascinare i widget per riorganizzarli nella dashboard
+                  </li>
+                  <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
+                    Ogni widget ha controlli per il tema <span style={{ 
+                      background: '#f8f9fa',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '4px'
+                    }}>🌙/☀️</span> e rimozione <span style={{ 
+                      background: '#f8f9fa',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '4px'
+                    }}>✕</span>
+                  </li>
+                  <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
+                    Personalizza la dashboard aggiungendo i widget che preferisci
+                  </li>
+                </ol>
+              </Modal.Body>
+              <Modal.Footer style={{ 
+                background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+                borderTop: '2px solid #dee2e6',
+                padding: '1.25rem'
+              }}>
+                <Button 
+                  variant="primary" 
+                  onClick={() => setShowHelpModal(false)}
+                  style={{ 
+                    padding: '0.75rem 2.5rem',
+                    fontWeight: 500,
+                    borderRadius: '8px',
+                    background: '#007bff',
+                    border: 'none',
+                    boxShadow: '0 4px 8px rgba(0,123,255,0.2)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Ho capito
                 </Button>
               </Modal.Footer>
             </Modal>
