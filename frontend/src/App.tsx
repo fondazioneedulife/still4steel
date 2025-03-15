@@ -1,30 +1,29 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AggiungiProdotti from './pagine/AggiungiProdotti';
-import Magazzino from './pagine/Magazzino'; 
-import SecondaSottopagina from './pagine/SecondaSottopagina';
-import TerzaSottopagina from './pagine/TerzaSottopagina';
-import Riepilogo from './pagine/Riepilogo'
-import Navbar from './componenti/Navbar';
-import QuintaSottopagina from './pagine/QuintaSottopagina';
-import NavFooter from './componenti/NavFooter'
-import DettagliSpedizioni from './pagine/DettagliSpedizione'
-import Spedzioni from './pagine/Spedizioni'
-import Login from './routes/login'
-import Register from './routes/register'
-import NewPsw from './routes/newPassword'
-import { Root } from './routes/root';
-import BeforeLogin from './pagine/LoadingPage';
-import Ordini from './pagine/Ordini';
-import Fornitori from './pagine/Fornitori';
-import ListaOrdini from './pagine/ListaOrdini';
-import NuovoOrdine from './pagine/NuovoOrdine';
-import ListaProdotti from './pagine/ListaProdotti';
-import Home from './pagine/Home';
-import './App.css';
-import CustomNavbar from '../componenti2/Navbar';
-import ImportaSpedizioni from './pagine/ImportaSpedizioni';
-import Varianti from './pagine/Varianti';
-import { ProductProvider } from './pagine/ContestoProdotto';
+import AggiungiProdotti from '../src/pagine/AggiungiProdotti';
+import Magazzino from '../src/pagine/Magazzino'; 
+import SecondaSottopagina from '../src/pagine/SecondaSottopagina';
+import TerzaSottopagina from '../src/pagine/TerzaSottopagina';
+import Riepilogo from '../src/pagine/Riepilogo'
+import Navbar from '../src/componenti/Navbar';
+import QuintaSottopagina from '../src/pagine/QuintaSottopagina';
+import NavFooter from '../src/componenti/NavFooter'
+import DettagliSpedizioni from '../src/pagine/DettagliSpedizione'
+import Spedzioni from '../src/pagine/Spedizioni'
+import Login from '../src/routes/login'
+import Register from '../src/routes/register'
+import NewPsw from '../src/routes/newPassword'
+import { Root } from '../src/routes/root';
+import BeforeLogin from '../src/pagine/LoadingPage';
+import Ordini from '../src/pagine/Ordini';
+import Fornitori from '../src/pagine/Fornitori';
+import ListaOrdini from '../src/pagine/listaOrdini';
+import NuovoOrdine from '../src/pagine/nuovoOrdine';
+import ListaProdotti from '../src/pagine/ListaProdotti';
+import Home from '../src/pagine/Home';
+import '../src/App.css';
+import ImportaSpedizioni from '../src/pagine/ImportaSpedizioni';
+import Varianti from '../src/pagine/Varianti';
+import { ProductProvider } from '../src/pagine/ContestoProdotto';
 function App() {
     return (
       <ProductProvider>
