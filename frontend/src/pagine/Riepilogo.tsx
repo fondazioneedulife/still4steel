@@ -39,17 +39,19 @@ const Riepilogo: React.FC = () => {
     }
   }, []);
 
+  // Update the productData structure in handleNext
   const handleNext = () => {
-    // Create the complete product data structure
     const productData = {
       prodotto: {
         nomeProdotto: formData.datiProdotto?.nomeProdotto || '',
         sku: formData.datiProdotto?.sku || '',
         categoria: formData.datiProdotto?.categoria || '',
+        brand: formData.datiProdotto?.brand || '',  // Added brand
         descrizione: formData.datiProdotto?.descrizione || '',
         prezzoAcquisto: formData.datiMagazzino?.prezzoAcquisto || '',
         prezzoVendita: formData.datiMagazzino?.prezzoVendita || '',
-        iva: formData.datiMagazzino?.iva || ''
+        iva: formData.datiMagazzino?.iva || '',
+        varianti: formData.datiVarianti || []
       },
       magazzino: {
         quantita: formData.datiMagazzino?.quantita || '',
@@ -88,12 +90,17 @@ const Riepilogo: React.FC = () => {
                   <Box className="me-2" /> Dati Prodotto
                 </Card.Title>
               </Card.Header>
+              // Add brand to the Dati Prodotto card display
               <Card.Body>
                 {formData.datiProdotto && (
                   <>
                     <div className="riepilogo-field">
                       <strong>Nome Prodotto</strong>
                       <p>{formData.datiProdotto.nomeProdotto || 'Non specificato'}</p>
+                    </div>
+                    <div className="riepilogo-field">
+                      <strong>Brand</strong>
+                      <p>{formData.datiProdotto.brand || 'Non specificato'}</p>
                     </div>
                     <div className="riepilogo-field">
                       <strong>SKU</strong>
@@ -122,21 +129,14 @@ const Riepilogo: React.FC = () => {
                 </Card.Title>
               </Card.Header>
               <Card.Body>
-                {formData.datiVarianti && (
-                  <>
-                    <div className="riepilogo-field">
-                      <strong>Varianti Base</strong>
-                      {formData.datiVarianti.variantiBase && Object.entries(formData.datiVarianti.variantiBase).map(([nome, tipo]) => (
-                        <p key={nome}>{nome}: {tipo || 'Non specificato'}</p>
-                      ))}
-                    </div>
-                    <div className="riepilogo-field">
-                      <strong>Varianti Personalizzate</strong>
-                      {formData.datiVarianti.variantiPersonalizzate && Object.entries(formData.datiVarianti.variantiPersonalizzate).map(([nome, tipo]) => (
-                        <p key={nome}>{nome}: {tipo || 'Non specificato'}</p>
-                      ))}
-                    </div>
-                  </>
+                {Array.isArray(formData.datiVarianti) && formData.datiVarianti.map((variante, index) => (
+                  <div key={index} className="riepilogo-field">
+                    <strong>{variante.label}</strong>
+                    <p>{variante.types.join(', ')}</p>
+                  </div>
+                ))}
+                {!Array.isArray(formData.datiVarianti) && (
+                  <p>Nessuna variante specificata</p>
                 )}
               </Card.Body>
             </Card>

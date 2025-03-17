@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, PlusCircle, Trash, Pencil } from 'react-bootstra
 import Stepper from '../componenti/Stepper';
 import { useNavigate } from 'react-router-dom';
 import './Varianti.css';
+import { useProductData } from './ContestoProdotto';
 
 const VariantiProdotto: React.FC = () => {
   const [step] = useState<number>(2);
@@ -19,6 +20,7 @@ const VariantiProdotto: React.FC = () => {
     const saved = localStorage.getItem('savedVariants');
     return saved ? JSON.parse(saved) : [];
   });
+  const { productData, setProductData } = useProductData();
 
   // Update handleAddVariant to save to localStorage
   const handleAddVariant = () => {
@@ -31,8 +33,11 @@ const VariantiProdotto: React.FC = () => {
         : [...savedVariants, { label: variantLabel.toUpperCase(), types }];
       
       setSavedVariants(newVariants);
+      setProductData({
+        ...productData,
+        varianti: newVariants
+      });
       localStorage.setItem('savedVariants', JSON.stringify(newVariants));
-      sessionStorage.setItem('variantiData', JSON.stringify(newVariants));
       
       setVariantLabel('');
       setVariantTypes('');
@@ -121,55 +126,127 @@ const VariantiProdotto: React.FC = () => {
 
   // Update the Modal form inputs
   return (
-    <Container className="mt-4 bg-white p-4">
+    <Container className="mt-4" style={{ 
+      maxWidth: '1200px',
+      background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+      borderRadius: '16px',
+      padding: '2.5rem',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.08)'
+    }}>
       <Stepper steps={steps} currentStep={step} />
-      <h2 className="text-center my-4">Varianti</h2>
+      
+      <div style={{
+        textAlign: 'center',
+        margin: '2.5rem 0 3rem'
+      }}>
+        <h2 style={{ 
+          fontSize: '2rem',
+          fontWeight: 700,
+          marginBottom: '0.5rem'
+        }}>Varianti</h2>
+      </div>
 
-      <div className="text-center mb-4">
+      <div className="text-center mb-5">
         <Button 
-          variant="primary" 
+          variant="dark" 
           onClick={() => setShowModal(true)}
-          className="d-inline-flex align-items-center gap-2"
+          style={{
+            padding: '1rem 2rem',
+            borderRadius: '12px',
+            fontSize: '1.1rem',
+            fontWeight: 500,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.75rem'
+          }}
         >
-          <PlusCircle size={18} /> Aggiungi Variante
+          <PlusCircle size={22} /> Aggiungi Variante
         </Button>
       </div>
 
-      <div className="variants-grid">
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gap: '1.5rem',
+        marginBottom: '3rem'
+      }}>
         {savedVariants.map((variant, index) => (
-          <Card key={index} className="mb-3 shadow-sm">
-            <Card.Body>
+          <Card key={index} style={{
+            border: '1px solid #e0e0e0',
+            borderRadius: '12px',
+            transition: 'all 0.3s ease'
+          }}>
+            <Card.Body style={{ padding: '1.5rem' }}>
               <div className="d-flex justify-content-between align-items-start">
-                <div>
-                  <h5 className="mb-3">{variant.label}</h5>
-                  <div className="d-flex flex-wrap gap-2">
+                <div style={{ flex: 1 }}>
+                  <h5 style={{
+                    fontSize: '1.25rem',
+                    fontWeight: 600,
+                    marginBottom: '1rem'
+                  }}>{variant.label}</h5>
+                  <div style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.5rem'
+                  }}>
                     {variant.types.map((type, i) => (
-                      <span key={i} className="badge bg-light text-dark border">
+                      <span key={i} style={{
+                        background: '#f8f9fa',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '8px',
+                        fontSize: '0.9rem',
+                        color: '#333333'
+                      }}>
                         {type}
                       </span>
                     ))}
                   </div>
                 </div>
-                <Button 
-                  variant="link" 
-                  className="text-primary p-0 me-2"
-                  onClick={() => handleEditVariant(index)}
-                >
-                  <Pencil size={16} />
-                </Button>
-                <Button 
-                  variant="link" 
-                  className="text-danger p-0"
-                  onClick={() => handleRemoveVariant(index)}
-                >
-                  <Trash size={16} />
-                </Button>
+                <div style={{
+                  display: 'flex',
+                  gap: '0.75rem'
+                }}>
+                  <Button 
+                    variant="link" 
+                    onClick={() => handleEditVariant(index)}
+                    style={{ color: '#666666', padding: '0.5rem' }}
+                  >
+                    <Pencil size={18} />
+                  </Button>
+                  <Button 
+                    variant="link" 
+                    onClick={() => handleRemoveVariant(index)}
+                    style={{ color: '#dc3545', padding: '0.5rem' }}
+                  >
+                    <Trash size={18} />
+                  </Button>
+                </div>
               </div>
             </Card.Body>
           </Card>
         ))}
       </div>
 
+      <div className="d-flex justify-content-between mt-5" style={{
+        borderTop: '1px solid #e0e0e0',
+        paddingTop: '2rem'
+      }}>
+        <Button variant="outline-dark" onClick={handlePrev} style={{
+          padding: '0.75rem 1.5rem',
+          borderRadius: '8px',
+          fontWeight: 500
+        }}>
+          <ArrowLeft size={20} className="me-2" /> Precedente
+        </Button>
+        <Button variant="dark" onClick={handleNext} style={{
+          padding: '0.75rem 1.5rem',
+          borderRadius: '8px',
+          fontWeight: 500
+        }}>
+          Successivo <ArrowRight size={20} className="ms-2" />
+        </Button>
+      </div>
+      
       <Modal show={showModal} onHide={handleModalClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>{editingIndex !== null ? 'Modifica Variante' : 'Nuova Variante'}</Modal.Title>
@@ -206,14 +283,15 @@ const VariantiProdotto: React.FC = () => {
         </Modal.Footer>
       </Modal>
 
-      <div className="d-flex justify-content-between mt-4">
+      {/* Remove these duplicate buttons */}
+      {/* <div className="d-flex justify-content-between mt-4">
         <Button variant="outline-dark" onClick={handlePrev}>
           <ArrowLeft size={20} className="me-2" /> Precedente
         </Button>
         <Button variant="dark" onClick={handleNext}>
           Successivo <ArrowRight size={20} className="ms-2" />
         </Button>
-      </div>
+      </div> */}
     </Container>
   );
 };

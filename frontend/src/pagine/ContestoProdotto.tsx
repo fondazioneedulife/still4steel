@@ -18,6 +18,8 @@ interface ProductData {
     prezzoAcquisto: string;
     prezzoVendita: string;
     iva: string;
+    brand: string;  // Add this line
+    varianti: Array<{ label: string; types: string[] }>;
   };
   magazzino: {
     quantita: string;
@@ -49,6 +51,8 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 // Provider per il contesto
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Update the initial state
+  // In the initial state
   const [productData, setProductData] = useState<ProductData>({
     prodotto: {
       nomeProdotto: '',
@@ -58,6 +62,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       prezzoAcquisto: '',
       prezzoVendita: '',
       iva: '',
+      brand: '',  // Add this line
+      varianti: [],
     },
     magazzino: {
       quantita: '',

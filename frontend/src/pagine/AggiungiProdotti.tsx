@@ -17,6 +17,7 @@ const AggiungiProdotti: React.FC = () => {
 
   const navigate = useNavigate();
 
+  // Add brand to the validation
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -24,6 +25,7 @@ const AggiungiProdotti: React.FC = () => {
     if (!productData.sku.trim()) newErrors.sku = 'Il codice SKU è obbligatorio';
     if (!productData.categoria.trim()) newErrors.categoria = 'La categoria è obbligatoria';
     if (!productData.descrizione.trim()) newErrors.descrizione = 'La descrizione è obbligatoria';
+    if (!productData.brand.trim()) newErrors.brand = 'Il brand è obbligatorio';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -72,9 +74,7 @@ const AggiungiProdotti: React.FC = () => {
   };
 
   // In the return statement, add this inside the Row component, after the existing Col components
- // ... imports remain the same ...
-
-return (
+ return (
   <LeftNavbar>
     <Container className="mt-4 aggiungi-prodotti-page">
       <Stepper steps={steps} currentStep={step} />
@@ -165,6 +165,22 @@ return (
             </Col>
 
             <Col md={12}>
+              <Form.Group className="input-container mb-4">
+                <Form.Label className="form-label d-flex align-items-center">
+                  <Tag size={18} className="me-2 text-primary" />
+                  <span className="fw-medium">Brand</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci il brand..."
+                  value={productData.brand}
+                  onChange={(e) => setProductData({ ...productData, brand: e.target.value })}
+                  isInvalid={!!errors.brand}
+                  className="form-input py-2"
+                />
+                <Form.Control.Feedback type="invalid">{errors.brand}</Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group className="input-container">
                 <Form.Label className="form-label d-flex align-items-center">
                   <Image size={18} className="me-2 text-primary" />

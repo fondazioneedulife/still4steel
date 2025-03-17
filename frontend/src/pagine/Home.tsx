@@ -161,7 +161,6 @@ const Home: React.FC = () => {
     }
   };
 
-  // Update handleRemoveWidget to also save state
   const handleRemoveWidget = (id: string) => {
     const updatedWidgets = homeWidgets.filter((widget) => widget.id !== id);
     setHomeWidgets(updatedWidgets);
@@ -213,7 +212,19 @@ const Home: React.FC = () => {
               </Button>
               <Button 
                 variant="dark" 
-                style={{ fontWeight: '900', height: '50px', width: '50px', borderRadius: '50%' }} 
+                style={{ 
+                  fontWeight: '900', 
+                  height: '50px', 
+                  width: '50px', 
+                  borderRadius: '50%',
+                  fontSize: '2rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 0,
+                  lineHeight: '0',  // Changed to 0
+                  transform: 'translateY(-1px)'  // Adjusted translation
+                }} 
                 onClick={toggleModal}
               >
                 +
@@ -343,18 +354,18 @@ const Home: React.FC = () => {
                       </Button>
                       <Button 
                         variant="dark" 
-                        onClick={handleAddWidget} 
-                        disabled={!selectedWidgetId}
                         style={{ 
-                          padding: '0.75rem 2rem',
-                          fontWeight: 500,
+                          padding: '0.75rem 1.5rem',
                           borderRadius: '8px',
-                          background: selectedWidgetId ? '#000000' : '#cccccc',
-                          border: 'none',
-                          minWidth: '120px'
-                        }}
+                          fontWeight: 500,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }} 
+                        onClick={toggleModal}
                       >
-                        {selectedWidgetId ? 'Aggiungi' : 'Seleziona'}
+                        <span style={{ fontSize: '1.5rem', fontWeight: 700 }}>+</span>
+                        Aggiungi Widget
                       </Button>
                     </div>
                   </div>
@@ -458,7 +469,7 @@ const Home: React.FC = () => {
                     }}>+</strong> per aprire il menu dei widget disponibili
                   </li>
                   <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
-                    Seleziona un widget dalla lista scorri in basso e clicca <strong style={{ 
+                    Seleziona un widget dalla lista e clicca <strong style={{ 
                       color: '#007bff',
                       background: '#e7f2ff',
                       padding: '0.2rem 0.6rem',
