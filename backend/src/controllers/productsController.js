@@ -27,16 +27,18 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     try {
-        const { name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id } = req.body;
+        console.log("dati frontend", req.body);
+        const { name, sku, unit_price, quantity, image, description, company_id, warehouse_id, iva_id } = req.body;
+        console.log("dati")
 
         if (quantity <= 0) {
             return res.status(400).json({ error: "La quantità deve essere maggiore di 0" });
         }
 
         const result = await pool.query(
-            `INSERT INTO products (name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id) 
+            `INSERT INTO products (name, sku, unit_price, quantity, description, company_id, warehouse_id, iva_id) 
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-            [name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id]
+            [name, sku, unit_price, quantity, image, description, company_id, warehouse_id, iva_id]
         );
 
         res.status(201).json({ message: "Prodotto creato", product: result.rows[0] });
@@ -49,7 +51,7 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id } = req.body;
+        const { name, sku, unit_price, quantity, image, description, company_id, warehouse_id, iva_id } = req.body;
 
         if (quantity <= 0) {
             return res.status(400).json({ error: "La quantità deve essere maggiore di 0" });
@@ -57,10 +59,10 @@ export const updateProduct = async (req, res) => {
 
         const result = await pool.query(
             `UPDATE products 
-            SET name = $1, code = $2, unit_price = $3, quantity = $4, description = $5, 
-                company_id = $6, warehouse_id = $7, iva_id = $8 
-            WHERE product_id = $9 RETURNING *`,
-            [name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id, id]
+            SET name = $1, sku = $2, unit_price = $3, quantity = $4, image = $5, description = $6, 
+                company_id = $7, warehouse_id = $8, iva_id = $9 
+            WHERE product_id = $10 RETURNING *`,
+            [name, sku, unit_price, quantity, image, description, company_id, warehouse_id, iva_id, id]
         );
 
         if (result.rowCount === 0) {
