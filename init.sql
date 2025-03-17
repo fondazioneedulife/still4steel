@@ -78,6 +78,16 @@ VALUES  ('Laptop X100', 'LAPX100', 1200.00, 50, 'Laptop di ultima generazione', 
         ('Freni Auto 3000', 'FR3000', 150.00, 80, 'Freni per auto ad alte prestazioni', 3, 2, 1),
         ('Giacca Fashion Trend', 'GIACFT01', 75.00, 150, 'Giacca elegante per stagione autunno-inverno', 1, 1, 2);
 
+CREATE TABLE variables (
+    variable_id SERIAL PRIMARY KEY,
+    type VARCHAR(255) NOT NULL,
+    product_id INT REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+INSERT INTO variables (type, product_id)
+VALUES  ('Colore', 5),  -- Giacca Fashion Trend, Colore
+        ('Taglia', 5);  -- Giacca Fashion Trend, Taglia
+
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

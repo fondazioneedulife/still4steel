@@ -28,11 +28,22 @@ import saleDiscountsRoutes from "./routes/saleDiscountsRoutes.js";
 import logsRoutes from "./routes/logsRoutes.js";
 import tokenRoutes from "./routes/token.js";
 import endpointsRoutes from "./endpoint/endpointsRoutes.js";
-import cookieRouter from "./endpoint/CookieController.js"
+import cookieRouter from "./endpoint/CookieController.js";
+import variablesRoutes from "./routes/variablesRoutes.js";
+import cors from "cors";
 
 
 const app = express();
 app.use(express.json());
+app.use(cors(corsOptions));
+
+var corsOptions = {
+    origin: 'http://127.0.0.1',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+// CRUD variables
+app.use("/api/variables", variablesRoutes);
 
 // Token
 app.use("/api/token", tokenRoutes);
