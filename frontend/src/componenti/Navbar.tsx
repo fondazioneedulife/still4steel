@@ -1,4 +1,3 @@
-import React from "react";
 import { Button} from "react-bootstrap";
 import { IoReturnUpBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
