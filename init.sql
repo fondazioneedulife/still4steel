@@ -11,6 +11,12 @@ CREATE TABLE companies (
     note TEXT
 );
 
+CREATE TABLE widgets (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
+);
+
 CREATE TABLE companies_token (
     id SERIAL PRIMARY KEY,
     token VARCHAR(200) NOT NULL,
