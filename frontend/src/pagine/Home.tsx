@@ -295,40 +295,101 @@ const Home: React.FC = () => {
 
                   <div style={{
                     background: '#ffffff',
-                    border: '2px solid #000000',
                     borderRadius: '12px',
                     padding: '1.5rem',
                     display: 'flex',
-                    alignItems: 'center',
+                    flexDirection: 'column',
                     gap: '1.2rem',
                     position: 'relative',
                     boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
                   }}>
-                    <div style={{
-                      width: '52px',
-                      height: '52px',
-                      background: '#ffffff',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: '2px solid #000000'
-                    }}>
-                      <span style={{ 
-                        fontSize: '2rem'
-                      }}>💡</span>
+                    <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
+                      <div style={{
+                        width: '52px',
+                        height: '52px',
+                        background: '#ffffff',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <span style={{ fontSize: '2rem' }}>💡</span>
+                      </div>
+                      <p style={{ 
+                        margin: 0,
+                        fontSize: '1rem',
+                        color: '#333333',
+                        fontWeight: 500,
+                        flex: 1
+                      }}>
+                        Seleziona un widget per aggiungere nuove funzionalità alla tua dashboard. Puoi aggiungere un solo widget per tipo.
+                      </p>
                     </div>
-                    <p style={{ 
-                      margin: 0,
-                      fontSize: '1rem',
-                      color: '#333333',
-                      fontWeight: 500,
-                      flex: 1
-                    }}>
-                      Seleziona un widget per aggiungere nuove funzionalità alla tua dashboard. Puoi aggiungere un solo widget per tipo.
-                    </p>
+                    </div>
+                    <div>
+                    <br></br>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                      <Button 
+                        variant="outline-dark" 
+                        onClick={toggleModal}
+                        style={{ 
+                          padding: '0.75rem 2rem',
+                          fontWeight: 500,
+                          borderRadius: '8px',
+                          color: '#666666'
+                        }}
+                      >
+                        Annulla
+                      </Button>
+                      <Button 
+                        variant="dark" 
+                        onClick={handleAddWidget} 
+                        disabled={!selectedWidgetId}
+                        style={{ 
+                          padding: '0.75rem 2rem',
+                          fontWeight: 500,
+                          borderRadius: '8px',
+                          background: selectedWidgetId ? '#000000' : '#cccccc',
+                          border: 'none',
+                          minWidth: '120px'
+                        }}
+                      >
+                        {selectedWidgetId ? 'Aggiungi' : 'Seleziona'}
+                      </Button>
+                    </div>
                   </div>
                 </Modal.Title>
+                <br></br>
+                {/* <Button 
+                  variant="outline-dark" 
+                  onClick={toggleModal}
+                  style={{ 
+                    padding: '0.75rem 2rem',
+                    fontWeight: 500,
+                    borderRadius: '8px',
+                    border: '2px solid #666666',
+                    color: '#666666',
+                    background: 'transparent',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Annulla
+                </Button>
+                <Button 
+                  variant="dark" 
+                  onClick={handleAddWidget} 
+                  disabled={!selectedWidgetId}
+                  style={{ 
+                    padding: '0.75rem 2rem',
+                    fontWeight: 500,
+                    borderRadius: '8px',
+                    background: selectedWidgetId ? '#000000' : '#cccccc',
+                    border: 'none',
+                    minWidth: '120px'
+                  }}
+                >
+                  {selectedWidgetId ? 'Aggiungi' : 'Seleziona'}
+                </Button> */}
               </Modal.Header>
 
               <Modal.Body style={{ 
@@ -359,44 +420,6 @@ const Home: React.FC = () => {
                   ))}
                 </Row>
               </Modal.Body>
-
-              <Modal.Footer style={{ 
-                background: '#ffffff',
-                borderTop: '2px solid #000000',
-                padding: '1.5rem',
-                gap: '1rem'
-              }}>
-                <Button 
-                  variant="outline-dark" 
-                  onClick={toggleModal}
-                  style={{ 
-                    padding: '0.75rem 2rem',
-                    fontWeight: 500,
-                    borderRadius: '8px',
-                    border: '2px solid #666666',
-                    color: '#666666',
-                    background: 'transparent',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  Annulla
-                </Button>
-                <Button 
-                  variant="dark" 
-                  onClick={handleAddWidget} 
-                  disabled={!selectedWidgetId}
-                  style={{ 
-                    padding: '0.75rem 2rem',
-                    fontWeight: 500,
-                    borderRadius: '8px',
-                    background: selectedWidgetId ? '#000000' : '#cccccc',
-                    border: 'none',
-                    minWidth: '120px'
-                  }}
-                >
-                  {selectedWidgetId ? 'Aggiungi' : 'Seleziona'}
-                </Button>
-              </Modal.Footer>
             </Modal>
 
             <Modal show={showHelpModal} onHide={() => setShowHelpModal(false)} centered>

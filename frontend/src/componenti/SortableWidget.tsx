@@ -369,5 +369,4 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   );
 };
 
-// Add this CSS to your Widget.css file:
 export default SortableWidget;
