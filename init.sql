@@ -56,16 +56,17 @@ VALUES  (22.00, 'IVA ordinaria'),
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    code VARCHAR(255) UNIQUE NOT NULL,
+    sku VARCHAR(255) UNIQUE NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
+    image VARCHAR(255), 
     description TEXT,
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE,
     warehouse_id INT REFERENCES warehouses(warehouse_id) ON DELETE CASCADE,
     iva_id INT REFERENCES iva(iva_id) ON DELETE CASCADE
 );
 
-INSERT INTO products (name, code, unit_price, quantity, description, company_id, warehouse_id, iva_id)
+INSERT INTO products (name, sku, unit_price, quantity, description, company_id, warehouse_id, iva_id)
 VALUES  ('Laptop X100', 'LAPX100', 1200.00, 50, 'Laptop di ultima generazione', 1, 1, 1),
         ('Pannello Solare 200W', 'SOL200W', 300.00, 100, 'Pannello solare ad alta efficienza', 2, 2, 2),
         ('Pizza Gourmet', 'PZ123', 12.00, 200, 'Pizza gourmet con ingredienti freschi', 1, 3, 3),
