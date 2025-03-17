@@ -20,7 +20,6 @@ const SecondaSottopagina: React.FC = () => {
   const [quantitaMinima, setQuantitaMinima] = useState<string>('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // Update form fields when productData changes
   useEffect(() => {
     if (productData?.magazzino) {
       setPrezzoAcquisto(productData.magazzino.prezzoAcquisto || '');
@@ -96,6 +95,14 @@ const SecondaSottopagina: React.FC = () => {
     navigate('/magazzino/aggiungi-prodotti');
   };
 
+  const handleNumericInput = (value: string, setter: (value: string) => void) => {
+    // Allow only numbers and decimal point
+    const regex = /^\d*\.?\d*$/;
+    if (value === '' || regex.test(value)) {
+      setter(value);
+    }
+  };
+
   return (
     <LeftNavbar>
       <Container className="mt-4 seconda-sottopagina-page">
@@ -111,13 +118,13 @@ const SecondaSottopagina: React.FC = () => {
                 type="text"
                 placeholder="Inserisci il prezzo di acquisto..."
                 value={prezzoAcquisto}
-                onChange={(e) => setPrezzoAcquisto(e.target.value)}
+                onChange={(e) => handleNumericInput(e.target.value, setPrezzoAcquisto)}
                 isInvalid={!!errors.prezzoAcquisto}
                 className="form-input py-2"
               />
               <Form.Control.Feedback type="invalid">{errors.prezzoAcquisto}</Form.Control.Feedback>
             </Form.Group>
-  
+
             <Form.Group className="input-container mt-4">
               <Form.Label className="form-label d-flex align-items-center">
                 <Tag size={18} className="me-2 text-primary" />
@@ -127,7 +134,7 @@ const SecondaSottopagina: React.FC = () => {
                 type="text"
                 placeholder="Inserisci il prezzo di vendita..."
                 value={prezzoVendita}
-                onChange={(e) => setPrezzoVendita(e.target.value)}
+                onChange={(e) => handleNumericInput(e.target.value, setPrezzoVendita)}
                 isInvalid={!!errors.prezzoVendita}
                 className="form-input py-2"
               />
@@ -162,13 +169,13 @@ const SecondaSottopagina: React.FC = () => {
                 type="text"
                 placeholder="Inserisci la quantità..."
                 value={quantita}
-                onChange={(e) => setQuantita(e.target.value)}
+                onChange={(e) => handleNumericInput(e.target.value, setQuantita)}
                 isInvalid={!!errors.quantita}
                 className="form-input py-2"
               />
               <Form.Control.Feedback type="invalid">{errors.quantita}</Form.Control.Feedback>
             </Form.Group>
-  
+
             <Form.Group className="input-container mt-4">
               <Form.Label className="form-label d-flex align-items-center">
                 <BoxArrowInDown size={18} className="me-2 text-primary" />
@@ -178,7 +185,7 @@ const SecondaSottopagina: React.FC = () => {
                 type="text"
                 placeholder="Inserisci la quantità minima..."
                 value={quantitaMinima}
-                onChange={(e) => setQuantitaMinima(e.target.value)}
+                onChange={(e) => handleNumericInput(e.target.value, setQuantitaMinima)}
                 isInvalid={!!errors.quantitaMinima}
                 className="form-input py-2"
               />
