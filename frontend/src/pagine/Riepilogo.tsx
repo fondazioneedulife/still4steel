@@ -40,7 +40,7 @@ const Riepilogo: React.FC = () => {
   }, []);
 
   // Update the productData structure in handleNext
-  const handleNext = () => {
+  const handleNext = async() => {
     const productData = {
       prodotto: {
         nomeProdotto: formData.datiProdotto?.nomeProdotto || '',
@@ -66,10 +66,26 @@ const Riepilogo: React.FC = () => {
       }
     };
 
-    // Navigate to quinta-sottopagina with the data
-    navigate('/magazzino/quinta-sottopagina', { 
-      state: { productData } 
-    });
+    try {
+      const response = await fetch('http://localhost:3001/api/prodotti', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData)
+      });
+
+      if (response.ok) {
+        console.log('Dati inviati con successo');
+        navigate('/magazzino/quinta-sottopagina', { 
+          state: { productData } 
+        });
+      } else {
+        console.error('Errore nell invio dei dati:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Errore di rete:', error);
+    }
   };
 
   const handlePrev = () => {

@@ -101,6 +101,25 @@ VALUES  ('Elettronica', 'Prodotti tecnologici e dispositivi elettronici'),
         ('Automobili', 'Accessori e componenti per automobili'),
         ('Moda', 'Abbigliamento e accessori alla moda');
 
+CREATE TABLE prodotti (
+  id SERIAL PRIMARY KEY,
+  nome TEXT NOT NULL,
+  sku TEXT NOT NULL UNIQUE,
+  category_id TEXT,
+  brand TEXT,
+  descrizione TEXT,
+  prezzoAcquisto DECIMAL(10,2),
+  prezzoVendita DECIMAL(10,2),
+  iva_id INTEGER,
+  quantita INTEGER,
+  quantitaMinima INTEGER,
+  nomeFornitore TEXT,
+  codice_fornitore TEXT,
+  emailFornitore TEXT,
+  telefonoFornitore TEXT,
+  dataFornitura DATE
+);
+
 CREATE TABLE product_category (
     product_category_id SERIAL PRIMARY KEY,
     product_id INT REFERENCES products(product_id) ON DELETE CASCADE,

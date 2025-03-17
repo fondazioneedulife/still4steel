@@ -12,7 +12,25 @@ const AggiungiProdotti: React.FC = () => {
   const steps = [1, 2, 3, 4, 5];
   const [showModal, setShowModal] = useState(false);
   const [newCategory, setNewCategory] = useState('');
-  const [categories, setCategories] = useState(['Categoria A', 'Categoria B', 'Categoria C']);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/categories'); // Verifica che l'endpoint sia corretto
+        const data = await response.json();
+  
+        // Estrarre solo i nomi
+        const categoryNames = data.map((cat: { name: string }) => cat.name);
+        setCategories(categoryNames);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+  
+    fetchCategories();
+  }, []);  
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const navigate = useNavigate();
@@ -49,11 +67,27 @@ const AggiungiProdotti: React.FC = () => {
     navigate('/magazzino');
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
     if (newCategory.trim() && !categories.includes(newCategory)) {
-      setCategories([...categories, newCategory]);
-      setNewCategory('');
-      setShowModal(false);
+      try {
+        const response = await fetch('http://localhost:3001/api/categories', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: newCategory }),
+        });
+
+        if (response.ok) {
+          setCategories([...categories, newCategory]);
+          setNewCategory('');
+          setShowModal(false);
+        } else {
+          console.error('Failed to add category');
+        }
+      } catch (error) {
+        console.error('Error adding category:', error);
+      }
     }
   };
 
@@ -129,8 +163,8 @@ const AggiungiProdotti: React.FC = () => {
                     className="form-input py-2"
                   >
                     <option value="">Seleziona una categoria</option>
-                    {categories.map((cat, index) => (
-                      <option key={index} value={cat}>{cat}</option>
+                    {categories.map((categoryName, index) => (
+                      <option key={index} value={categoryName}>{categoryName}</option>
                     ))}
                   </Form.Select>
                   <Button 
