@@ -28,7 +28,7 @@ import saleDiscountsRoutes from "./routes/saleDiscountsRoutes.js";
 import logsRoutes from "./routes/logsRoutes.js";
 import tokenRoutes from "./routes/token.js";
 import endpointsRoutes from "./endpoint/endpointsRoutes.js";
-
+import cookieRouter from "./endpoint/CookieController.js"
 
 
 const app = express();
@@ -36,6 +36,9 @@ app.use(express.json());
 
 // Token
 app.use("/api/token", tokenRoutes);
+
+// Cookie
+app.use("/api/cookie", cookieRouter);
 
 //endpoint
 app.use("/endpoints", endpointsRoutes);
