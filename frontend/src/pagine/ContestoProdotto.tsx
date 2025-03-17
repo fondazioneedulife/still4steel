@@ -40,8 +40,8 @@ interface ProductContextType {
   productData: ProductData;
   setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
   products: Product[];
-  addProduct: (product: Product) => void;
-  deleteProduct: (productId: number) => void; // Add this line
+  addProduct: (formData: ProductData) => void;  // Changed type to match form data
+  deleteProduct: (productId: number) => void;
 }
 
 // Crea il contesto
@@ -73,12 +73,37 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   });
 
   const [products, setProducts] = useState<Product[]>([
-    { id: 1, sku: 'SKU123', name: 'Prodotto A', image: 'https://placehold.co/100x100', quantity: 10, status: 'available' },
-    { id: 2, sku: 'SKU456', name: 'Prodotto B', image: 'https://placehold.co/100x100', quantity: 0, status: 'out_of_stock' },
-    { id: 3, sku: 'SKU789', name: 'Prodotto C', image: 'https://placehold.co/100x100', quantity: 2, status: 'low_stock' },
-  ]);
+    { 
+      id: 1, 
+      sku: 'SKU112', 
+      name: 'Prodotto A', 
+      image: 'https://placehold.co/100x100', 
+      quantity: 150, 
+      status: 'available' 
+    },
+    { 
+      id: 2, 
+      sku: 'SKU113', 
+      name: 'Prodotto B', 
+      image: 'https://placehold.co/100x100', 
+      quantity: 3, 
+      status: 'low_stock' 
+    },
+    { 
+      id: 3, 
+      sku: 'SKU114', 
+      name: 'Prodotto C', 
+      image: 'https://placehold.co/100x100', 
+      quantity: 0, 
+      status: 'out_of_stock' 
+    }
+  ]);  // Start with empty array
 
   const addProduct = (formData: ProductData) => {
+    // First, update the productData state for the forms
+    setProductData(formData);
+
+    // Then, create and add the new product to the products list
     const newProduct: Product = {
       id: Date.now(),
       sku: formData.prodotto.sku,
@@ -92,7 +117,16 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           : 'low_stock',
     };
 
-    setProducts(prevProducts => [...prevProducts, newProduct]);
+    // Check if product with same SKU already exists
+    setProducts(prevProducts => {
+      const existingProduct = prevProducts.find(p => p.sku === newProduct.sku);
+      if (existingProduct) {
+        // If product exists, don't add it
+        return prevProducts;
+      }
+      // If product doesn't exist, add it
+      return [...prevProducts, newProduct];
+    });
   };
 
   const deleteProduct = (productId: number) => {

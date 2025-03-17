@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent, DragStartEvent, DragOverlay } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -105,7 +105,11 @@ const availableWidgets: Widget[] = [
   },
 ];
 const Home: React.FC = () => {
-  const [homeWidgets, setHomeWidgets] = useState<Widget[]>([]);
+  // Load widgets from localStorage on initial render
+  const [homeWidgets, setHomeWidgets] = useState<Widget[]>(() => {
+    const savedWidgets = localStorage.getItem('homeWidgets');
+    return savedWidgets ? JSON.parse(savedWidgets) : [];
+  });
   const [showModal, setShowModal] = useState(false);
   const [activeWidget, setActiveWidget] = useState<Widget | null>(null);
   const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
@@ -125,6 +129,11 @@ const Home: React.FC = () => {
     }
   };
 
+  // Save widgets to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('homeWidgets', JSON.stringify(homeWidgets));
+  }, [homeWidgets]);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveWidget(null);
@@ -138,7 +147,8 @@ const Home: React.FC = () => {
           ...widgetToAdd,
           id: generateUniqueId(),
         };
-        setHomeWidgets([...homeWidgets, newWidget]);
+        const updatedWidgets = [...homeWidgets, newWidget];
+        setHomeWidgets(updatedWidgets);
       }
     } else {
       const activeIndex = homeWidgets.findIndex((w) => w.id === active.id);
@@ -151,8 +161,10 @@ const Home: React.FC = () => {
     }
   };
 
+  // Update handleRemoveWidget to also save state
   const handleRemoveWidget = (id: string) => {
-    setHomeWidgets(homeWidgets.filter((widget) => widget.id !== id));
+    const updatedWidgets = homeWidgets.filter((widget) => widget.id !== id);
+    setHomeWidgets(updatedWidgets);
   };
 
   const toggleModal = () => {

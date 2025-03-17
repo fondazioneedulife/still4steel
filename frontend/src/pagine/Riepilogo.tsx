@@ -40,7 +40,34 @@ const Riepilogo: React.FC = () => {
   }, []);
 
   const handleNext = () => {
-    navigate('/magazzino/quinta-sottopagina');
+    // Create the complete product data structure
+    const productData = {
+      prodotto: {
+        nomeProdotto: formData.datiProdotto?.nomeProdotto || '',
+        sku: formData.datiProdotto?.sku || '',
+        categoria: formData.datiProdotto?.categoria || '',
+        descrizione: formData.datiProdotto?.descrizione || '',
+        prezzoAcquisto: formData.datiMagazzino?.prezzoAcquisto || '',
+        prezzoVendita: formData.datiMagazzino?.prezzoVendita || '',
+        iva: formData.datiMagazzino?.iva || ''
+      },
+      magazzino: {
+        quantita: formData.datiMagazzino?.quantita || '',
+        quantitaMinima: formData.datiMagazzino?.quantitaMinima || ''
+      },
+      fornitore: {
+        nomeFornitore: formData.datiFornitore?.nomeFornitore || '',
+        codiceFornitore: formData.datiFornitore?.codiceFornitore || '',
+        data: formData.datiFornitore?.data || '',
+        emailFornitore: formData.datiFornitore?.emailFornitore || '',
+        telefonoFornitore: formData.datiFornitore?.telefonoFornitore || ''
+      }
+    };
+
+    // Navigate to quinta-sottopagina with the data
+    navigate('/magazzino/quinta-sottopagina', { 
+      state: { productData } 
+    });
   };
 
   const handlePrev = () => {
