@@ -7,6 +7,7 @@ import { Widget } from '../../Types/types';
 import '../componenti/Widget.css';
 import LeftNavbar from '../componenti/NavbarDesktop';
 import NavFooter from '../componenti/NavFooter';
+import { BsPlus } from "react-icons/bs";
 
 const availableWidgets: Widget[] = [
   {
@@ -114,6 +115,7 @@ const Home: React.FC = () => {
   const [activeWidget, setActiveWidget] = useState<Widget | null>(null);
   const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
 
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
@@ -213,21 +215,19 @@ const Home: React.FC = () => {
               <Button 
                 variant="dark" 
                 style={{ 
-                  fontWeight: '900', 
                   height: '50px', 
                   width: '50px', 
                   borderRadius: '50%',
-                  fontSize: '2rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: 0,
-                  lineHeight: '0',  // Changed to 0
-                  transform: 'translateY(-1px)'  // Adjusted translation
+                  backgroundColor: '#000',
+                  border: 'none'
                 }} 
                 onClick={toggleModal}
               >
-                +
+                <BsPlus size={40} color="#fff" />
               </Button>
             </div>
 
@@ -249,11 +249,18 @@ const Home: React.FC = () => {
               {activeWidget ? <SortableWidget widget={activeWidget} /> : null}
             </DragOverlay>
 
-            <Modal show={showModal} onHide={toggleModal} centered size="lg">
+            <Modal show={showModal} onHide={toggleModal} centered size="lg" style={{ 
+              height: '100vh',  // Changed from maxHeight to height
+              display: 'flex',
+              marginTop: '2vh'  // Added to center vertically
+            }}>
               <Modal.Header closeButton style={{ 
                 background: 'linear-gradient(145deg, #ffffff, #f0f0f0)',
                 borderBottom: '2px solid #000000',
-                padding: '2rem'
+                padding: '2rem', 
+                position: 'sticky',
+                top: 0,
+                zIndex: 1000
               }}>
                 <Modal.Title style={{ width: '100%' }}>
                   <div style={{
@@ -279,66 +286,9 @@ const Home: React.FC = () => {
                     </p>
                   </div>
 
-                  <div style={{
-                    display: 'flex',
-                    gap: '1.2rem',
-                    flexWrap: 'wrap',
-                    marginBottom: '1.5rem'
-                  }}>
-                    {[
-                      { name: 'Grafici', icon: '📊' },
-                      { name: 'Strumenti', icon: '🛠️' },
-                      { name: 'Calendario', icon: '📅' },
-                      { name: 'Note', icon: '📝' }
-                    ].map((category) => (
-                      <div key={category.name} style={{
-                        fontSize: '1rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        color: '#333333'
-                      }}>
-                        <span style={{ fontSize: '1.4rem' }}>{category.icon}</span>
-                        {category.name}
-                      </div>
-                    ))}
-                  </div>
+                  {/* Removed the help section div */}
 
-                  <div style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1.2rem',
-                    position: 'relative',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
-                  }}>
-                    <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
-                      <div style={{
-                        width: '52px',
-                        height: '52px',
-                        background: '#ffffff',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                        <span style={{ fontSize: '2rem' }}>💡</span>
-                      </div>
-                      <p style={{ 
-                        margin: 0,
-                        fontSize: '1rem',
-                        color: '#333333',
-                        fontWeight: 500,
-                        flex: 1
-                      }}>
-                        Seleziona un widget per aggiungere nuove funzionalità alla tua dashboard. Puoi aggiungere un solo widget per tipo.
-                      </p>
-                    </div>
-                    </div>
-                    <div>
-                    <br></br>
+                  <div style={{ marginTop: '1rem' }}>
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
                       <Button 
                         variant="outline-dark" 
@@ -362,7 +312,8 @@ const Home: React.FC = () => {
                           alignItems: 'center',
                           gap: '0.5rem'
                         }} 
-                        onClick={toggleModal}
+                        onClick={handleAddWidget}  // Changed from toggleModal to handleAddWidget
+                        disabled={!selectedWidgetId} // Added disabled state
                       >
                         <span style={{ fontSize: '1.5rem', fontWeight: 700 }}>+</span>
                         Aggiungi Widget
@@ -405,7 +356,10 @@ const Home: React.FC = () => {
 
               <Modal.Body style={{ 
                 padding: '2rem', 
-                background: '#ffffff'
+                background: '#ffffff',
+                overflowY: 'auto',
+                height: 'calc(100vh - 200px)',  // Changed to use full viewport height minus header
+                marginTop: '0'
               }}>
                 <Row className="g-4">
                   {availableWidgets.map((widget) => (

@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from '../componenti/Navbar';
 import NavFooter from '../componenti/NavFooter';
 import Ordine from '../componenti/Ordine';

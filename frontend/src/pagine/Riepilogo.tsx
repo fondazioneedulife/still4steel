@@ -90,7 +90,6 @@ const Riepilogo: React.FC = () => {
                   <Box className="me-2" /> Dati Prodotto
                 </Card.Title>
               </Card.Header>
-              // Add brand to the Dati Prodotto card display
               <Card.Body>
                 {formData.datiProdotto && (
                   <>

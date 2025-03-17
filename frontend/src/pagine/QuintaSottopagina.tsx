@@ -44,11 +44,11 @@ const QuintaSottopagina: React.FC = () => {
   }, [addProduct, location.state]);
 
   const handleBackToHome = () => {
-    navigate('/magazzino');
+    navigate('/magazzino/lista-prodotti');
   };
 
   const handlePrev = () => {
-    navigate('/magazzino/riepilogo');
+    navigate('/magazzino');
   };
 
   return (
@@ -79,10 +79,10 @@ const QuintaSottopagina: React.FC = () => {
 
       <div className="button-container">
         <Button variant='outline-dark' onClick={handlePrev} className="nav-button btn-prev">
-          Torna al Riepilogo
+          Vai al magazzino
         </Button>
         <Button variant='dark' onClick={handleBackToHome} className="nav-button btn-next">
-          Torna al Magazzino
+          Visualizza il prodotto
         </Button>
       </div>
     </Container>
