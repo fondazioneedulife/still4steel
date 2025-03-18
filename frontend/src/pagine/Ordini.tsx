@@ -12,7 +12,7 @@ function Ordini() {
                         <Rectangle titolo="ORDINI" imgSrc="/iconLista.png" imgHoverSrc="/iconListaWhite.png" link='lista-ordini'/>
                     </div>
                     <div className="rectangles mb-5 d-flex flex-column flex-md-row">
-                        <Rectangle titolo="FATTURE" imgSrc="/iconFatture.png" imgHoverSrc="/iconFattureWhite.png" link='#'/>
+                        <Rectangle titolo="FATTURE" imgSrc="/iconFatture.png" imgHoverSrc="/iconFattureWhite.png" link='/wipPage'/>
                         <Rectangle titolo="FORNITORI" imgSrc="/iconFornitori.png" imgHoverSrc="/iconFornitoriWhite.png" link='fornitori'/>
                     </div>
                 </LeftNavbar>

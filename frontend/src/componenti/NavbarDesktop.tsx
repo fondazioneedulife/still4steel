@@ -19,6 +19,7 @@ export default function LeftNavbar({ children }) {
     { path: "/home", icon: House, label: "Home" },
     { path: "/magazzino", icon: Box, label: "Magazzino" },
     { path: "/ordini", icon: Cart, label: "Ordini" },
+    { path: "/wipPage", icon: CurrencyDollar, label: "Vendite" },
   ];
 
   return (
