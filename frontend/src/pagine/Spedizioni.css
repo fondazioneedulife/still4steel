@@ -55,6 +55,10 @@
   background-color: #0d6efd;
   color: #fff;
 }
+.btn-elaborazione {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
 
 .shipment-date {
   font-size: 14px;

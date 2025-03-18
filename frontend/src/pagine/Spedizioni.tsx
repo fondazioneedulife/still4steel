@@ -13,12 +13,12 @@ const Spedizioni: React.FC = () => {
   
   // Update shipments data to include shipmentType
   const [shipments, setShipments] = useState([
-    { id: 1, trackingNumber: 'TRK123456', status: 'In transito', date: '2024-10-01', sender: 'Fornitore AcciaioTech', recipient: 'Still4Steel', weight: '200 kg', shipmentType: 'in-entrata' },
-    { id: 2, trackingNumber: 'TRK789012', status: 'Consegnato', date: '2024-09-28', sender: 'Still4Steel', recipient: 'Cliente MetalPro', weight: '150 kg', shipmentType: 'in-uscita' },
-    { id: 3, trackingNumber: 'TRK345678', status: 'In elaborazione', date: '2025-02-05', sender: 'Fornitore SteelMax', recipient: 'Still4Steel', weight: '300 kg', shipmentType: 'in-entrata' },
-    { id: 4, trackingNumber: 'TRK901234', status: 'In transito', date: '2025-02-03', sender: 'Still4Steel', recipient: 'Cliente BuildTech', weight: '180 kg', shipmentType: 'in-uscita' },
-    { id: 5, trackingNumber: 'TRK567890', status: 'Consegnato', date: '2025-02-30', sender: 'Fornitore IronWorks', recipient: 'Still4Steel', weight: '250 kg', shipmentType: 'in-entrata' },
-    { id: 6, trackingNumber: 'TRK123890', status: 'In elaborazione', date: '2025-03-06', sender: 'Still4Steel', recipient: 'Cliente SteelCraft', weight: '120 kg', shipmentType: 'in-uscita' },
+    { id: 1, trackingNumber: 'TRK123456', status: 'In transito', date: '2024-10-01', sender: 'Mittente 1', recipient: 'Destinatario 1', weight: '200 kg', shipmentType: 'in-entrata' },
+    { id: 2, trackingNumber: 'TRK789012', status: 'Consegnato', date: '2024-09-28', sender: 'Mittente 2', recipient: 'Destinatario 2', weight: '150 kg', shipmentType: 'in-uscita' },
+    { id: 3, trackingNumber: 'TRK345678', status: 'In elaborazione', date: '2025-02-05', sender: 'Mittente 3', recipient: 'Destinatario 3', weight: '300 kg', shipmentType: 'in-entrata' },
+    { id: 4, trackingNumber: 'TRK901234', status: 'In transito', date: '2025-02-03', sender: 'Mittente 1', recipient: 'Destinatario 2', weight: '180 kg', shipmentType: 'in-uscita' },
+    { id: 5, trackingNumber: 'TRK567890', status: 'Consegnato', date: '2025-02-30', sender: 'Mittente 2', recipient: 'Destinatario 3', weight: '250 kg', shipmentType: 'in-entrata' },
+    { id: 6, trackingNumber: 'TRK123890', status: 'In elaborazione', date: '2025-03-06', sender: 'Mittente 3', recipient: 'Destinatario 1', weight: '120 kg', shipmentType: 'in-uscita' },
   ]);
 
   const navigate = useNavigate();
@@ -90,7 +90,16 @@ const Spedizioni: React.FC = () => {
             <Card.Body>
               <div className="shipment-tracking">Tracking: {shipment.trackingNumber}</div>
               <div className="shipment-status">
-                Stato: <span className={`status-badge ${shipment.status.toLowerCase().replace(' ', '-')}`}>{shipment.status}</span>
+                Stato: <span className={`status-badge ${shipment.status.toLowerCase().replace(' ', '-')}`} 
+                  style={{ 
+                    backgroundColor: shipment.status === 'Consegnato' 
+                      ? 'var(--bs-success)' 
+                      : shipment.status === 'In transito' 
+                      ? 'var(--bs-warning)' 
+                      : 'var(--bs-primary)'
+                  }}>
+                  {shipment.status}
+                </span>
               </div>
               <div className="shipment-date">Data: {shipment.date}</div>
               <div className="shipment-details">
@@ -100,7 +109,7 @@ const Spedizioni: React.FC = () => {
               </div>
               <Button
                 variant={shipment.status === 'Consegnato' ? 'success' : shipment.status === 'In transito' ? 'warning' : 'primary'}
-                className="view-button"
+                className={`view-button ${shipment.status === 'In elaborazione' ? '' : 'primary'}`}
                 onClick={() => navigate('/magazzino/dettagli-spedizione', { state: { shipment } })}
               >
                 Dettagli
