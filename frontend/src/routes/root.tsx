@@ -2,5 +2,5 @@ import { Navigate } from "react-router";
 
 export const Root: React.FC = () => {
   // TODO: check user and redirect to it's main page
-  return <Navigate to="/home" replace={true} />;
+  return <Navigate to="/loading-page" replace={true} />;
 };
