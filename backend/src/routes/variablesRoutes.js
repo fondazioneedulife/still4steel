@@ -20,13 +20,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * /Variabiles:
+ * /Variables:
  *   get:
- *     summary: Ottiene tutti le variabili
- *     tags: [Variabiles]
+ *     summary: Ottiene tutte le variabili
+ *     tags: [Variables]
  *     responses:
  *       200:
- *         description: Lista di tutti le variabili
+ *         description: Lista di tutte le variabili
  *       500:
  *         description: Errore interno del server
  */
@@ -35,10 +35,10 @@ router.get("/", getAllVariables);
 
 /**
  * @swagger
- * /Variabiles/{id}:
+ * /Variables/{id}:
  *   get:
- *     summary: Ottiene un variabile per ID
- *     tags: [Variabiles]
+ *     summary: Ottiene una variabile per ID
+ *     tags: [Variables]
  *     parameters:
  *       - in: path
  *         name: id
@@ -48,9 +48,9 @@ router.get("/", getAllVariables);
  *           type: integer
  *     responses:
  *       200:
- *         description: Dettagli della variabile richiesto
+ *         description: Dettagli della variabile richiesta
  *       404:
- *         description: variabile non trovato
+ *         description: variabile non trovata
  *       500:
  *         description: Errore interno del server
  */
@@ -59,10 +59,10 @@ router.get("/:id", getVariableById);
 
 /**
  * @swagger
- * /Variabiles:
+ * /Variables:
  *   post:
  *     summary: Crea una nuova variabile
- *     tags: [Variabiles]
+ *     tags: [Variables]
  *     requestBody:
  *       required: true
  *       content:
@@ -81,7 +81,7 @@ router.get("/:id", getVariableById);
  *                 description: ID del prodotto associato
  *     responses:
  *       201:
- *         description: variabile creato con successo
+ *         description: variabile creata con successo
  *       400:
  *         description: Dati non validi
  *       500:
@@ -92,15 +92,15 @@ router.post("/", createVariable);
 
 /**
  * @swagger
- * /Variabiles/{id}:
+ * /Variables/{id}:
  *   put:
- *     summary: Aggiorna un variabile esistente
- *     tags: [Variabiles]
+ *     summary: Aggiorna una variabile esistente
+ *     tags: [Variables]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID del variabile da aggiornare
+ *         description: ID della variabile da aggiornare
  *         schema:
  *           type: integer
  *     requestBody:
@@ -118,11 +118,11 @@ router.post("/", createVariable);
  *                 description: ID aggiornato del prodotto associato
  *     responses:
  *       200:
- *         description: variabile aggiornato con successo
+ *         description: variabile aggiornata con successo
  *       400:
  *         description: Dati non validi
  *       404:
- *         description: variabile non trovato
+ *         description: variabile non trovata
  *       500:
  *         description: Errore interno del server
  */
@@ -131,22 +131,22 @@ router.put("/:id", updateVariable);
 
 /**
  * @swagger
- * /Variabiles/{id}:
+ * /Variables/{id}:
  *   delete:
- *     summary: Elimina un variabile
- *     tags: [Variabiles]
+ *     summary: Elimina una variabile
+ *     tags: [Variables]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID del variabile da eliminare
+ *         description: ID della variabile da eliminare
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: variabile eliminato con successo
+ *         description: variabile eliminata con successo
  *       404:
- *         description: variabile non trovato
+ *         description: variabile non trovata
  *       500:
  *         description: Errore interno del server
  */
