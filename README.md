@@ -80,7 +80,7 @@ GET /api/category
   {
     "id": 2,
     "name": "Cartoleria",
-    "description": "Articoli per ufficio e scuola
+    "description": "Articoli per ufficio e scuola"
   }
 ]
 ```
