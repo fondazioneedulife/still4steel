@@ -117,7 +117,7 @@ function RegisterForm() {
         <Form.Group>
           <Form.Check
             type="checkbox"
-            label="dati"
+            label="Ho letto, compreso e accettato la privacy policy e i termini e condizioni (obbligatorio)"
             checked={dati}
             onChange={(e) => setDati(e.target.checked)}
             required
