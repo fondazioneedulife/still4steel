@@ -93,8 +93,8 @@ Ecco la struttura dei file principali:
 /still4steel
 │── /frontend   # Codice React + Bootstrap
 │── /backend    # Node.js + Express
-│── /database   # Configurazioni PostgreSQL
 │── docker-compose.yml
+│── init.sql    
 │── README.md
 ```
 
