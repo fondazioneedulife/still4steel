@@ -92,8 +92,8 @@ app.use("/api/customers", customersRoutes);
 // CRUD companyCustomers
 app.use("/api/companyCustomers", companyCustomersRoutes);
 
-// CRUD supplierCustomers
-app.use("/api/supplierCustomers", suppliersRoutes);
+// CRUD suppliers
+app.use("/api/suppliers", suppliersRoutes);
 
 // CRUD supplyCustomers
 app.use("/api/supplyCustomers", suppliesRoutes);

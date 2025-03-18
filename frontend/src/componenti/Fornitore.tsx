@@ -3,6 +3,7 @@ import { FaEdit } from "react-icons/fa";
 
 interface FornitoreProps {
   nome: string;
+  cognome: string;
   email: string;
   telefono: string;
   imgSrc: string;
@@ -10,7 +11,7 @@ interface FornitoreProps {
   onEdit: () => void;  // Nuovo prop per la funzione di modifica
 }
 
-const Fornitore: React.FC<FornitoreProps> = ({ nome, email, telefono, imgSrc, onDelete, onEdit }) => {
+const Fornitore: React.FC<FornitoreProps> = ({ nome, cognome, email, telefono, imgSrc, onDelete, onEdit }) => {
   return (
     <div className="card mb-3 mt-2 mx-4 poppins-regular">
       
@@ -18,6 +19,7 @@ const Fornitore: React.FC<FornitoreProps> = ({ nome, email, telefono, imgSrc, on
         <img src={imgSrc} alt="" style={{width:'82px', height:'82px'}}/>
         <div className="info ms-5">
           <p>{nome}</p>
+          <p>{cognome}</p>
           <p>✉️ {email}</p>
           <p>📞 {telefono}</p>
         </div>
