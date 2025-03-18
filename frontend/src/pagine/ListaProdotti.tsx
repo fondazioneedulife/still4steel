@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
-import { X } from 'react-bootstrap-icons';  // Add this import
+import { X } from 'react-bootstrap-icons';  
 import "./ListaProdotti.css";
 import LeftNavbar from "../componenti/NavbarDesktop";
 import NavFooter from "../componenti/NavFooter";

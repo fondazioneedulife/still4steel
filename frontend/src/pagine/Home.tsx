@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Row, Col, Container } from 'react-bootstrap';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent, DragStartEvent, DragOverlay } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -7,6 +7,7 @@ import { Widget } from '../../Types/types';
 import '../componenti/Widget.css';
 import LeftNavbar from '../componenti/NavbarDesktop';
 import NavFooter from '../componenti/NavFooter';
+import { BsPlus } from "react-icons/bs";
 
 const availableWidgets: Widget[] = [
   {
@@ -105,11 +106,16 @@ const availableWidgets: Widget[] = [
   },
 ];
 const Home: React.FC = () => {
-  const [homeWidgets, setHomeWidgets] = useState<Widget[]>([]);
+  // Load widgets from localStorage on initial render
+  const [homeWidgets, setHomeWidgets] = useState<Widget[]>(() => {
+    const savedWidgets = localStorage.getItem('homeWidgets');
+    return savedWidgets ? JSON.parse(savedWidgets) : [];
+  });
   const [showModal, setShowModal] = useState(false);
   const [activeWidget, setActiveWidget] = useState<Widget | null>(null);
   const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
 
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
@@ -125,6 +131,11 @@ const Home: React.FC = () => {
     }
   };
 
+  // Save widgets to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('homeWidgets', JSON.stringify(homeWidgets));
+  }, [homeWidgets]);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveWidget(null);
@@ -138,7 +149,8 @@ const Home: React.FC = () => {
           ...widgetToAdd,
           id: generateUniqueId(),
         };
-        setHomeWidgets([...homeWidgets, newWidget]);
+        const updatedWidgets = [...homeWidgets, newWidget];
+        setHomeWidgets(updatedWidgets);
       }
     } else {
       const activeIndex = homeWidgets.findIndex((w) => w.id === active.id);
@@ -152,7 +164,8 @@ const Home: React.FC = () => {
   };
 
   const handleRemoveWidget = (id: string) => {
-    setHomeWidgets(homeWidgets.filter((widget) => widget.id !== id));
+    const updatedWidgets = homeWidgets.filter((widget) => widget.id !== id);
+    setHomeWidgets(updatedWidgets);
   };
 
   const toggleModal = () => {
@@ -201,10 +214,20 @@ const Home: React.FC = () => {
               </Button>
               <Button 
                 variant="dark" 
-                style={{ fontWeight: '900', height: '50px', width: '50px', borderRadius: '50%' }} 
+                style={{ 
+                  height: '50px', 
+                  width: '50px', 
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 0,
+                  backgroundColor: '#000',
+                  border: 'none'
+                }} 
                 onClick={toggleModal}
               >
-                +
+                <BsPlus size={40} color="#fff" />
               </Button>
             </div>
 
@@ -226,11 +249,18 @@ const Home: React.FC = () => {
               {activeWidget ? <SortableWidget widget={activeWidget} /> : null}
             </DragOverlay>
 
-            <Modal show={showModal} onHide={toggleModal} centered size="lg">
+            <Modal show={showModal} onHide={toggleModal} centered size="lg" style={{ 
+              height: '100vh',  // Changed from maxHeight to height
+              display: 'flex',
+              marginTop: '2vh'  // Added to center vertically
+            }}>
               <Modal.Header closeButton style={{ 
                 background: 'linear-gradient(145deg, #ffffff, #f0f0f0)',
                 borderBottom: '2px solid #000000',
-                padding: '2rem'
+                padding: '2rem', 
+                position: 'sticky',
+                top: 0,
+                zIndex: 1000
               }}>
                 <Modal.Title style={{ width: '100%' }}>
                   <div style={{
@@ -256,105 +286,43 @@ const Home: React.FC = () => {
                     </p>
                   </div>
 
-                  <div style={{
-                    display: 'flex',
-                    gap: '1.2rem',
-                    flexWrap: 'wrap',
-                    marginBottom: '1.5rem'
-                  }}>
-                    {[
-                      { name: 'Grafici', icon: '📊' },
-                      { name: 'Strumenti', icon: '🛠️' },
-                      { name: 'Calendario', icon: '📅' },
-                      { name: 'Note', icon: '📝' }
-                    ].map((category) => (
-                      <div key={category.name} style={{
-                        fontSize: '1rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        color: '#333333'
-                      }}>
-                        <span style={{ fontSize: '1.4rem' }}>{category.icon}</span>
-                        {category.name}
-                      </div>
-                    ))}
-                  </div>
+                  {/* Removed the help section div */}
 
-                  <div style={{
-                    background: '#ffffff',
-                    border: '2px solid #000000',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1.2rem',
-                    position: 'relative',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
-                  }}>
-                    <div style={{
-                      width: '52px',
-                      height: '52px',
-                      background: '#ffffff',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: '2px solid #000000'
-                    }}>
-                      <span style={{ 
-                        fontSize: '2rem'
-                      }}>💡</span>
-                    </div>
-                    <p style={{ 
-                      margin: 0,
-                      fontSize: '1rem',
-                      color: '#333333',
-                      fontWeight: 500,
-                      flex: 1
-                    }}>
-                      Seleziona un widget per aggiungere nuove funzionalità alla tua dashboard. Puoi aggiungere un solo widget per tipo.
-                    </p>
-                  </div>
-                </Modal.Title>
-              </Modal.Header>
-
-              <Modal.Body style={{ 
-                padding: '2rem', 
-                background: '#ffffff'
-              }}>
-                <Row className="g-4">
-                  {availableWidgets.map((widget) => (
-                    <Col key={widget.id} xs={12} md={6}>
-                      <div
-                        className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
-                        onClick={() => handleWidgetClick(widget.id)}
-                        style={{
-                          cursor: 'pointer',
-                          transition: 'all 0.3s ease',
-                          border: selectedWidgetId === widget.id 
-                            ? '2px solid #000000' 
-                            : '1px solid #e0e0e0',
-                          borderRadius: '12px',
-                          position: 'relative',
-                          background: '#ffffff',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                  <div style={{ marginTop: '1rem' }}>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                      <Button 
+                        variant="outline-dark" 
+                        onClick={toggleModal}
+                        style={{ 
+                          padding: '0.75rem 2rem',
+                          fontWeight: 500,
+                          borderRadius: '8px',
+                          color: '#666666'
                         }}
                       >
-                        <SortableWidget widget={widget} isInModal />
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
-              </Modal.Body>
-
-              <Modal.Footer style={{ 
-                background: '#ffffff',
-                borderTop: '2px solid #000000',
-                padding: '1.5rem',
-                gap: '1rem'
-              }}>
-                <Button 
+                        Annulla
+                      </Button>
+                      <Button 
+                        variant="dark" 
+                        style={{ 
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '8px',
+                          fontWeight: 500,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }} 
+                        onClick={handleAddWidget}  // Changed from toggleModal to handleAddWidget
+                        disabled={!selectedWidgetId} // Added disabled state
+                      >
+                        <span style={{ fontSize: '1.5rem', fontWeight: 700 }}>+</span>
+                        Aggiungi Widget
+                      </Button>
+                    </div>
+                  </div>
+                </Modal.Title>
+                <br></br>
+                {/* <Button 
                   variant="outline-dark" 
                   onClick={toggleModal}
                   style={{ 
@@ -383,8 +351,40 @@ const Home: React.FC = () => {
                   }}
                 >
                   {selectedWidgetId ? 'Aggiungi' : 'Seleziona'}
-                </Button>
-              </Modal.Footer>
+                </Button> */}
+              </Modal.Header>
+
+              <Modal.Body style={{ 
+                padding: '2rem', 
+                background: '#ffffff',
+                overflowY: 'auto',
+                height: 'calc(100vh - 200px)',  // Changed to use full viewport height minus header
+                marginTop: '0'
+              }}>
+                <Row className="g-4">
+                  {availableWidgets.map((widget) => (
+                    <Col key={widget.id} xs={12} md={6}>
+                      <div
+                        className={`widget-container ${selectedWidgetId === widget.id ? 'selected-widget' : ''}`}
+                        onClick={() => handleWidgetClick(widget.id)}
+                        style={{
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          border: selectedWidgetId === widget.id 
+                            ? '2px solid #000000' 
+                            : '1px solid #e0e0e0',
+                          borderRadius: '12px',
+                          position: 'relative',
+                          background: '#ffffff',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                        }}
+                      >
+                        <SortableWidget widget={widget} isInModal />
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </Modal.Body>
             </Modal>
 
             <Modal show={showHelpModal} onHide={() => setShowHelpModal(false)} centered>
@@ -423,7 +423,7 @@ const Home: React.FC = () => {
                     }}>+</strong> per aprire il menu dei widget disponibili
                   </li>
                   <li style={{ color: '#2c3e50', lineHeight: '1.7' }}>
-                    Seleziona un widget dalla lista scorri in basso e clicca <strong style={{ 
+                    Seleziona un widget dalla lista e clicca <strong style={{ 
                       color: '#007bff',
                       background: '#e7f2ff',
                       padding: '0.2rem 0.6rem',

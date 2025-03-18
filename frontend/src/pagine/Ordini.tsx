@@ -2,7 +2,6 @@ import Navbar from '../componenti/Navbar';
 import NavFooter from '../componenti/NavFooter';
 import Rectangle from '../componenti/rectangle';
 import LeftNavbar from '../componenti/NavbarDesktop';
-import React  from 'react';
 function Ordini() {
     return (
         <div>

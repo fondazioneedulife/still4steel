@@ -1,8 +1,6 @@
-import React from "react";
 import { Button} from "react-bootstrap";
 import { IoReturnUpBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { IoSettingsOutline } from "react-icons/io5";
 // import "./Navbar.css"; // Se vuoi personalizzare con CSS
 
 function Navbar() {
@@ -20,12 +18,6 @@ function Navbar() {
         {/* <img src="/logoNavbar.png" alt="Logo Centrale" height="50" /> */}
       </div>
 
-      {/* Logo a destra */}
-      <div className="d-flex justify-content-end p-3">
-        
-        <IoSettingsOutline size={30} />
-        
-      </div>
     </nav>
   );
 }

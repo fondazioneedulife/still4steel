@@ -4,8 +4,6 @@ import { Button } from "react-bootstrap";
 // import { useRouter } from "next/router";
 import LeftNavbar from "../componenti/NavbarDesktop";
 import NavFooter from "../componenti/NavFooter";
-import NavBar from "../componenti/NavBar";
-import React from "react";
 
 export default function NuovoOrdine() {
   const [fornitori, setFornitori] = useState([]);

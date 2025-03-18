@@ -8,7 +8,14 @@ CREATE TABLE companies (
     address VARCHAR(255) NOT NULL CHECK (email LIKE '%@%'),
     password VARCHAR(200) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    note TEXT
+    note TEXT,
+    dati BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE widgets (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
 );
 
 CREATE TABLE companies_token (
@@ -27,18 +34,19 @@ CREATE TABLE warehouses (
     company_id INT REFERENCES companies(company_id) ON DELETE CASCADE
 );
 
-INSERT INTO companies (name, vat, tax_code, phone, email, address, password, created_at, note)
-VALUES  ('Tech Innovations Srl', 'IT12345678901', 'TIN1234XYZ', '0412345678', 'alessandronicolis1@gmail.com', 'Via Roma 45, Milano', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.'),
-        ('Green Energy Solutions', 'IT98765432109', 'GES9876ABC', '0398765432', 'contact@greenenergy.com', 'Viale Europa 12, Torino', 'securePass123', NOW(), 'Fornitore di soluzioni per energie rinnovabili.'),
-        ('Foodie Delight Srl', 'IT11223344556', 'FDL1122QWE', '0634567890', 'support@foodiedelight.com', 'Piazza Maggiore 20, Bologna', 'gusto2025', NOW(), 'Ristorante con cucina gourmet.'),
-        ('AutoTech Italia', 'IT66778899000', 'ATI7788RTY', '0551234567', 'info@autotechitalia.com', 'Via Firenze 10, Firenze', 'automotive@123', NOW(), 'Specializzati in componenti per automobili.'),
-        ('Fashion Trends Srl', 'IT99887766554', 'FTS9988WER', '0301234567', 'sales@fashiontrends.com', 'Corso Vittorio Emanuele 120, Napoli', 'style2025', NOW(), 'Azienda di abbigliamento e moda.');
+INSERT INTO companies (name, vat, tax_code, phone, email, address, password, created_at, note, dati)
+VALUES  ('Tech Innovations Srl', 'IT12345678901', 'TIN1234XYZ', '0412345678', 'alessandronicolis1@gmail.com', 'Via Roma 45, Milano', 'password2025', NOW(), 'Azienda innovativa nel settore tecnologico.', TRUE),
+        ('Green Energy Solutions', 'IT98765432109', 'GES9876ABC', '0398765432', 'contact@greenenergy.com', 'Viale Europa 12, Torino', 'securePass123', NOW(), 'Fornitore di soluzioni per energie rinnovabili.', TRUE),
+        ('Foodie Delight Srl', 'IT11223344556', 'FDL1122QWE', '0634567890', 'support@foodiedelight.com', 'Piazza Maggiore 20, Bologna', 'gusto2025', NOW(), 'Ristorante con cucina gourmet.', TRUE),
+        ('AutoTech Italia', 'IT66778899000', 'ATI7788RTY', '0551234567', 'info@autotechitalia.com', 'Via Firenze 10, Firenze', 'automotive@123', NOW(), 'Specializzati in componenti per automobili.', TRUE),
+        ('Fashion Trends Srl', 'IT99887766554', 'FTS9988WER', '0301234567', 'sales@fashiontrends.com', 'Corso Vittorio Emanuele 120, Napoli', 'style2025', NOW(), 'Azienda di abbigliamento e moda.', TRUE);
 
 INSERT INTO warehouses (name, address, type, note, company_id)
 VALUES  ('Magazzino Centrale Milano', 'Via Milano 100, Milano', 'Stoccaggio', 'Magazzino principale per la gestione delle merci.', 1),
         ('Deposito Torino', 'Strada Torino 45, Torino', 'Logistica', 'Magazzino utilizzato per la distribuzione regionale.', 2),
         ('Centro Distribuzione Bologna', 'Via Bologna 120, Bologna', 'Logistica', 'Magazzino per la gestione degli ordini online.', 3),
-
+        ('Magazzino Componenti Auto', 'Via Autostrada 10, Roma', 'Stoccaggio', 'Deposito per componenti e accessori per auto.', 4),
+        ('Showroom Napoli', 'Via Napoli 30, Napoli', 'Vendita', 'Spazio espositivo per la vendita di abbigliamento.', 5),
         ('Stoccaggio Materie Prime Firenze', 'Via Firenze 55, Firenze', 'Stoccaggio', 'Deposito per materie prime utilizzate nella produzione.', 1),
         ('Magazzino Rimini', 'Via Rimini 10, Rimini', 'Distribuzione', 'Magazzino destinato alla spedizione dei prodotti finiti.', 2);
 
@@ -72,6 +80,17 @@ VALUES  ('Laptop X100', 'LAPX100', 1200.00, 50, 'Laptop di ultima generazione', 
         ('Freni Auto 3000', 'FR3000', 150.00, 80, 'Freni per auto ad alte prestazioni', 3, 2, 1),
         ('Giacca Fashion Trend', 'GIACFT01', 75.00, 150, 'Giacca elegante per stagione autunno-inverno', 1, 1, 2);
 
+CREATE TABLE variables (
+    variable_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    product_id INT REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+INSERT INTO variables (name, type, product_id)
+VALUES  ('Colore', 'rosso', 5),  -- Giacca Fashion Trend, Colore
+        ('Taglia', 'L', 5);  -- Giacca Fashion Trend, Taglia
+
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -84,6 +103,25 @@ VALUES  ('Elettronica', 'Prodotti tecnologici e dispositivi elettronici'),
         ('Cibo', 'Prodotti alimentari e bevande'),
         ('Automobili', 'Accessori e componenti per automobili'),
         ('Moda', 'Abbigliamento e accessori alla moda');
+
+CREATE TABLE prodotti (
+  id SERIAL PRIMARY KEY,
+  nome TEXT NOT NULL,
+  sku TEXT NOT NULL UNIQUE,
+  category_id TEXT,
+  brand TEXT,
+  descrizione TEXT,
+  prezzoAcquisto DECIMAL(10,2),
+  prezzoVendita DECIMAL(10,2),
+  iva_id INTEGER,
+  quantita INTEGER,
+  quantitaMinima INTEGER,
+  nomeFornitore TEXT,
+  codice_fornitore TEXT,
+  emailFornitore TEXT,
+  telefonoFornitore TEXT,
+  dataFornitura DATE
+);
 
 CREATE TABLE product_category (
     product_category_id SERIAL PRIMARY KEY,

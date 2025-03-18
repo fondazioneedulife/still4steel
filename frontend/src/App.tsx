@@ -4,9 +4,7 @@ import Magazzino from '../src/pagine/Magazzino';
 import SecondaSottopagina from '../src/pagine/SecondaSottopagina';
 import TerzaSottopagina from '../src/pagine/TerzaSottopagina';
 import Riepilogo from '../src/pagine/Riepilogo'
-import Navbar from '../src/componenti/Navbar';
 import QuintaSottopagina from '../src/pagine/QuintaSottopagina';
-import NavFooter from '../src/componenti/NavFooter'
 import DettagliSpedizioni from '../src/pagine/DettagliSpedizione'
 import Spedzioni from '../src/pagine/Spedizioni'
 import Login from '../src/routes/login'

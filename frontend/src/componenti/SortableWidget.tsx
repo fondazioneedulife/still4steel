@@ -42,58 +42,54 @@ const CalculatorWidget: React.FC<{ value: string; onButtonClick: (value: string)
   </div>
 );
 
-const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Event) => void; disabled?: boolean }> = ({ events, onAddEvent, disabled }) => {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [showPopup, setShowPopup] = useState(false);
-  const [newEventTitle, setNewEventTitle] = useState('');
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-
-  const handleDateClick = (date: string) => {
-    if (!disabled) {
-      setSelectedDate(date);
-      setShowPopup(true);
-      setNewEventTitle('');
-      setSelectedEvent(null);
-    }
-  };
-
-  const handleEventClick = (event: Event, e: React.MouseEvent) => {
+const CalendarButton: React.FC<{ 
+  onClick: (e: React.MouseEvent) => void; 
+  disabled?: boolean;
+  children: React.ReactNode;
+}> = ({ onClick, disabled, children }) => {
+  const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!disabled) {
-      setSelectedDate(event.date);
-      setNewEventTitle(event.title);
-      setSelectedEvent(event);
-      setShowPopup(true);
-    }
+    e.preventDefault();
+    onClick(e);
   };
 
-  const handleAddEvent = () => {
-    if (selectedDate && newEventTitle.trim() && !disabled) {
-      onAddEvent({ date: selectedDate, title: newEventTitle });
-      setShowPopup(false);
-      setSelectedDate(null);
-      setNewEventTitle('');
-      setSelectedEvent(null);
-    }
-  };
+  return (
+    <button 
+      onClick={handleClick}
+      onMouseDown={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+      onTouchStart={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+      disabled={disabled}
+      style={{ 
+        cursor: 'pointer',
+        userSelect: 'none',
+        position: 'relative',
+        zIndex: 1000
+      }}
+    >
+      {children}
+    </button>
+  );
+};
 
-  const handleDeleteEvent = () => {
-    if (selectedEvent && !disabled) {
-      const updatedEvents = events.filter(e => e !== selectedEvent);
-      // You'll need to implement onDeleteEvent in parent component
-      onAddEvent({ ...selectedEvent, deleted: true });
-      setShowPopup(false);
-      setSelectedEvent(null);
-    }
-  };
+const SimpleCalendarWidget: React.FC<{ events: Event[]; disabled?: boolean }> = ({ events, disabled }) => {
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  const changeMonth = (offset: number) => {
-    if (disabled) return;
+  const handlePrevMonth = () => {
     const newDate = new Date(currentDate);
-    newDate.setMonth(currentDate.getMonth() + offset);
+    newDate.setMonth(currentDate.getMonth() - 1);
     setCurrentDate(newDate);
-    setSelectedDate(null);
+  };
+
+  const handleNextMonth = () => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + 1);
+    setCurrentDate(newDate);
   };
 
   const currentYear = currentDate.getFullYear();
@@ -110,81 +106,58 @@ const SimpleCalendarWidget: React.FC<{ events: Event[]; onAddEvent: (event: Even
     monthDates.push(date as never);
   }
 
+  const handleButtonClick = (e: React.MouseEvent, offset: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // changeMonth(offset);
+  };
+
+  const handleButtonInteraction = (e: React.MouseEvent | React.TouchEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  };
+
   return (
     <div className="simple-calendar">
       <div className="calendar-header">
-        <button onClick={() => changeMonth(-1)} disabled={disabled}>⬅️</button>
+        <CalendarButton 
+          onClick={() => handlePrevMonth()} 
+          disabled={disabled}
+        >
+          ⬅️
+        </CalendarButton>
         <h4>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h4>
-        <button onClick={() => changeMonth(1)} disabled={disabled}>➡️</button>
+        <CalendarButton 
+          onClick={() => handleNextMonth()} 
+          disabled={disabled}
+        >
+          ➡️
+        </CalendarButton>
       </div>
-      <div className="calendar-grid">
+      <div 
+        className="calendar-grid"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
         {['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'].map((day) => (
-          <div key={day} className="calendar-day-header">
-            {day}
-          </div>
+          <div key={day} className="calendar-day-header">{day}</div>
         ))}
         {monthDates.map((date, index) => (
           <div
             key={index}
-            className={`calendar-date ${date ? '' : 'empty'} ${selectedDate === date ? 'selected' : ''}`}
-            onClick={() => date && handleDateClick(date)}
+            className={`calendar-date ${date ? '' : 'empty'}`}
+            onMouseDown={(e) => e.stopPropagation()}
           >
             {date ? new Date(date).getDate() : ''}
           </div>
         ))}
       </div>
-      {selectedDate && (
-        <div className="calendar-event-form">
-          <h4>Aggiungi evento per il {selectedDate}</h4>
-          <input
-            type="text"
-            placeholder="Titolo evento"
-            value={newEventTitle}
-            onChange={(e) => setNewEventTitle(e.target.value)}
-            disabled={disabled}
-          />
-          <button onClick={handleAddEvent} disabled={disabled}>Aggiungi Evento</button>
-        </div>
-      )}
-      
-      {showPopup && (
-        <>
-          <div className="calendar-popup-overlay" onClick={() => setShowPopup(false)} />
-          <div className="calendar-popup">
-            <h4>{selectedEvent ? 'Edit Event' : 'Add Event'} for {selectedDate}</h4>
-            <input
-              type="text"
-              placeholder="Event title"
-              value={newEventTitle}
-              onChange={(e) => setNewEventTitle(e.target.value)}
-              disabled={disabled}
-            />
-            <div className="calendar-popup-buttons">
-              {selectedEvent && (
-                <button className="delete" onClick={handleDeleteEvent}>
-                  Delete
-                </button>
-              )}
-              <button className="cancel" onClick={() => setShowPopup(false)}>
-                Cancel
-              </button>
-              <button className="save" onClick={handleAddEvent}>
-                {selectedEvent ? 'Update' : 'Add'}
-              </button>
-            </div>
-          </div>
-        </>
-      )}
 
       <div className="events-list">
         {events
           .filter((event) => event.date.startsWith(currentDate.toISOString().split('T')[0].slice(0, 7)))
           .map((event, index) => (
-            <div
-              key={index}
-              className="event-item"
-              onClick={(e) => handleEventClick(event, e)}
-            >
+            <div key={index} className="event-item">
               <strong>{event.date}</strong>: {event.title}
             </div>
           ))}
@@ -235,15 +208,49 @@ const TaskListWidget: React.FC<{ tasks: string[]; onAddTask: (task: string) => v
   );
 };
 
+// Sposta il CalendarWrapper fuori dal componente SortableWidget, prima di esso
+const CalendarWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const preventDragHandler = (e: React.MouseEvent | React.TouchEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    e.persist();
+  };
+
+  return (
+    <div 
+      onMouseDown={preventDragHandler}
+      onTouchStart={preventDragHandler}
+      onClick={preventDragHandler}
+      style={{ 
+        width: '100%', 
+        height: '100%',
+        pointerEvents: 'auto',
+        touchAction: 'none'
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
 const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInModal }) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: widget.id, disabled: isInModal });
+  const isCalendar = widget.type === 'calendar';
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ 
+    id: widget.id, 
+    disabled: isInModal
+  });
+
+  // Modifica qui: separa gli attributi del drag and drop
+  const dragAttributes = isCalendar ? {} : attributes;
+  const dragListeners = isCalendar ? {} : listeners;
+
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
 
   const [note, setNote] = useState(widget.type === 'notes' && widget.data[0] && 'title' in widget.data[0] ? widget.data[0].title : '');
   const [tasks, setTasks] = useState<string[]>([]);
   const [calcValue, setCalcValue] = useState('');
-  const [events, setEvents] = useState<Event[]>(widget.type === 'calendar' ? (widget.data as Event[]) : []);
-
+  const [isDark, setIsDark] = useState(widget.theme === 'dark');
+  
   const handleNoteChange = (value: string) => {
     if (!isInModal) setNote(value);
   };
@@ -257,8 +264,7 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   };
 
   const handleCalcButtonClick = (value: string) => {
-    if (isInModal) return; // Disabilita la calcolatrice nel modale
-
+    if (isInModal) return;
     if (value === 'C') {
       setCalcValue('');
     } else if (value === '=') {
@@ -272,25 +278,27 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
     }
   };
 
-  const handleAddEvent = (event: Event) => {
-    if (!isInModal) setEvents([...events, event]);
-  };
-
-  const [isDark, setIsDark] = useState(widget.theme === 'dark');
-
   const toggleTheme = (e: React.MouseEvent) => {
-    if (isInModal) return; // Disabilita il cambio tema nel modale
+    if (isInModal) return;
     e.stopPropagation();
     e.preventDefault();
     setIsDark(!isDark);
   };
 
+  const [events] = useState<Event[]>(() => {
+    if (widget.type === 'calendar') {
+      const savedEvents = localStorage.getItem(`calendar-events-${widget.id}`);
+      return savedEvents ? JSON.parse(savedEvents) : [];
+    }
+    return [];
+  });
+
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      {...dragAttributes} 
+      {...dragListeners} 
       className={`widget ${isDark ? 'widget-dark' : 'widget-light'}`}
     >
       <div className="widget-header">
@@ -324,9 +332,11 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
           )}
         </div>
       </div>
-      <div className="chart-container" onClick={(e) => e.stopPropagation()}>
+      <div className="chart-container">
         {widget.type === 'calendar' ? (
-          <SimpleCalendarWidget events={events} onAddEvent={handleAddEvent} disabled={isInModal} />
+          <CalendarWrapper>
+            <SimpleCalendarWidget events={events} disabled={!isInModal} />
+          </CalendarWrapper>
         ) : widget.type === 'notes' ? (
           <NotesWidget note={note} onNoteChange={handleNoteChange} disabled={isInModal} />
         ) : widget.type === 'tasklist' ? (
@@ -359,5 +369,4 @@ const SortableWidget: React.FC<SortableWidgetProps> = ({ widget, onRemove, isInM
   );
 };
 
-// Add this CSS to your Widget.css file:
 export default SortableWidget;

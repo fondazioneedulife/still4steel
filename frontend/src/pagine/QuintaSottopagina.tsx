@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useProductData } from './ContestoProdotto';
 import './QuintaSottopagina.css';
 import LeftNavbar from '../componenti/NavbarDesktop';
@@ -10,39 +10,17 @@ const QuintaSottopagina: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const { addProduct } = useProductData();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
-        // Get form data from sessionStorage
-        const datiProdotto = JSON.parse(sessionStorage.getItem('aggiungiProdottoData') || '{}');
-        const datiMagazzino = JSON.parse(sessionStorage.getItem('secondaSottopaginaData') || '{}');
-        const datiFornitore = JSON.parse(sessionStorage.getItem('terzaSottopaginaData') || '{}');
-
-        // Create form data structure that matches ProductData interface
-        const formData = {
-          prodotto: {
-            nomeProdotto: datiProdotto.nomeProdotto || '',
-            sku: datiProdotto.sku || `SKU${Math.floor(Math.random() * 1000)}`,
-            categoria: datiProdotto.categoria || '',
-            descrizione: datiProdotto.descrizione || '',
-            prezzoAcquisto: datiMagazzino.prezzoAcquisto || '0',
-            prezzoVendita: datiMagazzino.prezzoVendita || '0',
-            iva: datiMagazzino.iva || '0'
-          },
-          magazzino: {
-            quantita: datiMagazzino.quantita || '0',
-            quantitaMinima: datiMagazzino.quantitaMinima || '0'
-          },
-          fornitore: {
-            nomeFornitore: datiFornitore.nomeFornitore || '',
-            codiceFornitore: datiFornitore.codiceFornitore || '',
-            data: datiFornitore.data || '',
-            emailFornitore: datiFornitore.emailFornitore || '',
-            telefonoFornitore: datiFornitore.telefonoFornitore || ''
-          }
-        };
+        const formData = location.state?.productData;
+        
+        if (!formData) {
+          throw new Error('Nessun dato prodotto disponibile');
+        }
 
         // Add product to context
         addProduct(formData);
@@ -63,14 +41,14 @@ const QuintaSottopagina: React.FC = () => {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [addProduct]);
+  }, [addProduct, location.state]);
 
   const handleBackToHome = () => {
-    navigate('/magazzino');
+    navigate('/magazzino/lista-prodotti');
   };
 
   const handlePrev = () => {
-    navigate('/magazzino/riepilogo');
+    navigate('/magazzino');
   };
 
   return (
@@ -101,10 +79,10 @@ const QuintaSottopagina: React.FC = () => {
 
       <div className="button-container">
         <Button variant='outline-dark' onClick={handlePrev} className="nav-button btn-prev">
-          Torna al Riepilogo
+          Vai al magazzino
         </Button>
         <Button variant='dark' onClick={handleBackToHome} className="nav-button btn-next">
-          Torna al Magazzino
+          Visualizza il prodotto
         </Button>
       </div>
     </Container>

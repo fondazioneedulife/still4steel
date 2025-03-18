@@ -12,11 +12,30 @@ const AggiungiProdotti: React.FC = () => {
   const steps = [1, 2, 3, 4, 5];
   const [showModal, setShowModal] = useState(false);
   const [newCategory, setNewCategory] = useState('');
-  const [categories, setCategories] = useState(['Categoria A', 'Categoria B', 'Categoria C']);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/categories'); // Verifica che l'endpoint sia corretto
+        const data = await response.json();
+  
+        // Estrarre solo i nomi
+        const categoryNames = data.map((cat: { name: string }) => cat.name);
+        setCategories(categoryNames);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+  
+    fetchCategories();
+  }, []);  
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const navigate = useNavigate();
 
+  // Add brand to the validation
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -24,6 +43,7 @@ const AggiungiProdotti: React.FC = () => {
     if (!productData.sku.trim()) newErrors.sku = 'Il codice SKU è obbligatorio';
     if (!productData.categoria.trim()) newErrors.categoria = 'La categoria è obbligatoria';
     if (!productData.descrizione.trim()) newErrors.descrizione = 'La descrizione è obbligatoria';
+    if (!productData.brand.trim()) newErrors.brand = 'Il brand è obbligatorio';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -47,11 +67,27 @@ const AggiungiProdotti: React.FC = () => {
     navigate('/magazzino');
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
     if (newCategory.trim() && !categories.includes(newCategory)) {
-      setCategories([...categories, newCategory]);
-      setNewCategory('');
-      setShowModal(false);
+      try {
+        const response = await fetch('http://localhost:3001/api/categories', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: newCategory }),
+        });
+
+        if (response.ok) {
+          setCategories([...categories, newCategory]);
+          setNewCategory('');
+          setShowModal(false);
+        } else {
+          console.error('Failed to add category');
+        }
+      } catch (error) {
+        console.error('Error adding category:', error);
+      }
     }
   };
 
@@ -72,9 +108,7 @@ const AggiungiProdotti: React.FC = () => {
   };
 
   // In the return statement, add this inside the Row component, after the existing Col components
- // ... imports remain the same ...
-
-return (
+ return (
   <LeftNavbar>
     <Container className="mt-4 aggiungi-prodotti-page">
       <Stepper steps={steps} currentStep={step} />
@@ -129,8 +163,8 @@ return (
                     className="form-input py-2"
                   >
                     <option value="">Seleziona una categoria</option>
-                    {categories.map((cat, index) => (
-                      <option key={index} value={cat}>{cat}</option>
+                    {categories.map((categoryName, index) => (
+                      <option key={index} value={categoryName}>{categoryName}</option>
                     ))}
                   </Form.Select>
                   <Button 
@@ -165,6 +199,22 @@ return (
             </Col>
 
             <Col md={12}>
+              <Form.Group className="input-container mb-4">
+                <Form.Label className="form-label d-flex align-items-center">
+                  <Tag size={18} className="me-2 text-primary" />
+                  <span className="fw-medium">Brand</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci il brand..."
+                  value={productData.brand}
+                  onChange={(e) => setProductData({ ...productData, brand: e.target.value })}
+                  isInvalid={!!errors.brand}
+                  className="form-input py-2"
+                />
+                <Form.Control.Feedback type="invalid">{errors.brand}</Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group className="input-container">
                 <Form.Label className="form-label d-flex align-items-center">
                   <Image size={18} className="me-2 text-primary" />

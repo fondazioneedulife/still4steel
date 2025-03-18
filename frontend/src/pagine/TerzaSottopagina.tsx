@@ -20,6 +20,39 @@ const TerzaSottopagina: React.FC = () => {
   const [telefonoFornitore, setTelefonoFornitore] = useState<string>('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return email === '' || emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    // Only count actual digits, ignoring spaces and other characters
+    const digitsOnly = phone.replace(/\D/g, '');
+    return phone === '' || digitsOnly.length === 10;
+  };
+
+  const handlePhoneChange = (value: string) => {
+    // Allow only digits, spaces, and basic formatting characters
+    const formattedValue = value.replace(/[^\d\s()-]/g, '');
+    setTelefonoFornitore(formattedValue);
+    
+    const digitsOnly = formattedValue.replace(/\D/g, '');
+    if (digitsOnly.length !== 10 && formattedValue !== '') {
+      setErrors(prev => ({ ...prev, telefonoFornitore: 'Il numero di telefono deve contenere 10 cifre' }));
+    } else {
+      setErrors(prev => ({ ...prev, telefonoFornitore: '' }));
+    }
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmailFornitore(value);
+    if (!validateEmail(value) && value !== '') {
+      setErrors(prev => ({ ...prev, emailFornitore: 'Inserisci un indirizzo email valido' }));
+    } else {
+      setErrors(prev => ({ ...prev, emailFornitore: '' }));
+    }
+  };
+
   // Update form fields when productData changes
   useEffect(() => {
     if (productData?.fornitore) {
@@ -157,9 +190,11 @@ const TerzaSottopagina: React.FC = () => {
               type="email"
               placeholder="Inserisci l'email del fornitore..."
               value={emailFornitore}
-              onChange={(e) => setEmailFornitore(e.target.value)}
+              onChange={(e) => handleEmailChange(e.target.value)}
+              isInvalid={!!errors.emailFornitore}
               className="form-input py-2"
             />
+            <Form.Control.Feedback type="invalid">{errors.emailFornitore}</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="input-container mt-4">
@@ -172,9 +207,11 @@ const TerzaSottopagina: React.FC = () => {
               type="tel"
               placeholder="Inserisci il telefono del fornitore..."
               value={telefonoFornitore}
-              onChange={(e) => setTelefonoFornitore(e.target.value)}
+              onChange={(e) => handlePhoneChange(e.target.value)}
+              isInvalid={!!errors.telefonoFornitore}
               className="form-input py-2"
             />
+            <Form.Control.Feedback type="invalid">{errors.telefonoFornitore}</Form.Control.Feedback>
           </Form.Group>
         </Card.Body>
       </Card>
