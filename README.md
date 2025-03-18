@@ -2,9 +2,7 @@
 
 Questa web app è una piattaforma intuitiva progettata per supportare micro e piccole imprese nella gestione quotidiana delle loro attività operative. L'obiettivo è offrire uno strumento semplice, accessibile e intuitivo, senza la complessità tipica di altri software di gestione aziendale.
 
----
-
-## ✨ Funzionalità principali:
+### ✨ Funzionalità principali:
 ✅ **Gestione del magazzino** - Monitoraggio degli articoli disponibili e aggiornamento delle quantità in tempo reale.  
 ✅ **Gestione delle spedizioni** - Tracciamento delle spedizioni per una gestione efficiente delle consegne.  
 ✅ **Gestione degli ordini e forniture** - Gestione degli ordini ai fornitori e monitoraggio dello stato delle forniture.  
