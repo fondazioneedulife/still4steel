@@ -264,32 +264,34 @@ const Home: React.FC = () => {
               }}>
                 <Modal.Title style={{ width: '100%' }}>
                   <div style={{
-                    borderLeft: '4px solid #000000',
-                    paddingLeft: '1.5rem',
-                    marginBottom: '1.5rem'
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%'
                   }}>
-                    <h3 style={{ 
-                      color: '#000000', 
-                      fontSize: '2.2rem', 
-                      fontWeight: 800,
-                      margin: 0,
-                      letterSpacing: '-0.5px'
+                    <div style={{
+                      borderLeft: '4px solid #000000',
+                      paddingLeft: '1.5rem',
                     }}>
-                      Widget Disponibili
-                    </h3>
-                    <p style={{
-                      color: '#666666',
-                      fontSize: '1.1rem',
-                      margin: '0.25rem 0 0 0'
-                    }}>
-                      Personalizza la tua dashboard
-                    </p>
-                  </div>
+                      <h3 style={{ 
+                        color: '#000000', 
+                        fontSize: '2.2rem', 
+                        fontWeight: 800,
+                        margin: 0,
+                        letterSpacing: '-0.5px'
+                      }}>
+                        Widget Disponibili
+                      </h3>
+                      <p style={{
+                        color: '#666666',
+                        fontSize: '1.1rem',
+                        margin: '0.25rem 0 0 0'
+                      }}>
+                        Personalizza la tua dashboard
+                      </p>
+                    </div>
 
-                  {/* Removed the help section div */}
-
-                  <div style={{ marginTop: '1rem' }}>
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
                       <Button 
                         variant="outline-dark" 
                         onClick={toggleModal}
@@ -312,8 +314,8 @@ const Home: React.FC = () => {
                           alignItems: 'center',
                           gap: '0.5rem'
                         }} 
-                        onClick={handleAddWidget}  // Changed from toggleModal to handleAddWidget
-                        disabled={!selectedWidgetId} // Added disabled state
+                        onClick={handleAddWidget}
+                        disabled={!selectedWidgetId}
                       >
                         <span style={{ fontSize: '1.5rem', fontWeight: 700 }}>+</span>
                         Aggiungi Widget
