@@ -24,6 +24,7 @@ import '../src/App.css';
 import ImportaSpedizioni from '../src/pagine/ImportaSpedizioni';
 import Varianti from '../src/pagine/Varianti';
 import { ProductProvider } from '../src/pagine/ContestoProdotto';
+import WIPPage from './componenti/WIPpage';
 function App() {
     return (
       <ProductProvider>
@@ -53,7 +54,7 @@ function App() {
           <Route path='/home' element={<Home/>} />
           <Route path='/importa-spedizioni' element={<ImportaSpedizioni/>} />
           <Route path='/varianti' element={<Varianti/>} />
-          
+          <Route path='/wipPage' element={<WIPPage/>} />          
 
           
         </Routes>

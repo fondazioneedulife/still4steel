@@ -20,12 +20,6 @@ function ListaOrdini(){
     const navigate=useNavigate();
     const [ordini, setOrdini]=useState([]);
 
-    useEffect(() =>{
-        fetch("http://localhost:5000/ordini")
-        .then((response) => response.json())
-        .then((data) => setOrdini(data))
-        .catch((error) => console.error('Errore durante il caricamento degli ordini:', error));
-    },[]);
 
     return(
         <div className=''>
@@ -41,19 +35,11 @@ function ListaOrdini(){
                             </div>
                         </div>
                 </div>
-                <Accordion>
-                    {ordini.map((ordine)=>(
-                        <Accordion.Item eventKey={indexedDB.toString()} key={index}>
-                        <Ordine 
-                            id={ordine.id}
-                            nrOrdine={ordine.nrOrdine}
-                            fornitore={ordine.fornitore}
-                            dataOrdine={ordine.dataOrdine}
-                            importo={ordine.importo} 
-                            />
-                            </Accordion.Item>
-                    ))}
-                </Accordion>
+                <Ordine nrOrdine={'12345'} fornitore='fornitore1' dataOrdine={'02/20/2023'} importo={'123'} id={0}/>
+                <Ordine nrOrdine={'99999'} fornitore='fornitore2' dataOrdine={'02/20/2023'} importo={'123'} id={1}/>
+                <Ordine nrOrdine={'00000'} fornitore='fornitore3' dataOrdine={'02/20/2023'} importo={'123'} id={2}/>
+                <Ordine nrOrdine={'55555'} fornitore='fornitore4' dataOrdine={'02/20/2023'} importo={'123'} id={3}/>
+
             </div>
             </LeftNavbar>
             
