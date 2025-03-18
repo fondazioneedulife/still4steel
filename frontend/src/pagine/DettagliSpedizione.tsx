@@ -49,7 +49,7 @@ const DettagliSpedizione: React.FC = () => {
           <Button variant="dark" onClick={downloadPDF} className="download-button">
             Scarica PDF
           </Button>
-          <Button variant="outline secondary" onClick={() => navigate('/spedizioni')} className="back-button">
+          <Button variant="outline secondary" onClick={() => navigate('/magazzino/spedizioni')} className="back-button">
             Torna alle Spedizioni
           </Button>
         </Card.Body>

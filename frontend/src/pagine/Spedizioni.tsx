@@ -108,8 +108,8 @@ const Spedizioni: React.FC = () => {
                 <div><strong>Peso:</strong> {shipment.weight}</div>
               </div>
               <Button
-                variant={shipment.status === 'Consegnato' ? 'success' : shipment.status === 'In transito' ? 'warning' : 'primary'}
-                className={`view-button ${shipment.status === 'In elaborazione' ? '' : 'primary'}`}
+                variant={shipment.status === 'Consegnato' ? 'success' : shipment.status === 'In transito' ? 'warning' :  shipment.status === 'In elaborazione' ? 'blu' : 'default'}
+                className={` view-button ${shipment.status === 'In elaborazione' ? '' : 'primary'}`}
                 onClick={() => navigate('/magazzino/dettagli-spedizione', { state: { shipment } })}
               >
                 Dettagli

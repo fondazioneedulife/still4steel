@@ -2,6 +2,9 @@
   padding: 20px;
 }
 
+.btn-blu{background-color: #0d6efd!important; color: white!important;}
+.btn-blu:hover{background-color: #0a58cd!important; color: white!important;}
+
 .page-title {
   font-size: 24px;
   font-weight: bold;
