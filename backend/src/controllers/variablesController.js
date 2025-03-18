@@ -27,13 +27,13 @@ export const getVariableById = async (req, res) => {
 
 export const createVariable = async (req, res) => {
     try {
-        const { type, product_id} = req.body;
+        const { type, name, product_id} = req.body;
 
         const result = await pool.query(
             `INSERT INTO variables
-            (type, product_id)
-            VALUES ($1, $2) RETURNING *`,
-            [type, product_id]
+            (type, name, product_id)
+            VALUES ($1, $2, $3) RETURNING *`,
+            [type, name, product_id]
         );
 
         res.status(201).json({ message: "Variabile creato", product: result.rows[0] });
@@ -50,8 +50,8 @@ export const updateVariable = async (req, res) => {
 
         const result = await pool.query(
             `UPDATE variables
-            SET type = $1, product_id = $2
-            WHERE variable_id = $3
+            SET type = $1, name = $2, product_id = $3
+            WHERE variable_id = $4
             RETURNING *`,
             [type, product_id, id]
         );
