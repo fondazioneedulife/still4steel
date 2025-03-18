@@ -6,7 +6,7 @@ import pool from "../config/db.js";
 
 export const registerAccount = async (req, res) => {
   try {
-    const { name, vat, tax_code, phone, email, address, password } = req.body;
+    const { name, vat, tax_code, phone, email, address, password, dati} = req.body;
 
     // Controllo se l'email esiste già
     const checkUser = await pool.query("SELECT * FROM companies WHERE email = $1", [email]);
@@ -19,10 +19,10 @@ export const registerAccount = async (req, res) => {
 
     // Inserimento nel database
     const newUser = await pool.query(
-      `INSERT INTO companies (name, vat, tax_code, phone, email, address, password)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO companies (name, vat, tax_code, phone, email, address, password, dati)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
        RETURNING company_id, name, email`,
-      [name, vat, tax_code, phone, email, address, hashedPassword]
+      [name, vat, tax_code, phone, email, address, hashedPassword, dati]
     );
 
     // Genera un token JWT per il nuovo utente

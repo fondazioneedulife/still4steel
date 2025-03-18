@@ -66,22 +66,42 @@ const Riepilogo: React.FC = () => {
       }
     };
 
+    const VariableData = {
+      type: formData.datiMagazzino?.iva || '',
+      product_id: formData.datiProdotto?.sku || ''
+    };
+
     try {
       const response = await fetch('http://localhost:3001/api/prodotti', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(productData)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(productData)
       });
 
       if (response.ok) {
-        console.log('Dati inviati con successo');
+      console.log('Dati inviati con successo');
+
+      // Send VariableData to the backend
+      const variableResponse = await fetch('http://localhost:3001/api/variables', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(VariableData)
+      });
+
+      if (variableResponse.ok) {
+        console.log('Variable data inviati con successo');
         navigate('/magazzino/quinta-sottopagina', { 
-          state: { productData } 
+        state: { productData } 
         });
       } else {
-        console.error('Errore nell invio dei dati:', response.statusText);
+        console.error('Errore nell invio dei dati della variabile:', variableResponse.statusText);
+      }
+      } else {
+      console.error('Errore nell invio dei dati:', response.statusText);
       }
     } catch (error) {
       console.error('Errore di rete:', error);

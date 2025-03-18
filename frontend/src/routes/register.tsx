@@ -13,6 +13,7 @@ function RegisterForm() {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [dati, setDati] = useState(false);
   const [error, setError] = useState('');
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -23,7 +24,7 @@ function RegisterForm() {
       const response = await fetch('http://localhost:3001/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, vat, tax_code, phone, email, address, password }),
+        body: JSON.stringify({ name, vat, tax_code, phone, email, address, password, dati }),
       });
 
       const data = await response.json();
@@ -111,6 +112,17 @@ function RegisterForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Check
+            type="checkbox"
+            label="dati"
+            checked={dati}
+            onChange={(e) => setDati(e.target.checked)}
+            required
+          />
+          <Form.Control.Feedback type="invalid">Devi accettare i termini e le condizioni</Form.Control.Feedback>
         </Form.Group>
 
         {error && <p className="text-danger">{error}</p>}
